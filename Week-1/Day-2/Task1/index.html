@@ -3,13 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./images/collage.png" type="image/x-icon" />
+
     <title>Testimonials - Internship Task</title>
     <link rel="stylesheet" href="style.css" />
   </head>
+  <style>
+    /* start at 0 and 20px fro Y */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(25px);
+      animation: fadeUp 1.2s ease-in-out forwards;
+    }
+    /* Then opacity become 1 and position default for Y */
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
   <body>
     <!-- main body of testimonials -->
-    <div class="testimonials">
-      
+    <section class="fade-up testimonials">
       <!-- Card 1 with purple background -->
       <div class="card card-bg-purple">
         <!-- card header for name and img -->
@@ -165,6 +181,6 @@
           developer after receiving multiple offers. 100% recommend!"
         </p>
       </div>
-    </div>
+    </section>
   </body>
 </html>
