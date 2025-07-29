@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="icon" href="./images/cv.png" type="image/x-icon" />
+    <title>Resume - Html & CSS</title>
+  </head>
+  <!-- Animation effect - like appearing from bottom to top with fade-->
+  <style>
+    /* start at 0 and 30px from Y */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s ease-in-out forwards;
+    }
+    /* Then opacity become 1 and position default for Y */
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <body class="fade-up bg-gray-300">
+    <section
+      class="p-4 md:p-6 max-w-full md:max-w-[90%] lg:max-w-[70%] m-auto shadow-xl rounded-md md:my-7 bg-white"
+    >
+      <!-- Header section for name -->
+      <header class="name flex items-center flex-col space-y-1 mb-3">
+        <h1 class="font-bold text-2xl md:text-3xl">John Doe</h1>
+        <p class="text-sm text-gray-700">
+          Creative and Innovative Web Developer
+        </p>
+        <div
+          class="links flex flex-wrap justify-center text-sm space-x-2 md:space-x-4 text-gray-700"
+        >
+          <p class="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-4 text-green-600 mr-1"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+              />
+            </svg>
+            Pleasantville, CA
+          </p>
+          <p class="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-4 text-green-600 mr-1"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"
+              />
+            </svg>
+            (555) 123-4567
+          </p>
+          <p class="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-4 text-green-600 mr-1"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25"
+              />
+            </svg>
+            <a href="mailto:john.doe@gmail.com">john.doe@gmail.com</a>
+          </p>
+          <p class="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-4 text-green-600 mr-1"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
+              />
+            </svg>
+            <a href="#">https://johndoe.me/</a>
+          </p>
+        </div>
+      </header>
+      <hr class="border-gray-700" />
+
+      <!-- Section for Profiles -->
+      <section
+        class="profiles flex flex-col md:flex-row items-start justify-normal md:justify-between mt-3 mb-3 text-gray-600 text-sm"
+      >
+        <div>
+          <h2 class="font-bold text-black">Profiles</h2>
+        </div>
+        <div
+          class="w-full md:w-[80%] flex flex-col md:flex-row md:items-center md:justify-between md:pr-0 lg:pr-40 mt-2 md:mt-0 space-y-2 md:space-y-0"
+        >
+          <div>
+            <p class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"
+                class="size-4 text-blue-700 mr-1 fill-current"
+              >
+                <path
+                  d="M512 96L127.9 96C110.3 96 96 110.5 96 128.3L96 511.7C96 529.5 110.3 544 127.9 544L512 544C529.6 544 544 529.5 544 511.7L544 128.3C544 110.5 529.6 96 512 96zM231.4 480L165 480L165 266.2L231.5 266.2L231.5 480L231.4 480zM198.2 160C219.5 160 236.7 177.2 236.7 198.5C236.7 219.8 219.5 237 198.2 237C176.9 237 159.7 219.8 159.7 198.5C159.7 177.2 176.9 160 198.2 160zM480.3 480L413.9 480L413.9 376C413.9 351.2 413.4 319.3 379.4 319.3C344.8 319.3 339.5 346.3 339.5 374.2L339.5 480L273.1 480L273.1 266.2L336.8 266.2L336.8 295.4L337.7 295.4C346.6 278.6 368.3 260.9 400.6 260.9C467.8 260.9 480.3 305.2 480.3 362.8L480.3 480z"
+                />
+              </svg>
+              johndoe
+            </p>
+            <p>LinkedIn</p>
+          </div>
+
+          <div>
+            <p class="flex items-center">
+              <svg
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                class="size-4 mr-1 fill-current"
+              >
+                <path
+                  d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+                />
+              </svg>
+              johndoe
+            </p>
+            <p>Github</p>
+          </div>
+
+          <div>
+            <p class="flex items-center">
+              <svg
+                viewBox="0 0 640 640"
+                xmlns="http://www.w3.org/2000/svg"
+                class="size-4 mr-1 fill-current text-orange-400"
+              >
+                <path
+                  d="M419 375L223.3 333.7L215.1 373L410.8 414L419 375zM470 288L316.5 159.7L291 190.5L444.5 318.8L470 288zM438.8 327.7L257.5 243L240.8 279.5L422 364L438.8 327.7zM390.3 96L358.3 120L477.6 280.3L509.6 256.3L390.3 96zM410.8 424L210.8 424L210.8 463.7L410.8 463.7L410.8 424zM450.5 504L171 504L171 384L131 384L131 544L490.5 544L490.5 384L450.5 384L450.5 504z"
+                />
+              </svg>
+              johndoe
+            </p>
+            <p>StackOverflow</p>
+          </div>
+        </div>
+      </section>
+      <hr class="border-gray-700" />
+
+      <!-- Section for Summary -->
+      <section
+        class="summary flex flex-col md:flex-row items-start justify-between mt-3 mb-3 text-sm"
+      >
+        <h2 class="font-bold text-black">Summary</h2>
+        <p class="w-full md:w-[80%] text-gray-700 leading-relaxed mt-2 md:mt-0">
+          Innovative Web Developer with 5 years of experience in building
+          impactful and user-friendly websites and applications. Specializes in
+          <strong>front-end technologies</strong> and passion about modern web
+          standards and cutting-edge development techniques. Proven track record
+          of leading successful projects from concept to deployment.
+        </p>
+      </section>
+
+      <hr class="border-gray-700" />
+
+      <!-- Section for Experience -->
+      <section class="experience mt-3 mb-3 text-sm">
+        <div class="flex flex-col md:flex-row items-start justify-between mb-4">
+          <h2 class="font-bold text-black">Experience</h2>
+          <div class="w-full md:w-[80%] mt-2 md:mt-0">
+            <!-- Job 1 -->
+            <article class="mb-6">
+              <div
+                class="flex flex-col md:flex-row justify-between items-start mb-2"
+              >
+                <div>
+                  <h3 class="font-semibold text-black">
+                    Creative Solutions Inc.
+                  </h3>
+                  <p class="text-gray-700">Senior Web Developer</p>
+                  <p class="flex items-center text-green-600 text-xs">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="size-3 mr-1"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
+                      />
+                    </svg>
+                    <a href="#">https://creativesolutions.inc/ </a>
+                  </p>
+                </div>
+                <div class="md:text-right mt-2 md:mt-0">
+                  <p class="font-semibold text-black">
+                    January 2019 to Present
+                  </p>
+                  <p class="text-gray-700">San Francisco, CA</p>
+                </div>
+              </div>
+              <ul
+                class="list-disc text-gray-700 space-y-1 leading-relaxed pl-4"
+              >
+                <li>
+                  Spearheaded the redesign of the main product website,
+                  resulting in a 40% increase in user engagement.
+                </li>
+                <li>
+                  Developed and implemented a new responsive framework,
+                  improving cross-device compatibility.
+                </li>
+                <li>
+                  Mentored a team of four junior developers, fostering a culture
+                  of technical excellence.
+                </li>
+              </ul>
+            </article>
+
+            <!-- Job 2 -->
+            <article>
+              <div
+                class="flex flex-col md:flex-row justify-between items-start mb-2"
+              >
+                <div>
+                  <h3 class="font-semibold text-black">TechAdvancers</h3>
+                  <p class="text-gray-700">Web Developer</p>
+                  <p class="flex items-center text-green-600 text-xs">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="size-3 mr-1"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
+                      />
+                    </svg>
+                    <a href="#">https://techadvancers.com/ </a>
+                  </p>
+                </div>
+                <div class="md:text-right mt-2 md:mt-0">
+                  <p class="font-semibold text-black">
+                    June 2016 to December 2018
+                  </p>
+                  <p class="text-gray-700">San Jose, CA</p>
+                </div>
+              </div>
+              <ul
+                class="list-disc text-gray-700 space-y-1 leading-relaxed pl-4"
+              >
+                <li>
+                  Collaborated in a team of 10 to develop high-quality web
+                  applications using React.js and Node.js.
+                </li>
+                <li>
+                  Managed the integration of third-party services such as Stripe
+                  for payments and Twilio for SMS services.
+                </li>
+                <li>
+                  Optimized application performance, achieving a 30% reduction
+                  in load times.
+                </li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+      <hr class="border-gray-700" />
+
+      <!-- Section for Education -->
+      <section class="education mt-3 mb-3 text-sm">
+        <div class="flex flex-col md:flex-row items-start justify-between">
+          <h2 class="font-bold text-black">Education</h2>
+          <div
+            class="w-full md:w-[80%] flex flex-col md:flex-row justify-between items-start mt-2 md:mt-0"
+          >
+            <div>
+              <h3 class="font-semibold text-black">University of California</h3>
+              <p class="text-gray-700">Berkeley, CA</p>
+            </div>
+            <div class="md:text-right mt-2 md:mt-0">
+              <p class="font-semibold text-black">August 2012 to May 2016</p>
+              <p class="text-gray-700">Bachelor's in Computer Science</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <hr class="border-gray-700" />
+
+      <!-- Section for Projects -->
+      <section class="projects mt-3 mb-3 text-sm">
+        <div class="flex flex-col md:flex-row items-start justify-between">
+          <h2 class="font-bold text-black">Projects</h2>
+          <div
+            class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-2 gap-6 mt-2 md:mt-0"
+          >
+            <div>
+              <h3 class="font-semibold text-black">E-Commerce Platform</h3>
+              <p class="text-gray-700 mb-2">Project Lead</p>
+              <p class="text-gray-700 leading-relaxed">
+                Led the development of a full-stack e-commerce platform,
+                improving sales conversion by 25%.
+              </p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-black">Interactive Dashboard</h3>
+              <p class="text-gray-700 mb-2">Frontend Developer</p>
+              <p class="text-gray-700 leading-relaxed">
+                Created an interactive analytics dashboard for a SaaS
+                application, enhancing data visualization for clients.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <hr class="border-gray-700" />
+
+      <!-- Section for Skills -->
+      <section class="skills mt-3 mb-3 text-sm">
+        <div class="flex flex-col md:flex-row items-start justify-between">
+          <h2 class="font-bold text-black">Skills</h2>
+          <div
+            class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-2 md:mt-0"
+          >
+            <div>
+              <h3 class="font-semibold text-black">Web Technologies</h3>
+              <p class="text-gray-700 mb-1">Advanced</p>
+              <p class="text-gray-700 text-xs leading-relaxed">
+                HTML5, JavaScript, PHP, Python
+              </p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-black">Web Frameworks</h3>
+              <p class="text-gray-700 mb-1">Intermediate</p>
+              <p class="text-gray-700 text-xs leading-relaxed">
+                React.js, Angular, Vue.js, Laravel, Django
+              </p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-black">Tools</h3>
+              <p class="text-gray-700 mb-1">Intermediate</p>
+              <p class="text-gray-700 text-xs leading-relaxed">
+                Webpack, Git, Jenkins, Docker, JIRA
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <hr class="border-gray-700" />
+
+      <!-- Section for Certifications -->
+      <section class="certifications mt-3 mb-3 text-sm">
+        <div class="flex flex-col md:flex-row items-start justify-between">
+          <h2 class="font-bold text-black">Certifications</h2>
+          <div
+            class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-2 gap-6 mt-2 md:mt-0"
+          >
+            <div class="flex flex-col md:flex-row justify-between items-center">
+              <div>
+                <h3 class="font-semibold text-black">
+                  Full-Stack Web Development
+                </h3>
+                <p class="text-gray-700">CodeAcademy</p>
+              </div>
+              <p class="font-semibold text-black mt-1 md:mt-0">2020</p>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between">
+              <div>
+                <h3 class="font-semibold text-black">
+                  AWS Certified Developer
+                </h3>
+                <p class="text-gray-700">Amazon Web Services</p>
+              </div>
+              <p class="font-semibold text-black mt-1 md:mt-0">2019</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <hr class="border-gray-700" />
+
+      <!-- Section for Languages -->
+      <section class="languages mt-3 mb-3 text-sm">
+        <div class="flex flex-col md:flex-row items-start justify-between">
+          <h2 class="font-bold text-black">Languages</h2>
+          <div
+            class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-2 gap-6 mt-2 md:mt-0"
+          >
+            <div>
+              <h3 class="font-semibold text-black">English</h3>
+              <p class="text-gray-700">Native Speaker</p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-black">Spanish</h3>
+              <p class="text-gray-700">Intermediate</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <hr class="border-gray-700" />
+
+      <!-- Footer for References -->
+      <footer class="references mt-3 text-sm mb-7">
+        <div class="flex flex-col md:flex-row items-start justify-between">
+          <h2 class="font-bold text-black">References</h2>
+          <div class="w-full md:w-[80%] mt-2 md:mt-0">
+            <p class="text-gray-700">Available upon request</p>
+          </div>
+        </div>
+      </footer>
+    </section>
+  </body>
+</html>
