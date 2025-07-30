@@ -3,6 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="icon" href="./images/travel.ico" type="image/x-icon" />
     <title>Explore Saudia Arabia - Netixsol Task</title>
@@ -170,7 +177,58 @@
     <section>Explore Section</section>
 
     <!-- Footer Section -->
-    <footer>Footer Section</footer>
+    <footer
+      class="flex flex-col lg:flex-row items-center lg:items-start text-center lg:text-left justify-center lg:justify-between gap-12 lg:gap-16 px-6 sm:px-12 md:px-16 lg:px-24 mt-10 bg-[#222222] py-16"
+    >
+      <!-- left div for logo -->
+      <div>
+        <img src="./images/saudi-logo.svg" alt="Saudi logo" class="w-48" />
+      </div>
+      <!-- right div for links -->
+      <div
+        class="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left justify-between gap-10 sm:gap-12 md:gap-16"
+      >
+        <!-- About us -->
+        <div class="space-y-3">
+          <p class="text-2xl font-semibold">About</p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            About us
+          </p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            Features
+          </p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            News & Blogs
+          </p>
+        </div>
+        <!-- Contact -->
+        <div class="space-y-3">
+          <p class="text-2xl font-semibold">Contact</p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            Instagram
+          </p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            Twitter
+          </p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            Facebook
+          </p>
+        </div>
+        <!-- Support -->
+        <div class="space-y-3">
+          <p class="text-2xl font-semibold">Support</p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            FAQs
+          </p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            Support Centre
+          </p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            Feedback
+          </p>
+        </div>
+      </div>
+    </footer>
 
     <script>
       // Mobile menu functionality
