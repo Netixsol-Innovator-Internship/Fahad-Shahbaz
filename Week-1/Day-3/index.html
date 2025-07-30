@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="icon" href="./images/travel.ico" type="image/x-icon" />
+    <title>Explore Saudia Arabia - Netixsol Task</title>
+  </head>
+  <body class="bg-black text-white">
+    <!-- Hero Section with Navbar -->
+    <section
+      class="min-h-screen flex space-y-5 justify-between flex-col bg-[url('./images/hero-img.png')] bg-cover bg-center"
+    >
+      <!-- Navbar -->
+      <nav
+        class="flex justify-between items-center px-4 sm:px-8 md:px-12 lg:px-20 py-4 text-white"
+      >
+        <!-- logo -->
+        <img
+          src="./images/saudi-logo.svg"
+          alt="Logo"
+          class="size-32 sm:size-36 md:size-44 lg:size-48"
+        />
+
+        <!-- Desktop Menu -->
+        <ul
+          class="hidden md:flex space-x-8 lg:space-x-14 xl:space-x-16 text-xl lg:text-2xl font-semibold"
+        >
+          <li>
+            <a href="#" class="hover:text-gray-300 transition-colors"
+              >Destinations</a
+            >
+          </li>
+          <li>
+            <a href="#" class="hover:text-gray-300 transition-colors"
+              >Members</a
+            >
+          </li>
+          <li>
+            <a href="#" class="hover:text-gray-300 transition-colors"
+              >Gallery</a
+            >
+          </li>
+        </ul>
+
+        <!-- Mobile Menu Button -->
+        <button
+          class="md:hidden flex flex-col space-y-1 p-2 cursor-pointer"
+          id="mobile-menu-btn"
+        >
+          <span class="w-6 h-0.5 bg-white block"></span>
+          <span class="w-6 h-0.5 bg-white block"></span>
+          <span class="w-6 h-0.5 bg-white block"></span>
+        </button>
+      </nav>
+
+      <!-- Mobile Menu Overlay -->
+      <div
+        class="md:hidden fixed inset-0 bg-black bg-opacity-90 z-50 hidden opacity-0 transition-opacity duration-300 ease-in-out"
+        id="mobile-menu"
+      >
+        <div
+          class="flex flex-col items-center justify-center h-full space-y-8 text-white text-2xl font-semibold"
+        >
+          <button
+            class="absolute top-8 right-8 text-3xl cursor-pointer hover:text-gray-300 transition-colors"
+            id="close-menu"
+          >
+            <!-- For X button on mobile menu -->
+            &times;
+          </button>
+          <a href="#" class="hover:text-gray-300 transition-colors"
+            >Destinations</a
+          >
+          <a href="#" class="hover:text-gray-300 transition-colors">Members</a>
+          <a href="#" class="hover:text-gray-300 transition-colors">Gallery</a>
+        </div>
+      </div>
+
+      <!-- Hero Content -->
+      <div class="flex flex-col items-center justify-center text-center px-4">
+        <h1
+          class="font-extrabold leading-[1.15] text-white"
+          style="font-size: clamp(3rem, 10vw, 6rem)"
+        >
+          Explore<br />Saudi Arabia
+        </h1>
+        <p
+          class="mt-1 max-w-xl text-white leading-tight"
+          style="font-size: clamp(1.125rem, 2.5vw, 1.5rem)"
+        >
+          Saudi Arabia is rich in heritage and history. The country is home to
+          hundreds of important sites.
+        </p>
+      </div>
+
+      <!-- Info Cards Section -->
+      <div
+        class="relative mx-auto flex flex-col md:flex-row items-center justify-between z-10 my-20 px-6 text-white w-11/12"
+      >
+        <div class="block mb-12 md:mb-0 md:pr-6">
+          <h2 class="text-3xl font-semibold">History and Heritage</h2>
+          <p class="text-sm md:text-base leading-relaxed w-80">
+            Saudi Arabia has long occupied an important role at the center of
+            the islamic and Arab worlds. Located at the heart of three
+            continents.
+          </p>
+        </div>
+        <div class="block mb-6 md:mb-0 md:pl-6 w-80">
+          <h2 class="text-3xl font-semibold">People and Culture</h2>
+          <p class="text-sm md:text-base leading-relaxed">
+            Saudi Arabia has a rich Culture Shaped by the diversity of its
+            people. which has formed the basis of its cultural identity.
+          </p>
+        </div>
+      </div>
+
+      <!-- Overlay SVG -->
+      <div class="absolute bottom-0 left-0 w-full z-10">
+        <img
+          src="./images/overlay.svg"
+          alt="Overlay"
+          class="w-full h-auto opacity-70"
+        />
+      </div>
+    </section>
+
+    <!-- Logo Section -->
+    <section
+      class="flex flex-wrap justify-center items-center gap-8 sm:gap-12 md:gap-16 px-4 sm:px-8 py-8 md:py-10"
+    >
+      <div class="w-40 sm:w-48 md:w-52 lg:w-64">
+        <img
+          src="./images/logo-one.svg"
+          alt="Saudia logo"
+          class="w-full h-auto"
+        />
+      </div>
+      <div class="w-40 sm:w-48 md:w-52 lg:w-64">
+        <img
+          src="./images/logo-two.svg"
+          alt="Alrahji bank logo"
+          class="w-full h-auto"
+        />
+      </div>
+      <div class="w-40 sm:w-48 md:w-52 lg:w-64">
+        <img
+          src="./images/logo-three.svg"
+          alt="stc logo"
+          class="w-full h-auto"
+        />
+      </div>
+      <div class="w-40 sm:w-48 md:w-52 lg:w-64">
+        <img
+          src="./images/logo-four.svg"
+          alt="Almarahi logo"
+          class="w-full h-auto"
+        />
+      </div>
+    </section>
+
+    <!-- Grid Section -->
+    <section>Grid Section</section>
+
+    <!-- Desert Section -->
+    <section>Desert Section</section>
+
+    <!-- Explore Section -->
+    <section>Explore Section</section>
+
+    <!-- Footer Section -->
+    <footer>Footer Section</footer>
+
+    <script>
+      // Mobile menu functionality
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const closeMenu = document.getElementById("close-menu");
+
+      mobileMenuBtn.addEventListener("click", () => {
+        mobileMenu.classList.remove("hidden");
+        // Trigger reflow to ensure transition works
+        mobileMenu.offsetHeight;
+        mobileMenu.classList.remove("opacity-0");
+      });
+
+      closeMenu.addEventListener("click", () => {
+        mobileMenu.classList.add("opacity-0");
+        setTimeout(() => {
+          mobileMenu.classList.add("hidden");
+        }, 300); // Wait for transition to complete
+      });
+
+      // Close menu when clicking outside
+      mobileMenu.addEventListener("click", (e) => {
+        if (e.target === mobileMenu) {
+          mobileMenu.classList.add("opacity-0");
+          setTimeout(() => {
+            mobileMenu.classList.add("hidden");
+          }, 300);
+        }
+      });
+    </script>
+  </body>
+</html>
