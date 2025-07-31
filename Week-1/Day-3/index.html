@@ -14,7 +14,9 @@
     <link rel="icon" href="./images/travel.ico" type="image/x-icon" />
     <title>Explore Saudia Arabia - Netixsol Task</title>
   </head>
-  <body class="bg-black text-white font-['Poppins']">
+  <body
+    class="bg-white dark:bg-black text-black dark:text-white font-['Poppins'] transition-colors duration-300"
+  >
     <!-- Hero Section with Navbar -->
     <section
       class="relative min-h-screen flex justify-between flex-col bg-[url('./images/hero-img.png')] bg-cover bg-center"
@@ -34,6 +36,55 @@
         <ul
           class="hidden md:flex space-x-8 lg:space-x-14 xl:space-x-16 text-xl lg:text-2xl font-semibold items-center"
         >
+          <li>
+            <button
+              id="theme-toggle"
+              class="flex items-center justify-center rounded-full p-2 transition-colors"
+            >
+              <!-- Sun icon for dark mode -->
+              <svg
+                id="sun-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-6 h-6 text-yellow-300 hidden"
+              >
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2" />
+                <path d="M12 20v2" />
+                <path d="m4.93 4.93 1.41 1.41" />
+                <path d="m17.66 17.66 1.41 1.41" />
+                <path d="M2 12h2" />
+                <path d="M20 12h2" />
+                <path d="m6.34 17.66-1.41 1.41" />
+                <path d="m19.07 4.93-1.41 1.41" />
+              </svg>
+              <!-- Moon icon for light mode -->
+              <svg
+                id="moon-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-6 h-6 text-white block"
+              >
+                <path
+                  d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"
+                />
+              </svg>
+            </button>
+          </li>
           <li>
             <a
               href="./destinations.html"
@@ -81,6 +132,55 @@
             <!-- For X button on mobile menu -->
             &times;
           </button>
+          <!-- Mobile Theme Toggle -->
+          <div class="flex items-center space-x-2">
+            <span class="text-xl">Theme</span>
+            <button
+              id="mobile-theme-toggle"
+              class="flex items-center justify-center rounded-full p-2 transition-colors"
+            >
+              <!-- Sun icon for dark mode -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-6 h-6 text-yellow-300 hidden"
+              >
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2" />
+                <path d="M12 20v2" />
+                <path d="m4.93 4.93 1.41 1.41" />
+                <path d="m17.66 17.66 1.41 1.41" />
+                <path d="M2 12h2" />
+                <path d="M20 12h2" />
+                <path d="m6.34 17.66-1.41 1.41" />
+                <path d="m19.07 4.93-1.41 1.41" />
+              </svg>
+              <!-- Moon icon for light mode -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-6 h-6 text-white block"
+              >
+                <path
+                  d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"
+                />
+              </svg>
+            </button>
+          </div>
           <a
             href="./destinations.html"
             class="hover:text-gray-300 transition-colors"
@@ -585,6 +685,74 @@
           behavior: "smooth",
         });
       });
+
+      // Theme toggle functionality
+      const themeToggleBtn = document.getElementById("theme-toggle");
+      const mobileThemeToggleBtn = document.getElementById(
+        "mobile-theme-toggle"
+      );
+      const sunIcon = document.getElementById("sun-icon");
+      const moonIcon = document.getElementById("moon-icon");
+
+      // Check for saved theme preference or use the system preference
+      if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+        updateIcons(true);
+      } else {
+        document.documentElement.classList.remove("dark");
+        updateIcons(false);
+      }
+
+      // Function to toggle theme
+      function toggleTheme() {
+        const isDark = document.documentElement.classList.toggle("dark");
+        localStorage.theme = isDark ? "dark" : "light";
+        updateIcons(isDark);
+      }
+
+      // Function to update icons in both mobile and desktop toggles
+      function updateIcons(isDark) {
+        // Update desktop toggle icons
+        if (isDark) {
+          document
+            .querySelectorAll("#theme-toggle svg, #mobile-theme-toggle svg")
+            .forEach((icon) => {
+              if (
+                icon.id === "sun-icon" ||
+                icon.classList.contains("text-yellow-300")
+              ) {
+                icon.classList.remove("hidden");
+                icon.classList.add("block");
+              } else {
+                icon.classList.add("hidden");
+                icon.classList.remove("block");
+              }
+            });
+        } else {
+          document
+            .querySelectorAll("#theme-toggle svg, #mobile-theme-toggle svg")
+            .forEach((icon) => {
+              if (
+                icon.id === "moon-icon" ||
+                icon.classList.contains("text-white")
+              ) {
+                icon.classList.remove("hidden");
+                icon.classList.add("block");
+              } else {
+                icon.classList.add("hidden");
+                icon.classList.remove("block");
+              }
+            });
+        }
+      }
+
+      // Add event listeners to both toggle buttons
+      themeToggleBtn.addEventListener("click", toggleTheme);
+      mobileThemeToggleBtn.addEventListener("click", toggleTheme);
     </script>
   </body>
 </html>
