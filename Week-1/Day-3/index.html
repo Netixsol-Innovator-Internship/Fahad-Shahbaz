@@ -7,17 +7,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Imperial+Script&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="icon" href="./images/travel.ico" type="image/x-icon" />
     <title>Explore Saudia Arabia - Netixsol Task</title>
   </head>
-  <body class="bg-black text-white">
+  <body class="bg-black text-white font-['Poppins']">
     <!-- Hero Section with Navbar -->
     <section
-      class="min-h-screen flex space-y-5 justify-between flex-col bg-[url('./images/hero-img.png')] bg-cover bg-center"
+      class="relative min-h-screen flex justify-between flex-col bg-[url('./images/hero-img.png')] bg-cover bg-center"
     >
       <!-- Navbar -->
       <nav
@@ -35,12 +35,16 @@
           class="hidden md:flex space-x-8 lg:space-x-14 xl:space-x-16 text-xl lg:text-2xl font-semibold"
         >
           <li>
-            <a href="#" class="hover:text-gray-300 transition-colors"
+            <a
+              href="./destinations.html"
+              class="hover:text-gray-300 transition-colors"
               >Destinations</a
             >
           </li>
           <li>
-            <a href="#" class="hover:text-gray-300 transition-colors"
+            <a
+              href="./about-us.html"
+              class="hover:text-gray-300 transition-colors"
               >Members</a
             >
           </li>
@@ -86,7 +90,9 @@
       </div>
 
       <!-- Hero Content -->
-      <div class="flex flex-col items-center justify-center text-center px-4">
+      <div
+        class="flex flex-col items-center justify-center text-center px-4 py-8"
+      >
         <h1
           class="font-extrabold leading-[1.15] text-white"
           style="font-size: clamp(3rem, 10vw, 6rem)"
@@ -94,7 +100,7 @@
           Explore<br />Saudi Arabia
         </h1>
         <p
-          class="mt-1 max-w-xl text-white leading-tight"
+          class="mt-4 max-w-xl text-white leading-tight"
           style="font-size: clamp(1.125rem, 2.5vw, 1.5rem)"
         >
           Saudi Arabia is rich in heritage and history. The country is home to
@@ -128,7 +134,7 @@
         <img
           src="./images/overlay.svg"
           alt="Overlay"
-          class="w-full h-auto opacity-70"
+          class="w-full h-auto opacity-70 block"
         />
       </div>
     </section>
@@ -167,18 +173,295 @@
       </div>
     </section>
 
-    <!-- Grid Section -->
-    <section>Grid Section</section>
+    <!-- Cards Grid Section -->
+    <section class="flex items-center flex-col w-full space-y-10 py-10">
+      <!-- Heading div -->
+      <div class="text-center space-y-2">
+        <h1 class="text-3xl font-bold">Best Destinations</h1>
+        <p class="text-sm md:text-lg">
+          Explore the enhancing landscapes of saudia Arabia, from <br />the
+          breathtaking deserts to the stunning coastal shores.
+        </p>
+      </div>
+      <!-- Div for grid having six cards -->
+      <div class="w-full flex justify-center items-center flex-wrap gap-3 p-4">
+        <!-- Div 1 for 1 and 2 card -->
+        <div class="space-y-3">
+          <!-- Card one -->
+          <div class="relative group">
+            <img
+              src="./images/grid-one.png"
+              1
+              alt="Hisma desert"
+              class="w-full h-full object-cover"
+            />
+            <div
+              class="absolute inset-0 p-6 py-14 flex flex-col justify-between"
+            >
+              <div>
+                <h3 class="text-white font-extrabold text-4xl">Hisma Desert</h3>
+                <p class="text-white text-base mt-1 leading-tight">
+                  The hisma desert is a true marvel of <br />
+                  nature, and several desert oasis.
+                </p>
+              </div>
+              <div class="pt-2 flex items-center gap-3">
+                <img src="./images/arab-man.png" alt="" class="rounded-full" />
+                <div>
+                  <p class="text-white text-xl font-bold">Wazeem Al Mulk</p>
+                  <p>Traveler</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- card 2 -->
+          <div class="relative">
+            <img
+              src="./images/grid-two.png"
+              alt="Tabuk image"
+              class="bg-center bg-cover"
+            />
+
+            <div
+              class="absolute inset-0 p-6 py-14 flex flex-col justify-between"
+            >
+              <div>
+                <h3 class="text-white font-extrabold text-4xl">
+                  The best of Tabuk
+                </h3>
+                <p class="text-white text-base mt-1 leading-tight">
+                  Tabuk also spelled Tabouk, the capital city of the <br />
+                  Tabuk Region in northwestern Saudi Arabia.
+                </p>
+              </div>
+              <div class="pt-2 flex items-center gap-3">
+                <img src="./images/pie.png" alt="" class="rounded-full" />
+                <div>
+                  <p class="text-white text-xl font-bold">Jonatan Pie</p>
+                  <p>Influencer</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Div 2 for 3 and 4 card -->
+        <div class="space-y-3">
+          <!-- card 3 -->
+          <div class="relative">
+            <img
+              src="./images/grid-three.png"
+              alt="World trade center, Riyadh"
+            />
+            <div
+              class="absolute inset-0 p-6 py-10 flex flex-col justify-between"
+            >
+              <div>
+                <h3 class="text-white font-extrabold text-4xl">
+                  Kafd World Trade <br />
+                  Centre, Riyadh.
+                </h3>
+                <p class="text-white text-base mt-1 leading-tight">
+                  The Towering Structure stands as a <br />
+                  testament to Saudi Arabia’s vision for <br />
+                  a thriving business hub.
+                </p>
+              </div>
+              <div class="pt-2 flex items-center gap-3">
+                <img src="./images/benji.png" alt="" class="rounded-full" />
+                <div>
+                  <p class="text-white text-xl font-bold">Benjamin Voras</p>
+                  <p>Traveler</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- card 4 -->
+          <div class="relative">
+            <img src="./images/grid-four.png" alt="Red Sea Coast" />
+            <div
+              class="absolute inset-0 p-6 py-10 flex flex-col justify-between"
+            >
+              <div>
+                <h3 class="text-white font-extrabold text-4xl">AIUIa</h3>
+                <p class="text-white text-base mt-1 leading-tight">
+                  AIUIa is located deep in the desert in <br />
+                  the northwest of Saudi Arabia
+                </p>
+              </div>
+              <div class="pt-2 flex items-center gap-3">
+                <img
+                  src="./images/parker.png"
+                  alt="John's image"
+                  class="rounded-full"
+                />
+                <div>
+                  <p class="text-white text-xl font-bold">Garrett Parker</p>
+                  <p>Traveler</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Div 3 for 5 and 6 card -->
+        <div class="space-y-3">
+          <!-- card 5 -->
+          <div class="relative">
+            <img src="./images/grid-five.png" alt="Al Ula heritage site" />
+            <div
+              class="absolute inset-0 p-6 py-10 flex flex-col justify-between"
+            >
+              <div>
+                <h3 class="text-white font-extrabold text-4xl">
+                  Al Qarah Mountain
+                </h3>
+                <p class="text-white text-base mt-1 leading-tight">
+                  The Mountain’s distractive rocks <br />
+                  formations inviting adventures to <br />
+                  explore its hidden treasure.
+                </p>
+              </div>
+              <div class="pt-2 flex items-center gap-3">
+                <img src="./images/john.png" alt="" class="rounded-full" />
+                <div>
+                  <p class="text-white text-xl font-bold">John Towner</p>
+                  <p>Traveler</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- card 6 -->
+          <div class="relative">
+            <img src="./images/grid-six.png" alt="Jeddah old town" />
+            <div
+              class="absolute inset-0 p-6 py-10 flex flex-col justify-between"
+            >
+              <div>
+                <h3 class="text-white font-extrabold text-4xl">
+                  The best things <br />
+                  To do in Taif
+                </h3>
+                <p class="text-white text-base mt-1 leading-tight">
+                  Taif is a city and governorate in the Makkah <br />
+                  Region of Saudia Arabia.
+                </p>
+              </div>
+              <div class="pt-2 flex items-center gap-3">
+                <img src="./images/cristina.png" alt="" class="rounded-full" />
+                <div>
+                  <p class="text-white text-xl font-bold">Cristina Gottardi</p>
+                  <p>Traveler</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-full flex justify-center md:justify-end px-20">
+        <h1 class="text-2xl font-semibold cursor-pointer hover:underline">See More</h1>
+      </div>
+    </section>
 
     <!-- Desert Section -->
-    <section>Desert Section</section>
+    <section
+      class="relative min-h-screen bg-[url('./images/desert.png')] bg-cover bg-center"
+    >
+      <!-- Top Overlay SVG -->
+      <div class="absolute top-0 left-0 w-full z-10 rotate-180">
+        <img
+          src="./images/overlay.svg"
+          alt="Top Overlay"
+          class="w-full h-auto opacity-70 block"
+        />
+      </div>
+
+      <!-- Content Container -->
+      <div class="relative z-20 min-h-screen flex flex-col justify-between">
+        <div class="w-full flex items-center justify-end px-10 pt-6">
+          <!-- <h2 class="text-2xl font-semibold underline"></h2> -->
+        </div>
+
+        <!-- Bottom Div for Name and image and Detail -->
+        <div class="w-[90%] mx-auto mb-20">
+          <div
+            class="flex flex-col md:flex-row md:items-center gap-4 md:justify-between mb-6"
+          >
+            <div>
+              <!-- Left heading text -->
+              <h2 class="font-['Imperial_Script'] text-7xl">Hisma</h2>
+              <h2 class="text-7xl font-semibold">Desert</h2>
+            </div>
+            <div class="flex items-center gap-2">
+              <img
+                src="./images/arab-man.png"
+                alt="Arab Man"
+                class="rounded-full"
+              />
+              <div>
+                <p class="font-semibold">Wazeem Al Mulk</p>
+                <p>Traveler</p>
+              </div>
+            </div>
+          </div>
+          <!-- Div for Detail -->
+          <div>
+            <p class="text-sm md:text-lg lg:text-xl xl:text-2xl leading-relaxed"></p>
+              The Hisma Desert in Saudi Arabia is a realm of ethereal beauty
+              that captivates the senses. Its vast expanse of golden sand dunes,
+              sculpted by the winds of time, creates a mesmerizing landscape
+              that stretches as far as the eye can see. As the sun sets,
+              painting the sky with vivid hues.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Overlay SVG -->
+      <div class="absolute bottom-0 left-0 w-full z-10">
+        <img
+          src="./images/overlay.svg"
+          alt="Bottom Overlay"
+          class="w-full h-auto opacity-70 block"
+          style="display: block; margin: 0; padding: 0"
+        />
+      </div>
+    </section>
 
     <!-- Explore Section -->
-    <section>Explore Section</section>
+    <section class="md:min-h-screen w-full flex items-center justify-center relative z-30 mt-8 md:mt-0">
+      <div class="relative w-[90%] mx-auto">
+      <img
+        src="./images/explore-saudi.png"
+        alt="explore saudi img"
+        class="bg-center bg-cover w-full min-h-[300px] sm:min-h-[400px] object-cover"
+      />
+      <!-- Overlay Content -->
+      <div
+        class="absolute inset-0 flex flex-col sm:flex-row items-center justify-center sm:justify-between px-8 md:px-12 lg:px-16 gap-6 sm:gap-0"
+      >
+        <div class="text-white text-center sm:text-left">
+        <h2
+          class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+        >
+          Explore Saudi<br />
+          Arabia
+        </h2>
+        </div>
+        <div
+        class="text-white text-2xl md:text-3xl lg:text-4xl border-2 border-white rounded-full w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center flex-shrink-0"
+        >
+        <img src="./images/arrow.svg" alt="arrow icon" />
+        </div>
+      </div>
+      </div>
+    </section>
 
     <!-- Footer Section -->
     <footer
-      class="flex flex-col lg:flex-row items-center lg:items-start text-center lg:text-left justify-center lg:justify-between gap-12 lg:gap-16 px-6 sm:px-12 md:px-16 lg:px-24 mt-10 bg-[#222222] py-16"
+      class="flex flex-col lg:flex-row items-center lg:items-start text-center lg:text-left justify-center lg:justify-between gap-12 lg:gap-16 px-6 sm:px-12 md:px-16 lg:px-24 mt-8 bg-[#222222] py-16"
     >
       <!-- left div for logo -->
       <div>
