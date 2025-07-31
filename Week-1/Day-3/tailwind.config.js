@@ -4,6 +4,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Poppins", "sans-serif"],
+        "imperial-script": ["Imperial Script", "cursive"],
       },
     },
   },
