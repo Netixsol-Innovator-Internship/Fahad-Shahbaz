@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Imperial+Script&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="icon" href="./images/travel.ico" type="image/x-icon" />
+    <title>Destinations</title>
+  </head>
+  <body class="bg-black text-white font-['Poppins']">
+    <!-- Hero Section with Navbar ✅-->
+    <section
+      class="relative min-h-screen flex flex-col bg-[url('./images/neom.png')] bg-cover bg-center"
+    >
+      <!-- Navbar -->
+      <nav
+        class="flex justify-between items-center px-4 sm:px-8 md:px-12 lg:px-20 py-4 text-white mb-40 md:mb-20"
+      >
+        <!-- logo -->
+        <img
+          src="./images/saudi-logo.svg"
+          alt="Logo"
+          class="size-32 sm:size-36 md:size-44 lg:size-48"
+        />
+
+        <!-- Desktop Menu -->
+        <ul
+          class="hidden md:flex space-x-8 lg:space-x-14 xl:space-x-16 text-xl lg:text-2xl font-semibold items-center"
+        >
+          <li>
+            <a
+              href="./destinations.html"
+              class="hover:text-gray-300 transition-colors"
+              >Destinations</a
+            >
+          </li>
+          <li>
+            <a
+              href="./about-us.html"
+              class="hover:text-gray-300 transition-colors"
+              >Members</a
+            >
+          </li>
+          <li>
+            <a href="#" class="hover:text-gray-300 transition-colors"
+              >Gallery</a
+            >
+          </li>
+        </ul>
+
+        <!-- Mobile Menu Button -->
+        <button
+          class="md:hidden flex flex-col space-y-1 p-2 cursor-pointer"
+          id="mobile-menu-btn"
+        >
+          <span class="w-6 h-0.5 bg-white block"></span>
+          <span class="w-6 h-0.5 bg-white block"></span>
+          <span class="w-6 h-0.5 bg-white block"></span>
+        </button>
+      </nav>
+
+      <!-- Mobile Menu Overlay -->
+      <div
+        class="md:hidden fixed inset-0 bg-black bg-opacity-90 z-50 hidden opacity-0 transition-opacity duration-300 ease-in-out"
+        id="mobile-menu"
+      >
+        <div
+          class="flex flex-col items-center justify-center h-full space-y-8 text-white text-2xl font-semibold"
+        >
+          <button
+            class="absolute top-8 right-8 text-3xl cursor-pointer hover:text-gray-300 transition-colors"
+            id="close-menu"
+          >
+            <!-- For X button on mobile menu -->
+            &times;
+          </button>
+          <a
+            href="./destinations.html"
+            class="hover:text-gray-300 transition-colors"
+            >Destinations</a
+          >
+          <a
+            href="./about-us.html"
+            class="hover:text-gray-300 transition-colors"
+            >Members</a
+          >
+          <a href="#" class="hover:text-gray-300 transition-colors">Gallery</a>
+        </div>
+      </div>
+
+      <!-- Hero Content -->
+      <div
+        class="flex flex-col items-center justify-center text-center px-4 py-8"
+      >
+        <h1
+          class="font-extrabold leading-[1.15] text-white"
+          style="font-size: clamp(3rem, 10vw, 6rem)"
+        >
+          Destinations
+        </h1>
+        <p
+          class="mt-4 max-w-xl text-white leading-tight"
+          style="font-size: clamp(1.125rem, 2.5vw, 1.5rem)"
+        >
+          Saudi Arabia is rich in heritage and history. The country is home to
+          hundreds of important sites.
+        </p>
+      </div>
+
+      <!-- Overlay SVG -->
+      <div class="absolute bottom-0 left-0 w-full z-10">
+        <img
+          src="./images/overlay.svg"
+          alt="Overlay"
+          class="w-full h-auto opacity-70 block"
+        />
+      </div>
+    </section>
+
+    <!-- Cards Grid Section -->
+    <section class="flex items-center flex-col w-full space-y-10 py-10">
+      <!-- Heading div -->
+      <div class="text-center space-y-2">
+        <h1 class="text-3xl font-bold">Best Destinations</h1>
+        <p class="text-sm md:text-lg">
+          Explore the enhancing landscapes of saudia Arabia, from <br />the
+          breathtaking deserts to the stunning coastal shores.
+        </p>
+      </div>
+      <!-- Div for grid having six cards -->
+      <div class="w-full flex justify-center items-center flex-wrap gap-3 p-4">
+        <!-- Div 1 for 1 and 2 card -->
+        <div class="space-y-3">
+          <!-- Card one -->
+          <div class="relative group cursor-pointer">
+            <img
+              src="./images/grid-one.png"
+              1
+              alt="Hisma desert"
+              class="w-full h-full object-cover"
+            />
+            <div
+              class="absolute inset-0 p-6 py-14 flex flex-col justify-between transition-transform duration-300 ease-in-out group-hover:-translate-y-2"
+            >
+              <div>
+                <h3 class="text-white font-extrabold text-4xl">Hisma Desert</h3>
+                <p class="text-white text-base mt-1 leading-tight">
+                  The hisma desert is a true marvel of <br />
+                  nature, and several desert oasis.
+                </p>
+              </div>
+              <div class="pt-2 flex items-center gap-3">
+                <img src="./images/arab-man.png" alt="" class="rounded-full" />
+                <div>
+                  <p class="text-white text-xl font-bold">Wazeem Al Mulk</p>
+                  <p>Traveler</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- card 2 -->
+          <div class="relative cursor-pointer group">
+            <img
+              src="./images/grid-two.png"
+              alt="Tabuk image"
+              class="bg-center bg-cover"
+            />
+
+            <div
+              class="absolute inset-0 p-6 py-14 flex flex-col justify-between transition-transform duration-300 ease-in-out group-hover:translate-y-2"
+            >
+              <div>
+                <h3 class="text-white font-extrabold text-4xl">
+                  The best of Tabuk
+                </h3>
+                <p class="text-white text-base mt-1 leading-tight">
+                  Tabuk also spelled Tabouk, the capital city of the <br />
+                  Tabuk Region in northwestern Saudi Arabia.
+                </p>
+              </div>
+              <div class="pt-2 flex items-center gap-3">
+                <img src="./images/pie.png" alt="" class="rounded-full" />
+                <div>
+                  <p class="text-white text-xl font-bold">Jonatan Pie</p>
+                  <p>Influencer</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Div 2 for 3 and 4 card -->
+        <div class="space-y-3">
+          <!-- card 3 -->
+          <div class="relative cursor-pointer group">
+            <img
+              src="./images/grid-three.png"
+              alt="World trade center, Riyadh"
+            />
+            <div
+              class="absolute inset-0 p-6 py-10 flex flex-col justify-between transition-transform duration-300 ease-in-out group-hover:-translate-y-2"
+            >
+              <div>
+                <h3 class="text-white font-extrabold text-4xl">
+                  Kafd World Trade <br />
+                  Centre, Riyadh.
+                </h3>
+                <p class="text-white text-base mt-1 leading-tight">
+                  The Towering Structure stands as a <br />
+                  testament to Saudi Arabia’s vision for <br />
+                  a thriving business hub.
+                </p>
+              </div>
+              <div class="pt-2 flex items-center gap-3">
+                <img src="./images/benji.png" alt="" class="rounded-full" />
+                <div>
+                  <p class="text-white text-xl font-bold">Benjamin Voras</p>
+                  <p>Traveler</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- card 4 -->
+          <div class="relative cursor-pointer group">
+            <img src="./images/grid-four.png" alt="Red Sea Coast" />
+            <div
+              class="absolute inset-0 p-6 py-10 flex flex-col justify-between transition-transform duration-300 ease-in-out group-hover:translate-y-2"
+            >
+              <div>
+                <h3 class="text-white font-extrabold text-4xl">AIUIa</h3>
+                <p class="text-white text-base mt-1 leading-tight">
+                  AIUIa is located deep in the desert in <br />
+                  the northwest of Saudi Arabia
+                </p>
+              </div>
+              <div class="pt-2 flex items-center gap-3">
+                <img
+                  src="./images/parker.png"
+                  alt="John's image"
+                  class="rounded-full"
+                />
+                <div>
+                  <p class="text-white text-xl font-bold">Garrett Parker</p>
+                  <p>Traveler</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Div 3 for 5 and 6 card -->
+        <div class="space-y-3">
+          <!-- card 5 -->
+          <div class="relative cursor-pointer group">
+            <img src="./images/grid-five.png" alt="Al Ula heritage site" />
+            <div
+              class="absolute inset-0 p-6 py-10 flex flex-col justify-between transition-transform duration-300 ease-in-out group-hover:-translate-y-2"
+            >
+              <div>
+                <h3 class="text-white font-extrabold text-4xl">
+                  Al Qarah Mountain
+                </h3>
+                <p class="text-white text-base mt-1 leading-tight">
+                  The Mountain’s distractive rocks <br />
+                  formations inviting adventures to <br />
+                  explore its hidden treasure.
+                </p>
+              </div>
+              <div class="pt-2 flex items-center gap-3">
+                <img src="./images/john.png" alt="" class="rounded-full" />
+                <div>
+                  <p class="text-white text-xl font-bold">John Towner</p>
+                  <p>Traveler</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- card 6 -->
+          <div class="relative cursor-pointer group">
+            <img src="./images/grid-six.png" alt="Jeddah old town" />
+            <div
+              class="absolute inset-0 p-6 py-10 flex flex-col justify-between transition-transform duration-300 ease-in-out group-hover:translate-y-2"
+            >
+              <div>
+                <h3 class="text-white font-extrabold text-4xl">
+                  The best things <br />
+                  To do in Taif
+                </h3>
+                <p class="text-white text-base mt-1 leading-tight">
+                  Taif is a city and governorate in the Makkah <br />
+                  Region of Saudia Arabia.
+                </p>
+              </div>
+              <div class="pt-2 flex items-center gap-3">
+                <img src="./images/cristina.png" alt="" class="rounded-full" />
+                <div>
+                  <p class="text-white text-xl font-bold">Cristina Gottardi</p>
+                  <p>Traveler</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-full flex justify-center md:justify-end px-20">
+        <h1 class="text-2xl font-semibold cursor-pointer hover:underline">
+          See More
+        </h1>
+      </div>
+    </section>
+
+    <!-- Whatsapp section -->
+    <section class="w-full flex justify-center items-center">
+      <div class="w-[90%] bg-[#047F01] p-14 rounded-full flex justify-between items-center ">
+        <h1>Contact us on Whatsapp</h1>
+        <button class="bg-white rounded-md text-[#047F01] px-10 py-4">Start Chat</button>
+      </div>
+    </section>
+
+    <!-- Explore Section -->
+    <section
+      class="md:min-h-screen w-full flex items-center justify-center relative z-30 mt-8 md:mt-0"
+    >
+      <div class="relative w-[90%] mx-auto">
+        <img
+          src="./images/neom-pool.png"
+          alt="explore saudi img"
+          class="bg-center bg-cover w-full min-h-[300px] sm:min-h-[400px] object-cover"
+        />
+        <!-- Overlay Content -->
+        <div
+          class="absolute inset-0 flex flex-col sm:flex-row items-center justify-center sm:justify-between px-8 md:px-12 lg:px-16 gap-6 sm:gap-0"
+        >
+          <div class="text-white text-center sm:text-left">
+            <h2
+              class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+            >
+              Made to Change<br />
+              NEOM
+            </h2>
+          </div>
+          <div
+            class="text-white text-2xl md:text-3xl lg:text-4xl border-2 border-white rounded-full w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center flex-shrink-0 cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110"
+          >
+            <img src="./images/arrow.svg" alt="arrow icon" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer
+      class="relative flex flex-col lg:flex-row items-center lg:items-start text-center lg:text-left justify-center lg:justify-between gap-12 lg:gap-16 px-6 sm:px-12 md:px-16 lg:px-24 mt-8 bg-[#222222] py-16"
+    >
+      <!-- Back to Top Button -->
+      <button
+        id="back-to-top"
+        class="absolute top-8 right-8 bg-white text-black rounded-full w-12 h-12 flex items-center justify-center shadow-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-110 cursor-pointer"
+        title="Back to Top"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 10l7-7m0 0l7 7m-7-7v18"
+          ></path>
+        </svg>
+      </button>
+
+      <!-- left div for logo -->
+      <div>
+        <img src="./images/saudi-logo.svg" alt="Saudi logo" class="w-48" />
+      </div>
+      <!-- right div for links -->
+      <div
+        class="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left justify-between gap-10 sm:gap-12 md:gap-16"
+      >
+        <!-- About us -->
+        <div class="space-y-3">
+          <p class="text-2xl font-semibold">About</p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            About us
+          </p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            Features
+          </p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            News & Blogs
+          </p>
+        </div>
+        <!-- Contact -->
+        <div class="space-y-3">
+          <p class="text-2xl font-semibold">Contact</p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            Instagram
+          </p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            Twitter
+          </p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            Facebook
+          </p>
+        </div>
+        <!-- Support -->
+        <div class="space-y-3">
+          <p class="text-2xl font-semibold">Support</p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            FAQs
+          </p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            Support Centre
+          </p>
+          <p class="cursor-pointer hover:text-gray-300 transition-colors">
+            Feedback
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
