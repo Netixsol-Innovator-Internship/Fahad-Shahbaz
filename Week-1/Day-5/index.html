@@ -10,27 +10,39 @@
     <!-- Container for overall layout -->
     <div class="w-full max-w-[1640px] mx-auto">
       <!-- Navbar -->
-      <header
-        class="bg-[#191919] w-full px-4 md:px-16 py-4 relative"
-      >
+      <header class="bg-[#191919] w-full px-4 md:px-16 py-4 relative">
         <div class="flex items-center justify-between">
           <!-- Logo -->
           <div>
-            <h1 class="text-white font-semibold text-xl md:text-2xl">LogoHere</h1>
+            <h1 class="text-white font-semibold text-xl md:text-2xl">
+              LogoHere
+            </h1>
           </div>
 
           <!-- Desktop Navigation -->
           <nav class="hidden lg:flex space-x-14 text-white items-center">
-            <a href="#" class="text-base font-medium hover:text-gray-400 transition-colors">
+            <a
+              href="#"
+              class="text-base font-medium hover:text-gray-400 transition-colors"
+            >
               About
             </a>
-            <a href="#" class="text-base font-medium hover:text-gray-400 transition-colors">
+            <a
+              href="#"
+              class="text-base font-medium hover:text-gray-400 transition-colors"
+            >
               Collection
             </a>
-            <a href="#" class="text-base font-medium hover:text-gray-400 transition-colors">
+            <a
+              href="#"
+              class="text-base font-medium hover:text-gray-400 transition-colors"
+            >
               Creator
             </a>
-            <a href="#" class="text-base font-medium hover:text-gray-400 transition-colors">
+            <a
+              href="#"
+              class="text-base font-medium hover:text-gray-400 transition-colors"
+            >
               Roadmap
             </a>
             <button
@@ -152,14 +164,14 @@
               class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-10"
             >
               <button
-              class="bg-[#DA8F4D] hover:bg-[#b97538] px-6 sm:px-4 md:px-6 py-2 sm:py-1.5 md:py-2 rounded-lg md:rounded-xl border border-white font-semibold text-sm md:text-base whitespace-nowrap w-full sm:w-auto"
+                class="bg-[#DA8F4D] hover:bg-[#b97538] px-6 sm:px-4 md:px-6 py-2 sm:py-1.5 md:py-2 rounded-lg md:rounded-xl border border-white font-semibold text-sm md:text-base whitespace-nowrap w-full sm:w-auto"
               >
-              Get Whitelist
+                Get Whitelist
               </button>
               <button
-              class="hover:bg-[#b97538] px-6 sm:px-4 md:px-6 py-2 sm:py-1.5 md:py-2 rounded-lg md:rounded-xl border border-white font-semibold text-sm md:text-base whitespace-nowrap w-full sm:w-auto"
+                class="hover:bg-[#b97538] px-6 sm:px-4 md:px-6 py-2 sm:py-1.5 md:py-2 rounded-lg md:rounded-xl border border-white font-semibold text-sm md:text-base whitespace-nowrap w-full sm:w-auto"
               >
-              Contact Us
+                Contact Us
               </button>
             </div>
             <div
@@ -410,7 +422,6 @@
                 />
               </div>
               <div class="mt-auto text-center">
-                <h3 class="text-xl font-bold">Nfts Collections</h3>
                 <p class="text-sm text-gray-300 text-left mt-1">
                   Created by
                   <span class="text-amber-500 font-semibold">James Watson</span>
@@ -650,6 +661,259 @@
         </div>
       </section>
 
+      <!-- Road Map -->
+      <section
+        class="relative text-white py-16 px-4 bg-[url('./assets/hero.png')] bg-cover bg-center"
+      >
+        <!-- Section Header -->
+        <div class="relative z-10 text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold">Road Map</h2>
+        </div>
+
+        <!-- Desktop Timeline Container (hidden on mobile) -->
+        <div class="relative z-10 max-w-6xl mx-auto hidden md:block">
+          <!-- Timeline Line -->
+          <div
+            class="absolute left-1/2 top-24 bottom-24 w-0.5 bg-gradient-to-b from-amber-400 to-amber-600 transform -translate-x-1/2"
+          ></div>
+
+          <!-- January - Brief (Left Side) -->
+          <div class="relative flex items-center mb-24">
+            <!-- Content Box (Left) -->
+            <div class="w-1/2 pr-12 flex justify-end">
+              <div
+                class="bg-black bg-opacity-70 border border-amber-500/30 rounded-lg p-6 max-w-md backdrop-blur-sm"
+              >
+                <div class="text-white text-center text-xl mb-2">January</div>
+                <h3 class="text-2xl font-bold mb-3">Brief</h3>
+                <p class="text-gray-300 text-sm">
+                  Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae
+                  non semper quis. Morbi sed aliquet donec facilisis. Senectus
+                  eget.
+                </p>
+              </div>
+            </div>
+
+            <!-- Timeline Point -->
+            <div
+              class="absolute left-1/2 w-4 h-4 bg-white rounded-full transform -translate-x-1/2 border-4 border-amber-500"
+            ></div>
+
+            <!-- Empty Right Side -->
+            <div class="w-1/2"></div>
+          </div>
+
+          <!-- February - Research (Right Side) -->
+          <div class="relative flex items-center mb-24">
+            <!-- Empty Left Side -->
+            <div class="w-1/2"></div>
+
+            <!-- Timeline Point -->
+            <div
+              class="absolute left-1/2 w-4 h-4 bg-amber-500 rounded-full transform -translate-x-1/2 border-4 border-amber-600"
+            ></div>
+
+            <!-- Content Box (Right) -->
+            <div class="w-1/2 pl-12">
+              <div
+                class="bg-black bg-opacity-70 border border-amber-500/30 rounded-lg p-6 max-w-md backdrop-blur-sm"
+              >
+                <div class="text-white text-center font-bold text-xl mb-2">
+                  February
+                </div>
+                <h3 class="text-2xl font-bold mb-3">Research</h3>
+                <p class="text-gray-300 text-sm">
+                  Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae
+                  non semper quis. Morbi sed aliquet donec facilisis. Senectus
+                  eget.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- March - Discover (Left Side) -->
+          <div class="relative flex items-center mb-24">
+            <!-- Content Box (Left) -->
+            <div class="w-1/2 pr-12 flex justify-end">
+              <div
+                class="bg-black bg-opacity-70 border border-amber-500/30 rounded-lg p-6 max-w-md backdrop-blur-sm"
+              >
+                <div class="text-white text-center text-xl mb-2">March</div>
+                <h3 class="text-2xl font-bold mb-3">Discover</h3>
+                <p class="text-gray-300 text-sm">
+                  Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae
+                  non semper quis. Morbi sed aliquet donec facilisis. Senectus
+                  eget.
+                </p>
+              </div>
+            </div>
+
+            <!-- Timeline Point -->
+            <div
+              class="absolute left-1/2 w-4 h-4 bg-white rounded-full transform -translate-x-1/2 border-4 border-amber-500"
+            ></div>
+
+            <!-- Empty Right Side -->
+            <div class="w-1/2"></div>
+          </div>
+
+          <!-- April - Design (Right Side) -->
+          <div class="relative flex items-center mb-24">
+            <!-- Empty Left Side -->
+            <div class="w-1/2"></div>
+
+            <!-- Timeline Point -->
+            <div
+              class="absolute left-1/2 w-4 h-4 bg-amber-500 rounded-full transform -translate-x-1/2 border-4 border-amber-600"
+            ></div>
+
+            <!-- Content Box (Right) -->
+            <div class="w-1/2 pl-12">
+              <div
+                class="bg-black bg-opacity-70 border border-amber-500/30 rounded-lg p-6 max-w-md backdrop-blur-sm"
+              >
+                <div class="text-white text-center text-xl mb-2">April</div>
+                <h3 class="text-2xl font-bold mb-3">Design</h3>
+                <p class="text-gray-300 text-sm">
+                  Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae
+                  non semper quis. Morbi sed aliquet donec facilisis. Senectus
+                  eget.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- May - Testing (Left Side) -->
+          <div class="relative flex items-center mb-24">
+            <!-- Content Box (Left) -->
+            <div class="w-1/2 pr-12 flex justify-end">
+              <div
+                class="bg-black bg-opacity-70 border border-amber-500/30 rounded-lg p-6 max-w-md backdrop-blur-sm"
+              >
+                <div class="text-white text-center text-xl mb-2">May</div>
+                <h3 class="text-2xl font-bold mb-3">Testing</h3>
+                <p class="text-gray-300 text-sm">
+                  Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae
+                  non semper quis. Morbi sed aliquet donec facilisis. Senectus
+                  eget.
+                </p>
+              </div>
+            </div>
+
+            <!-- Timeline Point -->
+            <div
+              class="absolute left-1/2 w-4 h-4 bg-white rounded-full transform -translate-x-1/2 border-4 border-amber-500"
+            ></div>
+
+            <!-- Empty Right Side -->
+            <div class="w-1/2"></div>
+          </div>
+
+          <!-- June - Launch & Feedback (Right Side) -->
+          <div class="relative flex items-center">
+            <!-- Empty Left Side -->
+            <div class="w-1/2"></div>
+
+            <!-- Timeline Point -->
+            <div
+              class="absolute left-1/2 w-4 h-4 bg-amber-500 rounded-full transform -translate-x-1/2 border-4 border-amber-600"
+            ></div>
+
+            <!-- Content Box (Right) -->
+            <div class="w-1/2 pl-12">
+              <div
+                class="bg-black bg-opacity-70 border border-amber-500/30 rounded-lg p-6 max-w-md backdrop-blur-sm"
+              >
+                <div class="text-white text-center text-xl mb-2">June</div>
+                <h3 class="text-2xl font-bold mb-3">Launch & Feedback</h3>
+                <p class="text-gray-300 text-sm">
+                  Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae
+                  non semper quis. Morbi sed aliquet donec facilisis. Senectus
+                  eget.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile View (Complete with all months) -->
+        <div class="md:hidden relative z-10 space-y-6 max-w-md mx-auto">
+          <!-- January Card -->
+          <div
+            class="bg-black bg-opacity-70 border border-amber-500/30 rounded-lg p-6 backdrop-blur-sm"
+          >
+            <div class="text-white text-center text-xl mb-2">January</div>
+            <h3 class="text-2xl font-bold mb-3">Brief</h3>
+            <p class="text-gray-300 text-sm">
+              Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non
+              semper quis. Morbi sed aliquet donec facilisis. Senectus eget.
+            </p>
+          </div>
+
+          <!-- February Card -->
+          <div
+            class="bg-black bg-opacity-70 border border-amber-500/30 rounded-lg p-6 backdrop-blur-sm"
+          >
+            <div class="text-white text-center font-bold text-xl mb-2">
+              February
+            </div>
+            <h3 class="text-2xl font-bold mb-3">Research</h3>
+            <p class="text-gray-300 text-sm">
+              Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non
+              semper quis. Morbi sed aliquet donec facilisis. Senectus eget.
+            </p>
+          </div>
+
+          <!-- March Card -->
+          <div
+            class="bg-black bg-opacity-70 border border-amber-500/30 rounded-lg p-6 backdrop-blur-sm"
+          >
+            <div class="text-white text-center text-xl mb-2">March</div>
+            <h3 class="text-2xl font-bold mb-3">Discover</h3>
+            <p class="text-gray-300 text-sm">
+              Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non
+              semper quis. Morbi sed aliquet donec facilisis. Senectus eget.
+            </p>
+          </div>
+
+          <!-- April Card -->
+          <div
+            class="bg-black bg-opacity-70 border border-amber-500/30 rounded-lg p-6 backdrop-blur-sm"
+          >
+            <div class="text-white text-center text-xl mb-2">April</div>
+            <h3 class="text-2xl font-bold mb-3">Design</h3>
+            <p class="text-gray-300 text-sm">
+              Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non
+              semper quis. Morbi sed aliquet donec facilisis. Senectus eget.
+            </p>
+          </div>
+
+          <!-- May Card -->
+          <div
+            class="bg-black bg-opacity-70 border border-amber-500/30 rounded-lg p-6 backdrop-blur-sm"
+          >
+            <div class="text-white text-center text-xl mb-2">May</div>
+            <h3 class="text-2xl font-bold mb-3">Testing</h3>
+            <p class="text-gray-300 text-sm">
+              Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non
+              semper quis. Morbi sed aliquet donec facilisis. Senectus eget.
+            </p>
+          </div>
+
+          <!-- June Card -->
+          <div
+            class="bg-black bg-opacity-70 border border-amber-500/30 rounded-lg p-6 backdrop-blur-sm"
+          >
+            <div class="text-white text-center text-xl mb-2">June</div>
+            <h3 class="text-2xl font-bold mb-3">Launch & Feedback</h3>
+            <p class="text-gray-300 text-sm">
+              Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non
+              semper quis. Morbi sed aliquet donec facilisis. Senectus eget.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <!-- How it works section -->
       <section class="bg-black text-white py-16 px-4 md:px-8 lg:px-16">
         <!-- Section Header -->
@@ -801,52 +1065,60 @@
     <!-- JavaScript for Mobile Menu Toggle -->
     <script>
       // Get DOM elements
-      const mobileMenuButton = document.getElementById('mobile-menu-button');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const hamburgerIcon = document.getElementById('hamburger-icon');
-      const closeIcon = document.getElementById('close-icon');
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const hamburgerIcon = document.getElementById("hamburger-icon");
+      const closeIcon = document.getElementById("close-icon");
 
       // Toggle mobile menu function
       function toggleMobileMenu() {
-        const isHidden = mobileMenu.classList.contains('hidden');
-        
+        const isHidden = mobileMenu.classList.contains("hidden");
+
         if (isHidden) {
           // Show menu
-          mobileMenu.classList.remove('hidden');
-          hamburgerIcon.classList.add('hidden');
-          closeIcon.classList.remove('hidden');
-          mobileMenuButton.setAttribute('aria-expanded', 'true');
+          mobileMenu.classList.remove("hidden");
+          hamburgerIcon.classList.add("hidden");
+          closeIcon.classList.remove("hidden");
+          mobileMenuButton.setAttribute("aria-expanded", "true");
         } else {
           // Hide menu
-          mobileMenu.classList.add('hidden');
-          hamburgerIcon.classList.remove('hidden');
-          closeIcon.classList.add('hidden');
-          mobileMenuButton.setAttribute('aria-expanded', 'false');
+          mobileMenu.classList.add("hidden");
+          hamburgerIcon.classList.remove("hidden");
+          closeIcon.classList.add("hidden");
+          mobileMenuButton.setAttribute("aria-expanded", "false");
         }
       }
 
       // Add click event listener to mobile menu button
-      mobileMenuButton.addEventListener('click', toggleMobileMenu);
+      mobileMenuButton.addEventListener("click", toggleMobileMenu);
 
       // Close menu when clicking outside of it
-      document.addEventListener('click', function(event) {
-        const isClickInsideNav = mobileMenuButton.contains(event.target) || mobileMenu.contains(event.target);
-        
-        if (!isClickInsideNav && !mobileMenu.classList.contains('hidden')) {
+      document.addEventListener("click", function (event) {
+        const isClickInsideNav =
+          mobileMenuButton.contains(event.target) ||
+          mobileMenu.contains(event.target);
+
+        if (!isClickInsideNav && !mobileMenu.classList.contains("hidden")) {
           toggleMobileMenu();
         }
       });
 
       // Close menu on escape key press
-      document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+      document.addEventListener("keydown", function (event) {
+        if (
+          event.key === "Escape" &&
+          !mobileMenu.classList.contains("hidden")
+        ) {
           toggleMobileMenu();
         }
       });
 
       // Handle window resize - close mobile menu if window becomes large
-      window.addEventListener('resize', function() {
-        if (window.innerWidth >= 1024 && !mobileMenu.classList.contains('hidden')) {
+      window.addEventListener("resize", function () {
+        if (
+          window.innerWidth >= 1024 &&
+          !mobileMenu.classList.contains("hidden")
+        ) {
           toggleMobileMenu();
         }
       });
