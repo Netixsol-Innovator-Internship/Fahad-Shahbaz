@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Hackathon - Landing Page - Netixsol</title>
+  </head>
+  <body class="m-0 p-0 box-border text-gray-900">
+    <!-- Container for overall layout -->
+    <div class="w-full max-w-[1640px] mx-auto">
+      <!-- Navbar ✅ -->
+      <header
+        class="bg-[#191919] w-full px-10 md:px-16 py-4 flex items-center justify-between"
+      >
+        <!-- Add logo and nav items here -->
+        <div>
+          <h1 class="text-white font-semibold text-xl md:text-2xl">LogoHere</h1>
+        </div>
+        <nav class="hidden lg:flex space-x-14 text-white items-center">
+          <!-- Example nav links -->
+          <a href="#" class="text-base font-medium hover:text-gray-400">
+            About
+          </a>
+          <a href="#" class="text-base font-medium hover:text-gray-400">
+            Collection
+          </a>
+          <a href="#" class="text-base font-medium hover:text-gray-400">
+            Creator
+          </a>
+          <a href="#" class="text-base font-medium hover:text-gray-400">
+            Roadmap
+          </a>
+          <button
+            class="bg-[#DA8F4D] hover:bg-[#b97538] px-8 py-2 rounded-xl border border-white font-semibold"
+          >
+            sign in
+          </button>
+          <div></div>
+        </nav>
+      </header>
+
+      <!-- Hero Section ✅ -->
+      <section
+        class="w-full py-20 md:py-28 px-10 bg-[url('./assets/hero.png')] bg-cover bg-center"
+      >
+        <!-- Inner container with grid layout -->
+        <div
+          class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-6xl mx-auto"
+        >
+          <!-- left text -->
+          <div
+            class="text-white space-y-6 order-2 lg:order-1 text-center lg:text-left pl-6"
+          >
+            <h1
+              class="font-bold text-4xl md:text-6xl lg:text-7xl leading-normal"
+            >
+              We Have High <br />Quality
+              <span class="text-[#DA8F4D]">NFT</span>
+              <br />
+              Collections
+            </h1>
+            <p class="text-sm block max-w-md mx-auto lg:mx-0">
+              Lorem ipsum dolor sit amet consectetur. Rhoncus massa suspendisse
+              turpis sed viverra tempus tortor. Habitant accumsan sagittis in
+              facilisi placerat ac fermentum faucibus sit purus volutpat. Sed
+              mattis cursus ornare mauris pharetra elementum. Donec vitae
+              consectetur tellus mauris blandit.
+            </p>
+            <div
+              class="flex items-center justify-center lg:justify-start gap-10"
+            >
+              <button
+                class="bg-[#DA8F4D] hover:bg-[#b97538] px-4 md:px-8 py-1.5 md:py-2 rounded-lg md:rounded-xl border border-white font-semibold text-sm md:text-base whitespace-nowrap"
+              >
+                Get Whitelist
+              </button>
+              <button
+                class="hover:bg-[#b97538] px-4 md:px-8 py-1.5 md:py-2 rounded-lg md:rounded-xl border border-white font-semibold text-sm md:text-base whitespace-nowrap"
+              >
+                Contact Us
+              </button>
+            </div>
+            <div
+              class="mx-auto lg:mx-0 bg-white/10 backdrop-blur-sm rounded-lg flex justify-center items-center w-[400px] gap-6 md:gap-10 p-2 md:p-4"
+            >
+              <div>
+                <h1 class="text-base md:text-xl font-semibold">240k+</h1>
+                <p class="text-xs md:text-base">Total Sale</p>
+              </div>
+              <div>
+                <h1 class="text-md md:text-xl font-semibold">100k+</h1>
+                <p class="text-xs md:text-base">Auctions</p>
+              </div>
+              <div>
+                <h1 class="text-md md:text-xl font-semibold">240k+</h1>
+                <p class="text-xs md:text-base">Artists</p>
+              </div>
+            </div>
+          </div>
+          <!-- right hero image -->
+          <div class="flex justify-center items-center order-1 lg:order-2">
+            <img
+              src="./assets/tiger.svg"
+              alt="Tiger image"
+              class="size-[300px] md:size-[400px] lg:size-[500px]"
+            />
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
