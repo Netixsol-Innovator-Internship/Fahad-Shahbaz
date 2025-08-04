@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Netixsol - Age calculator app</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="./assets/images/calculator.ico"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- Container -->
+    <main class="container" role="main">
+      <!-- Content/Card within Container -->
+      <div class="content">
+        <!-- Input Date of Birth -->
+        <div class="input">
+          <!-- Title and input for Day -->
+          <div>
+            <h6>Day</h6>
+            <input type="text" placeholder="DD" id="dayIn" />
+            <p class="error"></p>
+          </div>
+          <!-- Title and input for Month -->
+          <div>
+            <h6>Month</h6>
+            <input type="text" placeholder="MM" id="monthIn" />
+            <p class="error"></p>
+          </div>
+          <!-- Title and input for Year -->
+          <div>
+            <h6>Year</h6>
+            <input type="text" placeholder="YYYY" id="yearIn" />
+            <p class="error"></p>
+          </div>
+        </div>
+        <!-- Calculate Button -->
+        <hr />
+        <button id="calculateBtn">
+          <img src="./assets/images/icon-arrow.svg" alt="arrow svg" />
+        </button>
+
+        <!-- Result will show here -->
+        <div class="result">
+          <h1><span id="yearOut">--</span> years</h1>
+          <h1><span id="monthOut">--</span> months</h1>
+          <h1><span id="dayOut">--</span> days</h1>
+        </div>
+      </div>
+    </main>
+    <script src="./script.js"></script>
+  </body>
+</html>
