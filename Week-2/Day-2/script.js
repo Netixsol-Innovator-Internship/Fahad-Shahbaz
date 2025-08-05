@@ -75,13 +75,8 @@ themeToggle.addEventListener("click", () => {
   const savedTheme = localStorage.getItem("theme");
   let isDark = savedTheme === "dark";
 
-  if (
-    !savedTheme &&
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    isDark = true;
-  }
+  // Only apply dark mode if specifically saved as dark
+  // No more system preference fallback - default to light
 
   // Apply class immediately to prevent flash
   if (isDark) {
@@ -94,13 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const savedTheme = localStorage.getItem("theme");
   let isDark = savedTheme === "dark";
 
-  if (
-    !savedTheme &&
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    isDark = true;
-  }
+  // No system preference check - default to light theme
 
   // Make sure the correct icon is set after DOM is ready
   const themeToggleIcon = document.querySelector("#theme-toggle img");
