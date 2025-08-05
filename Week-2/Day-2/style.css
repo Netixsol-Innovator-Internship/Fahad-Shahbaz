@@ -1,0 +1,260 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;800&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  transition: background-color 0.5s ease, color 0.5s ease,
+    border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+:root {
+  --body-bg: hsl(210, 60%, 98%);
+  --board-bg: hsl(0, 0%, 100%);
+  --primary-text: hsl(219, 12%, 42%);
+  --user-name: hsl(224, 21%, 14%);
+  --time-text: hsl(219, 14%, 63%);
+  --count-text: hsl(205, 33%, 90%);
+  --msg-border: hsl(211, 68%, 94%);
+  --red: hsl(1, 90%, 64%);
+  --blue: hsl(219, 85%, 26%);
+}
+
+body.dark-mode {
+  --body-bg: hsl(230, 17%, 14%);
+  --board-bg: hsl(228, 28%, 20%);
+  --primary-text: hsl(0, 0%, 100%);
+  --user-name: hsl(0, 0%, 100%);
+  --time-text: hsl(0, 0%, 100%);
+  --msg-border: hsl(228, 25%, 27%);
+  --blue: hsl(219, 85%, 56%);
+  --count-text: hsl(228, 28%, 25%); /* Darker hover background for dark mode */
+}
+
+body {
+  min-height: 100vh;
+  background: var(--body-bg);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: fadeUp 0.5s ease-in-out;
+  transition: background-color 0.5s ease;
+}
+
+body main {
+  max-width: 620px;
+  background: var(--board-bg);
+  padding: 1.5rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  transition: background-color 0.5s ease, box-shadow 0.4s ease,
+    transform 0.4s ease;
+}
+
+main header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.header-buttons {
+  display: flex;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 20px;
+  color: var(--user-name);
+}
+
+header h1 .count {
+  color: var(--count-text);
+  background: var(--blue);
+  border-radius: 0.3rem;
+  padding: 0.03rem 0.5rem;
+  margin-left: 5px;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+}
+
+header button {
+  color: var(--primary-text);
+  background: transparent;
+  font-size: 14px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease, background-color 0.5s ease;
+}
+
+.theme-toggle {
+  margin-top: 2px;
+  margin-left: 0.5rem;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative; /* Added for positioning control */
+}
+
+.theme-toggle img {
+  width: 18px;
+  height: 18px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: filter 0.5s ease;
+  display: block;
+}
+
+body.dark-mode .theme-toggle img {
+  filter: invert(1);
+}
+
+main a {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  text-decoration: none;
+  line-height: 1.3;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 0.6rem 0;
+  transition: all 0.3s ease;
+}
+
+a.unread {
+  background: var(--body-bg);
+}
+
+a:hover {
+  background: var(--count-text);
+}
+
+a img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+a:hover img {
+  transform: scale(1.05);
+}
+
+a .text-content p {
+  color: var(--primary-text);
+}
+
+p .user {
+  color: var(--user-name);
+  font-weight: 800;
+  margin-right: 0.2rem;
+}
+
+p .activity {
+  font-weight: 800;
+  margin: 0 0.2rem;
+}
+
+p .chess {
+  color: var(--blue);
+}
+
+p .dot {
+  display: inline-block;
+  background: var(--red);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  margin-left: 0.1rem;
+  animation: pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+}
+
+p span {
+  transition: color 0.3s ease;
+}
+
+p span:hover {
+  color: var(--blue);
+}
+
+.text-content .time {
+  color: var(--time-text);
+  margin-top: 0.1rem;
+}
+
+.text-content .private {
+  border: 1px solid var(--msg-border);
+  border-radius: 0.3rem;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.text-content .private:hover {
+  border-color: var(--blue);
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05);
+}
+
+a .picture {
+  margin-left: auto;
+}
+
+@media (min-width: 620px) {
+  body main {
+    margin: 3rem 0;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 5px rgba(255, 82, 82, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
