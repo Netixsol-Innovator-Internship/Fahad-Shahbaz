@@ -17,8 +17,17 @@ function removeDots(elem) {
 // This function updates the count displayed in the span and hides the plural 's' if count is 1 or less
 function manageCount(count) {
   countSpan.textContent = count;
-  if (count <= 1) {
+
+  // Hide the count badge entirely when count is 0
+  if (count <= 0) {
+    countSpan.style.display = "none";
     plural.style.display = "none"; // removes the 's' from 'notifications'
+  } else if (count == 1) {
+    countSpan.style.display = "inline-flex"; // Make sure it's visible
+    plural.style.display = "none"; // removes the 's' from 'notifications'
+  } else {
+    countSpan.style.display = "inline-flex"; // Make sure it's visible
+    plural.style.display = "inline"; // Show the 's' for plural
   }
 }
 
@@ -37,7 +46,8 @@ unread.forEach((elem) => {
 // Event listener for the "Mark All as Read" button
 // When clicked, it will set the count to 0, remove the 'unread' and dot from all notifications
 markAllAsRead.addEventListener("click", () => {
-  countSpan.textContent = 0;
+  count = 0; // Set count to 0
+  manageCount(count); // Use manageCount to handle display logic
   unread.forEach((elem) => {
     elem.classList.remove("unread");
     removeDots(elem);
