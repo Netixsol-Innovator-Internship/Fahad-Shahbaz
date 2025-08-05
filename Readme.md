@@ -20,7 +20,7 @@ Task 2 - Resume
 
 - https://fahad-week1-day3-4-figmadesign.vercel.app/
 
-#### Day 5 - Hackathon Task (Completed ✅)
+#### Day 5 - Hackathon Task (Completed) ✅
 
 - https://fahad-week1-day5-first-hackathon.vercel.app/
 
@@ -29,3 +29,7 @@ Task 2 - Resume
 #### Day 1 (Completed) ✅
 
 - https://fahad-week2-day1-calculator.vercel.app/
+
+#### Day 2 (Completed) ✅
+
+- https://fahad-week2-day2-notification.vercel.app/
