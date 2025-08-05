@@ -48,7 +48,7 @@ body {
 body main {
   max-width: 620px;
   background: var(--board-bg);
-  padding: 1.5rem 1rem;
+  padding: 1.5rem 1rem 0 1rem;
   border-radius: 1rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
   transition: background-color 0.5s ease, box-shadow 0.4s ease,
