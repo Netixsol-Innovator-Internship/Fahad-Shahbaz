@@ -8,6 +8,50 @@ const yearOut = document.getElementById("yearOut");
 const calculateBtn = document.getElementById("calculateBtn");
 const errorStyle = "0.5px solid var(--Light-red)";
 
+// Add input event listeners to allow only numbers and real-time validation
+dayIn.addEventListener("input", () => {
+  dayIn.value = dayIn.value.replace(/[^0-9]/g, "");
+  // Limit to 2 digits and pad with leading zero if needed on blur
+  if (dayIn.value.length > 2) {
+    dayIn.value = dayIn.value.slice(0, 2);
+  }
+  if (dayIn.value) validateDay(); // Real-time validation
+});
+
+dayIn.addEventListener("blur", () => {
+  // Add leading zero for single digit days
+  if (dayIn.value.length === 1 && dayIn.value !== "0") {
+    dayIn.value = "0" + dayIn.value;
+  }
+  validateDay();
+});
+
+monthIn.addEventListener("input", () => {
+  monthIn.value = monthIn.value.replace(/[^0-9]/g, "");
+  // Limit to 2 digits and pad with leading zero if needed on blur
+  if (monthIn.value.length > 2) {
+    monthIn.value = monthIn.value.slice(0, 2);
+  }
+  if (monthIn.value) validateMonth(); // Real-time validation
+});
+
+monthIn.addEventListener("blur", () => {
+  // Add leading zero for single digit months
+  if (monthIn.value.length === 1 && monthIn.value !== "0") {
+    monthIn.value = "0" + monthIn.value;
+  }
+  validateMonth();
+});
+
+yearIn.addEventListener("input", () => {
+  yearIn.value = yearIn.value.replace(/[^0-9]/g, "");
+  // Limit to 4 digits for year
+  if (yearIn.value.length > 4) {
+    yearIn.value = yearIn.value.slice(0, 4);
+  }
+  if (yearIn.value) validateYear(); // Real-time validation
+});
+
 // Calculate Button
 calculateBtn.addEventListener("click", () => {
   const D = dayIn.value;
@@ -22,16 +66,30 @@ calculateBtn.addEventListener("click", () => {
   }
 
   // Age Calculation
-  let years = new Date().getFullYear() - new Date(birthday).getFullYear();
-  let months = new Date().getMonth() - new Date(birthday).getMonth();
-  let days = new Date().getDate() - Number(D);
+  const today = new Date();
+  const birthDate = new Date(Y, M - 1, D); // Month is 0-indexed
+
+  let years = today.getFullYear() - birthDate.getFullYear();
+  let months = today.getMonth() - birthDate.getMonth();
+  let days = today.getDate() - birthDate.getDate();
+
+  // Adjust if current month/day is before birth month/day
   if (months < 0) {
     years = years - 1;
     months = months + 12;
   }
 
   if (days < 0) {
-    days += getNoOfDays(Y, M - 1);
+    months = months - 1;
+    if (months < 0) {
+      years = years - 1;
+      months = months + 12;
+    }
+    // Get days in previous month to add to negative days
+    const prevMonth = today.getMonth() === 0 ? 11 : today.getMonth() - 1;
+    const prevYear =
+      today.getMonth() === 0 ? today.getFullYear() - 1 : today.getFullYear();
+    days += getNoOfDays(prevYear, prevMonth + 1);
   }
 
   // Display Values
@@ -47,9 +105,9 @@ function getNoOfDays(y, m) {
 
 // Validation Part
 
-// For day validation
-dayIn.addEventListener("blur", () => {
-  validateDay();
+// For year validation
+yearIn.addEventListener("blur", () => {
+  validateYear();
 });
 
 // Validate Day function
@@ -60,8 +118,14 @@ const validateDay = () => {
   if (D == "") {
     showMessage(dayIn, "This field is required", errorStyle);
     return false;
-  } else if (!validDay(Y, M, D)) {
+  } else if (!isValidNumber(D)) {
+    showMessage(dayIn, "Must be a valid number", errorStyle);
+    return false;
+  } else if (parseInt(D) < 1 || parseInt(D) > 31) {
     showMessage(dayIn, "Must be a valid day", errorStyle);
+    return false;
+  } else if (M && Y && !validDay(Y, M, D)) {
+    showMessage(dayIn, "Must be a valid day for this month/year", errorStyle);
     return false;
   } else {
     showMessage(dayIn, "", "");
@@ -69,17 +133,15 @@ const validateDay = () => {
   }
 };
 
-// For month validation
-monthIn.addEventListener("blur", () => {
-  validateMonth();
-});
-
 const validateMonth = () => {
   const M = monthIn.value;
   if (M == "") {
     showMessage(monthIn, "This field is required", errorStyle);
     return false;
-  } else if (!validMonth(M)) {
+  } else if (!isValidNumber(M)) {
+    showMessage(monthIn, "Must be a valid number", errorStyle);
+    return false;
+  } else if (parseInt(M) < 1 || parseInt(M) > 12) {
     showMessage(monthIn, "Must be a valid month", errorStyle);
     return false;
   } else {
@@ -88,11 +150,6 @@ const validateMonth = () => {
   }
 };
 
-// For Year validation
-yearIn.addEventListener("blur", () => {
-  validateYear();
-});
-
 const validateYear = () => {
   const Y = yearIn.value;
   const M = monthIn.value;
@@ -100,7 +157,17 @@ const validateYear = () => {
   if (Y == "") {
     showMessage(yearIn, "This field is required", errorStyle);
     return false;
-  } else if (!validYear(Y, M, D)) {
+  } else if (!isValidNumber(Y)) {
+    showMessage(yearIn, "Must be a valid number", errorStyle);
+    return false;
+  } else if (parseInt(Y) < 1582) {
+    showMessage(
+      yearIn,
+      "Year must be 1582 or later (Gregorian calendar)",
+      errorStyle
+    );
+    return false;
+  } else if (M && D && !validYear(Y, M, D)) {
     showMessage(yearIn, "Must be in past", errorStyle);
     return false;
   } else {
@@ -109,22 +176,39 @@ const validateYear = () => {
   }
 };
 
+// Check if input is a valid number
+function isValidNumber(value) {
+  return /^\d+$/.test(value) && !isNaN(value);
+}
+
 // Validate Day
 function validDay(y, m, d) {
-  if (d > getNoOfDays(y, m) || d < 1) return false;
+  // Convert to numbers to ensure proper comparison
+  const year = parseInt(y);
+  const month = parseInt(m);
+  const day = parseInt(d);
+
+  // Check if day is within valid range for the specific month and year
+  if (day > getNoOfDays(year, month) || day < 1) return false;
   return true;
 }
 
 // validate Month
 function validMonth(m) {
-  if (m > 12 || m < 1) return false;
+  const month = parseInt(m);
+  if (month > 12 || month < 1) return false;
   return true;
 }
 
 // Validate Year
 function validYear(y, m, d) {
+  const year = parseInt(y);
+  const month = parseInt(m);
+  const day = parseInt(d);
+
   const secondDate = new Date();
-  const firstDate = new Date(`${y}-${m}-${d}`);
+  const firstDate = new Date(year, month - 1, day); // month is 0-indexed in Date constructor
+
   if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0)) {
     return true;
   }
