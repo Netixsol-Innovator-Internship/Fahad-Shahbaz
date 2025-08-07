@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link rel="stylesheet" href="style.css" />
+    <title>Tip calculator app</title>
+    <style>
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+    </style>
+  </head>
+
+  <body>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      🌙
+    </button>
+    <header>
+      <h1>spli<br />tter</h1>
+    </header>
+    <main>
+      <form action="" id="tip-calculator">
+        <section class="input">
+          <div class="form-group bill-group">
+            <label for="bill">Bill</label>
+            <span id="bill-error" class="input-error" style="display: none"
+              >Can't be zero or negative</span
+            >
+            <input type="number" name="bill" id="bill" placeholder="0" />
+          </div>
+
+          <fieldset class="form-group radio-group" role="radiogroup">
+            <legend class="group-label">Select Tip %</legend>
+
+            <input
+              type="radio"
+              name="tip"
+              id="tip-5"
+              value="0.05"
+              class="sr-only"
+            />
+            <label for="tip-5">5%</label>
+
+            <input
+              type="radio"
+              name="tip"
+              id="tip-10"
+              value="0.10"
+              class="sr-only"
+            />
+            <label for="tip-10">10%</label>
+
+            <input
+              type="radio"
+              name="tip"
+              id="tip-15"
+              value="0.15"
+              class="sr-only"
+            />
+            <label for="tip-15">15%</label>
+
+            <input
+              type="radio"
+              name="tip"
+              id="tip-25"
+              value="0.25"
+              class="sr-only"
+            />
+            <label for="tip-25">25%</label>
+
+            <input
+              type="radio"
+              name="tip"
+              id="tip-50"
+              value="0.50"
+              class="sr-only"
+            />
+            <label for="tip-50">50%</label>
+            <div class="custom">
+              <input
+                type="radio"
+                name="tip"
+                id="tip-custom"
+                value="custom"
+                class="sr-only"
+              />
+              <label for="tip-custom" class="custom-tip sr-only">Custom</label>
+
+              <input
+                type="text"
+                inputmode="numeric"
+                name="tip-custom"
+                id="tip-custom-input"
+                placeholder="Custom"
+                tabindex="-1"
+              />
+              <label for="tip-custom-input" class="sr-only">Custom tip %</label>
+              <span
+                id="custom-tip-error"
+                class="input-error"
+                style="display: none"
+                >Can't be negative</span
+              >
+              <span
+                id="custom-letters-error"
+                class="input-error"
+                style="display: none"
+                >Letters not allowed</span
+              >
+            </div>
+          </fieldset>
+
+          <div class="form-group">
+            <label for="people">Number of People</label>
+            <input
+              type="number"
+              min="1"
+              aria-describedby="not-zero"
+              name="people"
+              id="people"
+              placeholder="0"
+            />
+            <span id="not-zero" class="input-error" style="display: none"
+              >Can't be zero</span
+            >
+          </div>
+
+          <button type="submit" class="sr-only">Submit</button>
+        </section>
+        <section class="output">
+          <div class="wrapper">
+            <div class="form-group">
+              <label for="person-tip">
+                Tip Amount<br />
+                <span>/ person</span></label
+              >
+              <output for="bill tip people" id="person-tip">$0.00</output>
+            </div>
+            <div class="form-group">
+              <label for="person-total">
+                Total<br />
+                <span>/ person</span></label
+              >
+              <output for="bill tip people" id="person-total">$0.00</output>
+            </div>
+          </div>
+
+          <button type="reset">reset</button>
+        </section>
+      </form>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
