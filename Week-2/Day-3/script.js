@@ -296,16 +296,34 @@ function updateCartModal() {
   }
 }
 
+// Clear cart function
+function clearCart() {
+  cart = [];
+  cartCount = 0;
+  saveCartToLocalStorage();
+  updateCartCount();
+  updateCartModal();
+}
+
 // Show order confirmation
 function showOrderConfirmation() {
+  // Store the final total before clearing cart
+  const finalTotal = document.getElementById("total-to-pay").textContent;
+  document.getElementById("final-total").textContent = `GBP ${finalTotal}`;
+
   document.getElementById("cart-content").classList.add("hidden");
   document.getElementById("order-confirmation").classList.remove("hidden");
+
+  // Clear the cart after showing confirmation
+  clearCart();
 }
 
 // Go back to cart
 function goBackToCart() {
   document.getElementById("order-confirmation").classList.add("hidden");
   document.getElementById("cart-content").classList.remove("hidden");
+  // Since cart is cleared after order confirmation, update the modal
+  updateCartModal();
 }
 
 // Show notification
@@ -324,27 +342,16 @@ function showNotification(message = "Item added to cart!") {
 // Create menu card HTML
 function createMenuCard(item, imageType) {
   return `
-    <div class="bg-white rounded-xl shadow-lg overflow-hidden relative p-6">
-      <div class="flex items-start justify-${
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden relative p-4 sm:p-6">
+      <!-- Responsive layout: column on small screens, row on larger screens -->
+      <div class="flex flex-col sm:flex-row sm:items-start sm:justify-${
         item.id === 1 ? "center" : "between"
       }">
-        <!-- Left content -->
-        <div class="flex-1 pr-4">
-          <h3 class="text-xl font-bold text-gray-900 mb-3 leading-tight">
-            ${item.title}
-          </h3>
-          <p class="text-gray-600 text-sm mb-6 leading-relaxed">
-            ${item.description}
-          </p>
-          <p class="text-${item.id === 1 ? "base" : "xl"} font-${
-    item.id === 1 ? "extrabold" : "bold"
-  } text-gray-900">${item.price}</p>
-        </div>
-
-        <!-- Right image section -->
-        <div class="relative flex-shrink-0">
-          <div class="${
-            item.id === 1 ? "w-40 h-44" : "size-40"
+        
+        <!-- Image section - top on mobile, right on desktop -->
+        <div class="relative flex-shrink-0 order-1 sm:order-2 mb-4 sm:mb-0 flex justify-center sm:block">
+          <div class="w-32 h-32 sm:${
+            item.id === 1 ? "w-40 sm:h-44" : "size-40"
           } rounded-2xl relative overflow-hidden">
             <img
               src="${item.images[imageType]}"
@@ -358,12 +365,27 @@ function createMenuCard(item, imageType) {
     item.price
   }', '${item.images[imageType]}')"
               class="absolute bottom-0 right-0 bg-white text-white flex items-center justify-center hover:bg-opacity-90 transition-colors shadow-lg cursor-pointer"
-              style="width: 80px; height: 81px; border-top-left-radius: 45px; border-bottom-right-radius: 12px; opacity: 0.9; background-color: white;"
+              style="width: 60px; height: 61px; border-top-left-radius: 35px; border-bottom-right-radius: 12px; opacity: 0.9; background-color: white;"
             >
               <!-- Plus button image -->
-              <img src="./images/plus-btn.png" alt="Add to cart" class="size-12 object-contain">
+              <img src="./images/plus-btn.png" alt="Add to cart" class="size-8 sm:size-12 object-contain">
             </button>
           </div>
+        </div>
+
+        <!-- Content section - bottom on mobile, left on desktop -->
+        <div class="flex-1 order-2 sm:order-1 sm:pr-4">
+          <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 leading-tight line-clamp-2 text-center sm:text-left">
+            ${item.title}
+          </h3>
+          <p class="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-6 leading-relaxed line-clamp-3 text-center sm:text-left">
+            ${item.description}
+          </p>
+          <p class="text-base sm:text-${
+            item.id === 1 ? "base" : "xl"
+          } font-bold sm:font-${
+    item.id === 1 ? "extrabold" : "bold"
+  } text-gray-900 text-center sm:text-left">${item.price}</p>
         </div>
       </div>
     </div>
