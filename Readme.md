@@ -33,3 +33,11 @@ Task 2 - Resume
 #### Day 2 (Completed) ✅
 
 - https://fahad-week2-day2-notification.vercel.app/
+
+#### Day 3 (Completed) ✅
+
+- https://fahad-week2-day3-mcd.vercel.app/
+
+#### Day 4 (Completed) ✅
+
+- https://fahad-week2-day4-tip.vercel.app/
