@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Sign in page - Quiz App</title>
+  </head>
+  <body style="font-family: 'Manrope', sans-serif">
+    <!-- Header Section -->
+    <header
+      class="relative container max-w-[1600px] mx-auto py-5 px-3 md:px-8 lg:px-12 flex items-center justify-between mb-4 border-b border-gray-200"
+    >
+      <!-- header logo div -->
+      <div class="flex items-center justify-center">
+        <a href="./index.html">
+          <img
+            src="./images/logo.svg"
+            alt="brand-logo"
+            class="w-35 md:w-40 inline-block"
+          />
+        </a>
+      </div>
+    </header>
+
+    <!-- Select quiz section -->
+    <section
+      class="max-w-[960px] mx-auto mt-10 px-4 rounded-md relative overflow-hidden space-y-6"
+    >
+      <!-- Select a quiz and tag -->
+      <h1 class="text-3xl font-bold mb-8">Select a Quiz</h1>
+      <div class="flex flex-wrap gap-4">
+        <span class="bg-[#F0F2F5] text-sm px-4 py-2 rounded-md font-medium"
+          >All</span
+        >
+        <span class="bg-[#F0F2F5] text-sm px-4 py-2 rounded-md font-medium"
+          >History</span
+        >
+        <span class="bg-[#F0F2F5] text-sm px-4 py-2 rounded-md font-medium"
+          >Literature</span
+        >
+        <span class="bg-[#F0F2F5] text-sm px-4 py-2 rounded-md"
+          >Mathematics</span
+        >
+      </div>
+
+      <!-- featured quizzes -->
+      <h1 class="text-[22px] font-bold">Featured Quizzes</h1>
+      <div class="flex items-center flex-wrap gap-5 mx-auto">
+        <!-- first div -->
+        <div class="w-[254px] h-[225px]">
+          <div class="w-full h-[143px] overflow-hidden rounded-md">
+            <img
+              src="./images/universe.png"
+              alt="universe icon"
+              class="bg-center bg-cover w-full h-full object-cover"
+            />
+          </div>
+          <div class="py-4">
+            <h3 class="text-base font-semibold">The Universe</h3>
+            <p class="text-sm text-gray-500">
+              Test your knowledge about the cosmos.
+            </p>
+          </div>
+        </div>
+        <!-- second div -->
+        <div class="w-[254px] h-[225px]">
+          <div class="w-full h-[143px] overflow-hidden rounded-md">
+            <img
+              src="./images/ancient.png"
+              alt="ancient icon"
+              class="bg-center bg-cover w-full h-full object-cover"
+            />
+          </div>
+          <div class="py-4">
+            <h3 class="text-base font-semibold">Ancient Civilizations</h3>
+            <p class="text-sm text-gray-500">
+              Explore the mysteries of ancient cultures.
+            </p>
+          </div>
+        </div>
+        <!-- third div -->
+        <div class="w-[254px] h-[225px]">
+          <div class="w-full h-[143px] overflow-hidden rounded-md">
+            <img
+              src="./images/plays.png"
+              alt="plays icon"
+              class="bg-center bg-cover w-full h-full object-cover"
+            />
+          </div>
+          <div class="py-4">
+            <h3 class="text-base font-semibold">Shakespearean Plays</h3>
+            <p class="text-sm text-gray-500">
+              Dive into the world of the Bard.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- All Quiz section -->
+    <section
+      class="max-w-[960px] mx-auto mt-10 px-4 rounded-md relative overflow-hidden space-y-8 mb-10"
+    >
+      <div>
+        <h1 class="text-3xl font-bold">All Quizzes</h1>
+      </div>
+      <!-- General Quiz -->
+      <div class="flex items-center flex-wrap justify-between gap-3">
+        <!-- text side -->
+        <div class="self-start">
+          <h1 class="text-base font-bold">General knowledge</h1>
+          <p class="text-sm text-[#61738A]">
+            Test your overall knowledge with a mix of questions.
+          </p>
+        </div>
+        <!-- image side -->
+        <div class="w-[320px] h-[171px] rounded-md overflow-hidden">
+          <img
+            src="./images/general.png"
+            alt="General knowledge"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- Science Quiz -->
+      <div class="flex items-center flex-wrap justify-between gap-3">
+        <!-- text side -->
+        <div class="self-start">
+          <h1 class="text-base font-bold">Science</h1>
+          <p class="text-sm text-[#61738A]">
+            Explore the wonders of science from biology to physics.
+          </p>
+        </div>
+        <!-- image side -->
+        <div class="w-[320px] h-[171px] rounded-md overflow-hidden">
+          <img
+            src="./images/science.png"
+            alt="Science"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- History Quiz -->
+      <div class="flex items-center flex-wrap justify-between gap-3">
+        <!-- text side -->
+        <div class="self-start">
+          <h1 class="text-base font-bold">History</h1>
+          <p class="text-sm text-[#61738A]">
+            Journey through time and learn about historical events.
+          </p>
+        </div>
+        <!-- image side -->
+        <div class="w-[320px] h-[171px] rounded-md overflow-hidden">
+          <img
+            src="./images/history.png"
+            alt="History"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- Literature Quiz -->
+      <div class="flex items-center flex-wrap justify-between gap-3">
+        <!-- text side -->
+        <div class="self-start">
+          <h1 class="text-base font-bold">Literature</h1>
+          <p class="text-sm text-[#61738A]">
+            Discover the world of books and authors.
+          </p>
+        </div>
+        <!-- image side -->
+        <div class="w-[320px] h-[171px] rounded-md overflow-hidden">
+          <img
+            src="./images/lit.png"
+            alt="Literature icon"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- Mathematics Quiz -->
+      <div class="flex items-center flex-wrap justify-between gap-3">
+        <!-- text side -->
+        <div class="self-start">
+          <h1 class="text-base font-bold">Mathematics</h1>
+          <p class="text-sm text-[#61738A]">
+            Challenge your math skills with various problems.
+          </p>
+        </div>
+        <!-- image side -->
+        <div class="w-[320px] h-[171px] rounded-md overflow-hidden">
+          <img
+            src="./images/math.png"
+            alt="Mathematics"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    </section>
+    <script src="script.js"></script>
+  </body>
+</html>
