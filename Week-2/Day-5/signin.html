@@ -10,7 +10,7 @@
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Quiz App</title>
+    <title>Sign in page - Quiz App</title>
   </head>
   <body style="font-family: 'Manrope', sans-serif">
     <!-- Header Section -->
@@ -19,7 +19,7 @@
     >
       <!-- header logo div -->
       <div class="flex items-center justify-center">
-        <a href="#">
+        <a href="./index.html">
           <img
             src="./images/logo.svg"
             alt="brand-logo"
@@ -32,7 +32,7 @@
       <div class="flex lg:hidden items-center space-x-4">
         <!-- Mobile user image -->
         <div class="size-6 md:size-8 rounded-full overflow-hidden">
-          <img src="./images/user.png" alt="User" class="rounded-full" />
+          <img src="./images/user-new.png" alt="User" class="rounded-full" />
         </div>
         <!-- Mobile menu button -->
         <button
@@ -57,7 +57,7 @@
 
       <!-- Desktop navigation (hidden on smaller screens) -->
       <nav class="hidden lg:flex justify-between items-center space-x-10">
-        <a href="#" class="text-black hover:text-gray-500 text-base">Home</a>
+        <a href="./index.html" class="text-black hover:text-gray-500 text-base">Home</a>
         <a href="#" class="text-black hover:text-gray-500 text-base">Quizzes</a>
         <a href="#" class="text-black hover:text-gray-500 text-base"
           >Leaderboard</a
@@ -68,7 +68,7 @@
         </div>
         <!-- user img -->
         <div class="size-10 rounded-full overflow-hidden">
-          <img src="./images/user.png" alt="User" class="rounded-full" />
+          <img src="./images/user-new.png" alt="User" class="rounded-full" />
         </div>
       </nav>
 
@@ -115,92 +115,37 @@
       </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Sign up section -->
     <section
-      class="max-w-[960px] mx-auto mt-10 px-4 py-8 text-white rounded-md relative overflow-hidden"
+      class="max-w-[960px] mx-auto mt-10 px-4 py-8 rounded-md relative overflow-hidden space-y-4"
     >
-      <div
-        class="absolute inset-0 z-0"
-        style="
-          background: linear-gradient(135deg, #0000001a 0%, #00000066 100%),
-            url('./images/hero-img.png');
-          background-size: cover;
-          background-position: center;
-        "
-      ></div>
-      <div class="relative z-10">
-        <div
-          class="text-center min-h-[480px] flex flex-col items-center justify-end pb-10"
-        >
-          <h1 class="text-3xl md:text-4xl font-bold mb-4">
-            Welcome to the QuizMaster
-          </h1>
-          <p class="text-sm md:text-base mb-6">
-            Test your knowledge with our engaging quizzes. Compete with friends
-            and climb the leaderboard. Start your quiz journey <br />
-            today!
-          </p>
-          <a
-            href="./signup.html"
-            class="bg-blue-500 text-white px-6 py-3 cursor-pointer rounded-lg hover:bg-blue-600 transition-colors"
-          >
-            Get Started
-          </a>
-        </div>
+      <h1 class="text-2xl text-center font-bold">Welcome back</h1>
+      <div class="md:w-[480px] space-y-4 mt-8">
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email"
+          class="bg-[#F0F2F5] rounded-md p-4 w-full"
+        />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          class="bg-[#F0F2F5] rounded-md p-4 w-full"
+        />
+        <p class="text-[#61738A] text-sm font-normal">forget password?</p>
+        <button class="bg-[#0D78F2] text-white p-3 rounded-md w-full md:w-[480px]">
+          Sign Up
+        </button>
       </div>
-    </section>
-
-    <!-- Key features Section -->
-    <section
-      class="max-w-[960px] mx-auto px-2 md:px-0 mt-10 py-8 rounded-md relative overflow-hidden"
-    >
-      <!-- Heading div -->
-      <div class="space-y-4">
-        <h1 class="text-3xl md:text-4xl font-semibold">Key Features</h1>
-        <p class="text-sm md:text-base text-[#121417]">
-          Explore the exciting features that make QuizMaster the ultimate quiz
-          app.
-        </p>
-      </div>
-      <!-- features div -->
-      <div
-        class="flex flex-col md:flex-row flex-wrap justify-center items-center mt-8 gap-6"
-      >
-        <!-- first div -->
-        <div
-          class="border border-[#DBE0E5] rounded-md p-4 w-[301px] h-[157px] space-y-2"
+      <p class="text-[#61738A] text-center text-sm font-normal">
+        Don't have an account?
+        <a href="./signup.html" class="hover:text-[#0D78F2] hover:underline"
+          >Sign up</a
         >
-          <img src="./images/time.svg" alt="time icon" />
-          <h1 class="text-base">Timed Quizzes</h1>
-          <p class="text-sm text-[#61738A]">
-            Challenge yourself with timed quizzes to test your speed and
-            accuracy.
-          </p>
-        </div>
-        <!-- second div -->
-        <div
-          class="border border-[#DBE0E5] rounded-md p-4 w-[301px] h-[157px] space-y-2"
-        >
-          <img src="./images/win.svg" alt="leaderboard icon" />
-          <h1 class="text-base">Global Leaderboard</h1>
-          <p class="text-sm text-[#61738A]">
-            Compete with friends and other users to see who can achieve the
-            highest scores.
-          </p>
-        </div>
-        <!-- third div -->
-        <div
-          class="border border-[#DBE0E5] rounded-md p-4 w-[301px] h-[157px] space-y-2"
-        >
-          <img src="./images/progress.svg" alt="progress icon" />
-          <h1 class="text-base">User Profiles</h1>
-          <p class="text-sm text-[#61738A]">
-            Track your progress and see how you <br />
-            improve over time with detailed <br />
-            performance reports.
-          </p>
-        </div>
-      </div>
+      </p>
     </section>
     <script src="script.js"></script>
   </body>
