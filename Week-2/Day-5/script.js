@@ -715,14 +715,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const question = currentQuiz.questions[currentQuestionIndex];
 
-    // Update progress
+    // Update progress section (top H1)
+    const progressTitle = document.querySelector(
+      "#singleQuizSection .w-full.space-y-3 h1"
+    );
     const progressBar = document.querySelector(
       "#singleQuizSection .w-\\[30\\%\\]"
     );
     const progressText = document.querySelector(
       "#singleQuizSection .text-\\[\\#61738A\\]"
     );
-    const questionTitle = document.querySelector("#singleQuizSection h1");
+
+    // Update question section (MCQ H1 - the one with text-2xl class)
+    const questionTitle = document.querySelector(
+      "#singleQuizSection .text-2xl.md\\:text-3xl.font-bold"
+    );
+
+    if (progressTitle) {
+      progressTitle.textContent = "Progress";
+    }
 
     if (progressBar) {
       const progress =
