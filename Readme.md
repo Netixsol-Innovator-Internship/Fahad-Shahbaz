@@ -44,4 +44,4 @@ Task 2 - Resume
 
 #### Day 5 (Completed) ✅
 
-- https://fahad-week2-day4-tip.vercel.app/
+- https://fahad-week2-day5-quiz.vercel.app/
