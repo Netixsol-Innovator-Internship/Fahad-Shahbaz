@@ -42,7 +42,7 @@
   <body>
     <!-- Responsive header -->
     <header
-      class="flex justify-between items-center px-8 md:px-12 py-5 border-b border-[#F0F0F0] lg:border-none gap-3 mx-auto max-w-[1600px]"
+      class="flex justify-between items-center px-8 md:px-12 py-5 gap-3 mx-auto max-w-[1600px]"
     >
       <div class="w-28 md:w-38">
         <img src="./images/logo.png" alt="Company logo" />
@@ -169,11 +169,12 @@
         </div>
       </div>
     </header>
+    <div class="bg-gray-200 w-[90%] h-[1px] mx-auto block lg:hidden"></div>
 
     <!-- Mobile menu -->
     <nav class="mobile-menu text-center p-4 w-full">
       <ul
-        class="space-y-4 text-[#828282] flex items-center justify-center flex-col"
+        class="space-y-5 text-[#828282] flex items-center justify-center flex-col"
       >
         <li>
           <a href="#" class="gradient-underline hover:text-black">Home</a>
@@ -202,7 +203,7 @@
               </svg>
             </button>
             <ul
-              class="absolute left-0 top-full mt-2 min-w-[150px] bg-white border rounded shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity z-10"
+              class="absolute left-20 top-full mt-2 min-w-[150px] bg-white border rounded shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity z-10"
             >
               <li>
                 <a href="#" class="block px-4 py-2 hover:bg-gray-100"
@@ -239,7 +240,7 @@
               </svg>
             </button>
             <ul
-              class="absolute left-0 top-full mt-2 min-w-[150px] bg-white border rounded shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity z-10"
+              class="absolute left-20 top-full mt-2 min-w-[150px] bg-white border rounded shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity z-10"
             >
               <li>
                 <a href="#" class="block px-4 py-2 hover:bg-gray-100"
@@ -261,7 +262,7 @@
       </ul>
       <a
         href="#"
-        class="block w-full mt-4 py-2 rounded-md text-white font-semibold shadow-md max-w-80 mx-auto"
+        class="block w-full mt-4 py-2 rounded-md text-white font-semibold shadow-md max-w-80 mx-auto hover:opacity-80"
         style="
           background: linear-gradient(
             90deg,
