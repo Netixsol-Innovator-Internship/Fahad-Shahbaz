@@ -9,21 +9,129 @@
       .mobile-menu {
         display: none;
       }
+      @layer utilities {
+        .gradient-underline {
+          position: relative;
+        }
+        .gradient-underline::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: -6px; /* Increased gap between text and underline */
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(
+            83.21deg,
+            #3b0066 -130.25%,
+            #175fc4 -5.2%,
+            #00e1e7 140.51%,
+            #00f7e0 172.5%,
+            #00ffdd 192.89%
+          );
+          transform: scaleX(0);
+          transform-origin: bottom right;
+          transition: transform 0.3s ease-out;
+        }
+        .gradient-underline:hover::after {
+          transform: scaleX(1);
+          transform-origin: bottom left;
+        }
+      }
     </style>
   </head>
   <body>
     <!-- Responsive header -->
-    <header class="flex justify-between items-center px-8 md:px-12 py-6 gap-3">
+    <header
+      class="flex justify-between items-center px-8 md:px-12 py-5 border-b border-[#F0F0F0] lg:border-none gap-3 mx-auto max-w-[1600px]"
+    >
       <div class="w-28 md:w-38">
         <img src="./images/logo.png" alt="Company logo" />
       </div>
       <nav class="hidden lg:block">
         <ul class="flex space-x-10 text-[#828282]">
-          <li><a href="#" class="hover:text-black">Home</a></li>
-          <li><a href="#" class="hover:text-black">About Us</a></li>
-          <li><a href="#" class="hover:text-black">Features</a></li>
-          <li><a href="#" class="hover:text-black">Our Services</a></li>
-          <li><a href="#" class="hover:text-black">Why ADS?</a></li>
+          <li>
+            <a href="#" class="gradient-underline hover:text-black">Home</a>
+          </li>
+          <li>
+            <a href="#" class="gradient-underline hover:text-black">About Us</a>
+          </li>
+          <li>
+            <div class="relative group">
+              <button
+                class="gradient-underline hover:text-black flex items-center gap-1 focus:outline-none"
+              >
+                Features
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+              <ul
+                class="absolute left-0 top-full mt-2 min-w-[150px] bg-white border rounded shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity z-10"
+              >
+                <li>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                    >Feature 1</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                    >Feature 2</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li>
+            <div class="relative group">
+              <button
+                class="gradient-underline hover:text-black flex items-center gap-1 focus:outline-none"
+              >
+                Our Services
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+              <ul
+                class="absolute left-0 top-full mt-2 min-w-[150px] bg-white border rounded shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity z-10"
+              >
+                <li>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                    >Service 1</a
+                  >
+                </li>
+                <li>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                    >Service 2</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li>
+            <a href="#" class="gradient-underline hover:text-black">Why ADS?</a>
+          </li>
         </ul>
       </nav>
       <div>
@@ -64,16 +172,96 @@
 
     <!-- Mobile menu -->
     <nav class="mobile-menu text-center p-4 w-full">
-      <ul class="space-y-4 text-[#828282]">
-        <li><a href="#" class="hover:text-black">Home</a></li>
-        <li><a href="#" class="hover:text-black">About Us</a></li>
-        <li><a href="#" class="hover:text-black">Features</a></li>
-        <li><a href="#" class="hover:text-black">Our Services</a></li>
-        <li><a href="#" class="hover:text-black">Why ADS?</a></li>
+      <ul
+        class="space-y-4 text-[#828282] flex items-center justify-center flex-col"
+      >
+        <li>
+          <a href="#" class="gradient-underline hover:text-black">Home</a>
+        </li>
+        <li>
+          <a href="#" class="gradient-underline hover:text-black">About Us</a>
+        </li>
+        <li>
+          <div class="relative group">
+            <button
+              class="gradient-underline hover:text-black flex items-center gap-1 focus:outline-none w-full text-left"
+            >
+              Features
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <ul
+              class="absolute left-0 top-full mt-2 min-w-[150px] bg-white border rounded shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity z-10"
+            >
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                  >Feature 1</a
+                >
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                  >Feature 2</a
+                >
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <div class="relative group">
+            <button
+              class="gradient-underline hover:text-black flex items-center gap-1 focus:outline-none w-full text-left"
+            >
+              Our Services
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <ul
+              class="absolute left-0 top-full mt-2 min-w-[150px] bg-white border rounded shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity z-10"
+            >
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                  >Service 1</a
+                >
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                  >Service 2</a
+                >
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <a href="#" class="gradient-underline hover:text-black">Why ADS?</a>
+        </li>
       </ul>
       <a
         href="#"
-        class="block w-full mt-4 py-2 rounded-md text-white font-semibold shadow-md"
+        class="block w-full mt-4 py-2 rounded-md text-white font-semibold shadow-md max-w-80 mx-auto"
         style="
           background: linear-gradient(
             90deg,
@@ -88,6 +276,7 @@
         Contact Us
       </a>
     </nav>
+
     <!-- Js for toggling menu -->
     <script>
       const menuIconOpen = document.getElementById("menu-icon-open");
