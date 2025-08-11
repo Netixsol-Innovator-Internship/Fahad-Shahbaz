@@ -8,4 +8,4 @@
 
 ### 🔗 Live Project Link:
 
-coming soon...
+https://fahad-week3-day1-task.vercel.app/

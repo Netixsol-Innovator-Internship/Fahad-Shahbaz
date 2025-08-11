@@ -45,3 +45,13 @@ Task 2 - Resume
 #### Day 5 (Completed) ✅
 
 - https://fahad-week2-day5-quiz.vercel.app/
+
+### 📌 WEEK - 3
+
+#### Day 1 (Completed) ✅
+
+Task 1 - Responsive navbar
+
+- https://fahad-week3-day1-task.vercel.app/
+
+Task 2 - Restful Api (Only Code Repo Required)
