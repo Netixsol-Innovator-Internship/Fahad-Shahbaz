@@ -1,13 +1,13 @@
 import express from "express";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
+import { v4 as uuidv4 } from "uuid"; // For UUID IDs
 
 const app = express();
 app.use(express.json()); // Middleware
 
 // In-memory data
 let tasks = [];
-let idCounter = 1;
 
 // Swagger setup
 const swaggerOptions = {
@@ -31,7 +31,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *         - completed
  *       properties:
  *         id:
- *           type: integer
+ *           type: string
  *         title:
  *           type: string
  *         completed:
@@ -42,15 +42,27 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  * @swagger
  * /api/tasks:
  *   get:
- *     summary: Get all tasks
+ *     summary: Get all tasks (optional search by title)
+ *     parameters:
+ *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Filter tasks by title
  *     responses:
  *       200:
  *         description: List of tasks
  */
 app.get("/api/tasks", (req, res) => {
+  let result = tasks;
+  if (req.query.title) {
+    const search = req.query.title.toLowerCase();
+    result = result.filter((t) => t.title.toLowerCase().includes(search));
+  }
   res.json({
     success: true,
-    data: tasks,
+    data: result,
     message: "Tasks fetched successfully",
   });
 });
@@ -64,7 +76,7 @@ app.get("/api/tasks", (req, res) => {
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *     responses:
  *       200:
@@ -73,7 +85,7 @@ app.get("/api/tasks", (req, res) => {
  *         description: Task not found
  */
 app.get("/api/tasks/:id", (req, res) => {
-  const task = tasks.find((t) => t.id === parseInt(req.params.id));
+  const task = tasks.find((t) => t.id === req.params.id);
   if (!task)
     return res
       .status(404)
@@ -103,20 +115,41 @@ app.post("/api/tasks", (req, res) => {
       .status(400)
       .json({ success: false, data: null, message: "Invalid input" });
   }
-  const newTask = { id: idCounter++, title, completed };
+  const newTask = { id: uuidv4(), title, completed };
   tasks.push(newTask);
-  res
-    .status(201)
-    .json({
-      success: true,
-      data: newTask,
-      message: "Task created successfully",
-    });
+  res.status(201).json({
+    success: true,
+    data: newTask,
+    message: "Task created successfully",
+  });
 });
 
+/**
+ * @swagger
+ * /api/tasks/{id}:
+ *   put:
+ *     summary: Update a task
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Task'
+ *     responses:
+ *       200:
+ *         description: Task updated
+ *       404:
+ *         description: Task not found
+ */
 app.put("/api/tasks/:id", (req, res) => {
   const { title, completed } = req.body;
-  const task = tasks.find((t) => t.id === parseInt(req.params.id));
+  const task = tasks.find((t) => t.id === req.params.id);
   if (!task)
     return res
       .status(404)
@@ -131,8 +164,25 @@ app.put("/api/tasks/:id", (req, res) => {
   res.json({ success: true, data: task, message: "Task updated successfully" });
 });
 
+/**
+ * @swagger
+ * /api/tasks/{id}:
+ *   delete:
+ *     summary: Delete a task
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Task deleted
+ *       404:
+ *         description: Task not found
+ */
 app.delete("/api/tasks/:id", (req, res) => {
-  const index = tasks.findIndex((t) => t.id === parseInt(req.params.id));
+  const index = tasks.findIndex((t) => t.id === req.params.id);
   if (index === -1)
     return res
       .status(404)
@@ -142,6 +192,26 @@ app.delete("/api/tasks/:id", (req, res) => {
     success: true,
     data: deleted,
     message: "Task deleted successfully",
+  });
+});
+
+/**
+ * @swagger
+ * /api/stats:
+ *   get:
+ *     summary: Get statistics of tasks
+ *     responses:
+ *       200:
+ *         description: Task statistics
+ */
+app.get("/api/stats", (req, res) => {
+  const total = tasks.length;
+  const completedCount = tasks.filter((t) => t.completed).length;
+  const pendingCount = total - completedCount;
+  res.json({
+    success: true,
+    data: { total, completed: completedCount, pending: pendingCount },
+    message: "Task stats fetched successfully",
   });
 });
 

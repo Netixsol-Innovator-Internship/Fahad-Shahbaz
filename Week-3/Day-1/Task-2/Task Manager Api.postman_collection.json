@@ -1,218 +1,218 @@
 {
-	"info": {
-		"_postman_id": "2949e1bd-4d3e-425f-a4e7-a8d0a30e67b2",
-		"name": "Task Manager Api",
-		"description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "47499845",
-		"_collection_link": "https://fahadshahbazintern-1944498.postman.co/workspace/Fahad's-Workspace~3e1465b4-4680-4de7-8ef2-edc4ca3b48f2/collection/47499845-2949e1bd-4d3e-425f-a4e7-a8d0a30e67b2?action=share&source=collection_link&creator=47499845"
-	},
-	"item": [
-		{
-			"name": "Get All Tasks",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseURL}}/api/tasks/",
-					"host": [
-						"{{baseURL}}"
-					],
-					"path": [
-						"api",
-						"tasks",
-						""
-					]
-				},
-				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
-			},
-			"response": [
-				{
-					"name": "Get all tasks",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/tasks/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"tasks",
-								""
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "",
-					"header": [
-						{
-							"key": "X-Powered-By",
-							"value": "Express"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "Content-Length",
-							"value": "115"
-						},
-						{
-							"key": "ETag",
-							"value": "W/\"73-7dDdOXsQUOVwtAJGpAD7l+EOMoE\""
-						},
-						{
-							"key": "Date",
-							"value": "Mon, 11 Aug 2025 11:42:39 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5"
-						}
-					],
-					"cookie": [
-						{
-							"expires": "Invalid Date"
-						}
-					],
-					"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"Learn Express\",\n            \"completed\": false\n        }\n    ],\n    \"message\": \"Tasks fetched successfully\"\n}"
-				}
-			]
-		},
-		{
-			"name": "Create Task.",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"title\": \"Learn Tailwind\",\n  \"completed\": true \n}\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseURL}}/api/tasks/",
-					"host": [
-						"{{baseURL}}"
-					],
-					"path": [
-						"api",
-						"tasks",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Task by ID",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"title\": \"Learn JS\",\n  \"completed\": true\n}\n"
-				},
-				"url": {
-					"raw": "{{baseURL}}/api/tasks/4",
-					"host": [
-						"{{baseURL}}"
-					],
-					"path": [
-						"api",
-						"tasks",
-						"4"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Task",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"title\": \"Learn Express Updated\",\n  \"completed\": true\n}\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseURL}}/api/tasks/1",
-					"host": [
-						"{{baseURL}}"
-					],
-					"path": [
-						"api",
-						"tasks",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Task",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"title\": \"Learn Tailwind\",\n  \"completed\": true \n}\n"
-				},
-				"url": {
-					"raw": "{{baseURL}}/api/tasks/5",
-					"host": [
-						"{{baseURL}}"
-					],
-					"path": [
-						"api",
-						"tasks",
-						"5"
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"variable": [
-		{
-			"key": "baseURL",
-			"value": "http://localhost:3000",
-			"type": "default"
-		}
-	]
+  "info": {
+    "_postman_id": "2949e1bd-4d3e-425f-a4e7-a8d0a30e67b2",
+    "name": "Task Manager Api",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "47499845",
+    "_collection_link": "https://fahadshahbazintern-1944498.postman.co/workspace/Fahad's-Workspace~3e1465b4-4680-4de7-8ef2-edc4ca3b48f2/collection/47499845-2949e1bd-4d3e-425f-a4e7-a8d0a30e67b2?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get All Tasks",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/api/tasks/",
+          "host": ["{{baseURL}}"],
+          "path": ["api", "tasks", ""]
+        },
+        "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+      },
+      "response": [
+        {
+          "name": "Get all tasks",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/tasks/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "tasks", ""]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "",
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "115"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"73-7dDdOXsQUOVwtAJGpAD7l+EOMoE\""
+            },
+            {
+              "key": "Date",
+              "value": "Mon, 11 Aug 2025 11:42:39 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [
+            {
+              "expires": "Invalid Date"
+            }
+          ],
+          "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"Learn Express\",\n            \"completed\": false\n        }\n    ],\n    \"message\": \"Tasks fetched successfully\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Create Task.",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Learn Node.js\",\n  \"completed\": true \n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/api/tasks/",
+          "host": ["{{baseURL}}"],
+          "path": ["api", "tasks", ""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Task by ID",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Learn JS\",\n  \"completed\": true\n}\n"
+        },
+        "url": {
+          "raw": "{{baseURL}}/api/tasks/dfdb1ff2-2c67-48ec-84b1-b621f5f75164",
+          "host": ["{{baseURL}}"],
+          "path": ["api", "tasks", "dfdb1ff2-2c67-48ec-84b1-b621f5f75164"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Task",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Learn HTML Updated\",\n  \"completed\": true\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/api/tasks/dfdb1ff2-2c67-48ec-84b1-b621f5f75164",
+          "host": ["{{baseURL}}"],
+          "path": ["api", "tasks", "dfdb1ff2-2c67-48ec-84b1-b621f5f75164"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Task",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Learn Tailwind\",\n  \"completed\": true \n}\n"
+        },
+        "url": {
+          "raw": "{{baseURL}}/api/tasks/4b257648-3e28-484c-b3f0-e1d58d41d910",
+          "host": ["{{baseURL}}"],
+          "path": ["api", "tasks", "4b257648-3e28-484c-b3f0-e1d58d41d910"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Stats for All",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/stats",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "stats"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get by filter",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/tasks?title=HTML",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "tasks"],
+          "query": [
+            {
+              "key": "title",
+              "value": "HTML"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseURL",
+      "value": "http://localhost:3000",
+      "type": "default"
+    }
+  ]
 }
