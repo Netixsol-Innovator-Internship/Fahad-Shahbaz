@@ -55,3 +55,5 @@ Task 1 - Responsive navbar
 - https://fahad-week3-day1-task.vercel.app/
 
 Task 2 - Restful Api (Only Code Repo Required)
+
+- https://github.com/Netixsol-Innovator-Internship/Fahad-Shahbaz/tree/main/Week-3/Day-1/Task-2
