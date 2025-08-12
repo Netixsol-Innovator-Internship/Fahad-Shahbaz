@@ -6,13 +6,6 @@
     <title>Product Designer - Netixsol</title>
 
     <!-- Tailwind Config for CDN -->
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-      };
-    </script>
-
-    <!-- Tailwind CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <!-- Fonts -->
@@ -91,7 +84,7 @@
         class="md:hidden flex items-center justify-center p-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-400"
       >
         <svg
-          class="w-8 h-8 text-gray-800"
+          class="w-8 h-8 text-gray-200"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -110,7 +103,7 @@
     <!-- Mobile Nav Overlay -->
     <div
       id="mobile-nav"
-      class="fixed inset-0 bg-white dark:bg-[#000000] bg-opacity-95 z-50 flex flex-col items-center justify-center space-y-8 md:hidden"
+      class="fixed inset-0 bg-white dark:bg-[#000000] bg-opacity-95 z-50 hidden flex-col items-center justify-center space-y-8 md:hidden"
     >
       <a
         href="#"
@@ -150,9 +143,13 @@
       </button>
       <button
         id="close-mobile-nav"
-        class="absolute top-6 right-6 text-3xl text-gray-700"
+        class="absolute top-6 right-6 text-3xl cursor-pointer"
       >
-        &times;
+        <img
+          src="./images/close.svg"
+          alt="close logo"
+          class="transition-all dark:invert"
+        />
       </button>
     </div>
 
@@ -161,7 +158,9 @@
       class="w-full flex items-center justify-between gap-4 flex-wrap mx-auto lg:px-20 py-12"
     >
       <!-- left div -->
-      <div class="max-w-[660px] w-full flex flex-col justify-center items-center mx-auto">
+      <div
+        class="max-w-[660px] w-full flex flex-col justify-center items-center mx-auto"
+      >
         <div class="space-y-2 mb-10 px-4 md:px-0">
           <h1
             class="text-[24vw] md:text-[190px] font-display font-black text-black leading-none tracking-tight transition-all dark:text-white"
@@ -233,12 +232,15 @@
       const mobileNav = document.getElementById("mobile-nav");
       const closeMobileNav = document.getElementById("close-mobile-nav");
 
-      mobileMenuBtn.addEventListener("click", () =>
-        mobileNav.classList.remove("hidden")
-      );
-      closeMobileNav.addEventListener("click", () =>
-        mobileNav.classList.add("hidden")
-      );
+      mobileMenuBtn.addEventListener("click", () => {
+        mobileNav.classList.remove("hidden");
+        mobileNav.classList.add("flex");
+      });
+
+      closeMobileNav.addEventListener("click", () => {
+        mobileNav.classList.remove("flex");
+        mobileNav.classList.add("hidden");
+      });
 
       // Theme toggle with persistence
       function setThemeIcon(isDark) {
