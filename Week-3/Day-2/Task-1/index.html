@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Designer - Netixsol</title>
+
+    <!-- Tailwind Config for CDN -->
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class="w-full max-w-[1600px] mx-auto bg-white dark:bg-[#000000] font-body font-[Anton]"
+  >
+    <!-- Header -->
+    <header
+      class="flex items-center justify-between px-6 lg:px-20 py-6 font-sans"
+    >
+      <!-- Logo -->
+      <div class="flex items-center space-x-2">
+        <img
+          src="./images/Logo.svg"
+          alt="Company Logo"
+          class="transition-all dark:invert"
+        />
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a
+          href="#"
+          class="text-gray-700 hover:text-black dark:text-white dark:hover:text-white transition-colors"
+          >Home</a
+        >
+        <a
+          href="#"
+          class="text-gray-700 hover:text-black dark:text-white dark:hover:text-white transition-colors"
+          >Portfolio</a
+        >
+        <a
+          href="#"
+          class="text-gray-700 hover:text-black dark:text-white dark:hover:text-white transition-colors"
+          >Skills</a
+        >
+        <a
+          href="#"
+          class="text-gray-700 hover:text-black dark:text-white dark:hover:text-white transition-colors"
+          >About Me</a
+        >
+      </nav>
+
+      <!-- Desktop Right Side -->
+      <div class="hidden md:flex items-center space-x-4">
+        <!-- Theme Toggle -->
+        <button
+          id="theme-toggle"
+          class="size-14 bg-transparent rounded-full relative cursor-pointer flex items-center justify-center"
+        >
+          <img
+            id="theme-icon"
+            src="./images/light.svg"
+            alt="Toggle theme"
+            class="size-14 transition-all"
+          />
+        </button>
+        <!-- CTA Button -->
+        <button
+          class="cursor-pointer bg-[#925FF0] text-white px-6 py-2 rounded-md hover:bg-[#7a4fd1] transition-colors"
+        >
+          Contact Me
+        </button>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden flex items-center justify-center p-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-400"
+      >
+        <svg
+          class="w-8 h-8 text-gray-800"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          ></path>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Mobile Nav Overlay -->
+    <div
+      id="mobile-nav"
+      class="fixed inset-0 bg-white dark:bg-[#000000] bg-opacity-95 z-50 flex flex-col items-center justify-center space-y-8 md:hidden"
+    >
+      <a
+        href="#"
+        class="text-2xl text-gray-700 hover:text-black dark:text-white dark:hover:text-white transition-colors"
+        >Home</a
+      >
+      <a
+        href="#"
+        class="text-2xl text-gray-700 hover:text-black dark:text-white dark:hover:text-white transition-colors"
+        >Portfolio</a
+      >
+      <a
+        href="#"
+        class="text-2xl text-gray-700 hover:text-black dark:text-white dark:hover:text-white transition-colors"
+        >Skills</a
+      >
+      <a
+        href="#"
+        class="text-2xl text-gray-700 hover:text-black dark:text-white dark:hover:text-white transition-colors"
+        >About Me</a
+      >
+      <button
+        class="cursor-pointer bg-[#925FF0] text-white px-8 py-3 rounded-md hover:bg-[#7a4fd1] transition-colors text-xl"
+      >
+        Contact Me
+      </button>
+      <button
+        id="mobile-theme-toggle"
+        class="w-12 h-12 bg-transparent rounded-full relative cursor-pointer flex items-center justify-center"
+      >
+        <img
+          id="mobile-theme-icon"
+          src="./images/light.svg"
+          alt="Toggle theme"
+          class="size-14 transition-all"
+        />
+      </button>
+      <button
+        id="close-mobile-nav"
+        class="absolute top-6 right-6 text-3xl text-gray-700"
+      >
+        &times;
+      </button>
+    </div>
+
+    <!-- Main Content -->
+    <main
+      class="w-full flex items-center justify-between gap-4 flex-wrap mx-auto lg:px-20 py-12"
+    >
+      <!-- left div -->
+      <div class="max-w-[660px] w-full flex flex-col justify-center items-center mx-auto">
+        <div class="space-y-2 mb-10 px-4 md:px-0">
+          <h1
+            class="text-[24vw] md:text-[190px] font-display font-black text-black leading-none tracking-tight transition-all dark:text-white"
+          >
+            PRODUCT<br />
+            DESIGNER
+          </h1>
+          <div
+            class="text-[13vw] md:text-[105px] font-display font-black leading-[1.1] md:tracking-tight"
+          >
+            <span
+              class="bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400 bg-clip-text text-transparent"
+            >
+              CRISTIAN MUÑOZ
+            </span>
+          </div>
+        </div>
+        <div class="space-y-5 w-full flex flex-col justify-center items-center">
+          <div
+            class="flex items-center mx-auto justify-between px-5 gap-4 w-full flex-wrap"
+          >
+            <a href="#"
+              ><img
+                src="./images/Instagram.svg"
+                class="transition-all dark:invert"
+            /></a>
+            <a href="#"
+              ><img src="./images/Figma.svg" class="transition-all dark:invert"
+            /></a>
+            <a href="#"
+              ><img
+                src="./images/LinkedIn.svg"
+                class="transition-all dark:invert"
+            /></a>
+            <a href="#"
+              ><img
+                src="./images/Twitter.svg"
+                class="transition-all dark:invert"
+            /></a>
+            <a href="#"
+              ><img
+                src="./images/Telegram.svg"
+                class="transition-all dark:invert"
+            /></a>
+            <a href="#"
+              ><img
+                src="./images/Medium.svg"
+                class="transition-all dark:invert"
+            /></a>
+          </div>
+          <button class="bg-[#292929] text-white px-10 py-2 w-[90%] md:w-full">
+            Download Curriculum Vitae
+          </button>
+        </div>
+      </div>
+      <!-- Right div -->
+      <div class="hidden lg:block w-1/2 mx-auto">
+        <img
+          src="./images/bg.jpg"
+          alt="Background image"
+          class="w-[693px] h-[765px] object-cover"
+        />
+      </div>
+    </main>
+
+    <script>
+      // Mobile nav toggle
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileNav = document.getElementById("mobile-nav");
+      const closeMobileNav = document.getElementById("close-mobile-nav");
+
+      mobileMenuBtn.addEventListener("click", () =>
+        mobileNav.classList.remove("hidden")
+      );
+      closeMobileNav.addEventListener("click", () =>
+        mobileNav.classList.add("hidden")
+      );
+
+      // Theme toggle with persistence
+      function setThemeIcon(isDark) {
+        document.getElementById("theme-icon").src = isDark
+          ? "./images/dark.svg"
+          : "./images/light.svg";
+        document.getElementById("mobile-theme-icon").src = isDark
+          ? "./images/dark.svg"
+          : "./images/light.svg";
+      }
+
+      function toggleTheme() {
+        const html = document.documentElement;
+        const isDark = html.classList.toggle("dark");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+        setThemeIcon(isDark);
+      }
+
+      document
+        .getElementById("theme-toggle")
+        .addEventListener("click", toggleTheme);
+      document
+        .getElementById("mobile-theme-toggle")
+        .addEventListener("click", toggleTheme);
+
+      // Load saved theme
+      (function () {
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+          document.documentElement.classList.add("dark");
+          setThemeIcon(true);
+        } else {
+          setThemeIcon(false);
+        }
+      })();
+    </script>
+  </body>
+</html>
