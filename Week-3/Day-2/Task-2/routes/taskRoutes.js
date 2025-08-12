@@ -22,7 +22,6 @@ const router = express.Router();
  *       200:
  *         description: List of tasks
  */
-router.get("/", auth, getTasks);
 
 /**
  * @swagger
@@ -43,13 +42,16 @@ router.get("/", auth, getTasks);
  *             properties:
  *               title:
  *                 type: string
+ *                 example: Learn MongoDB with Mongoose
  *               completed:
  *                 type: boolean
+ *                 example: false
  *     responses:
  *       201:
- *         description: Task created
+ *         description: Task created successfully
+ *       400:
+ *         description: Bad request
  */
-router.post("/", auth, [body("title").notEmpty()], createTask);
 
 /**
  * @swagger
@@ -74,13 +76,16 @@ router.post("/", auth, [body("title").notEmpty()], createTask);
  *             properties:
  *               title:
  *                 type: string
+ *                 example: Learn MongoDB with Mongoose
  *               completed:
  *                 type: boolean
+ *                 example: true
  *     responses:
  *       200:
- *         description: Task updated
+ *         description: Task updated successfully
+ *       404:
+ *         description: Task not found
  */
-router.put("/:id", auth, updateTask);
 
 /**
  * @swagger
@@ -99,8 +104,13 @@ router.put("/:id", auth, updateTask);
  *         description: Task ID
  *     responses:
  *       200:
- *         description: Task deleted
+ *         description: Task deleted successfully
+ *       404:
+ *         description: Task not found
  */
+router.get("/", auth, getTasks);
+router.post("/", auth, [body("title").notEmpty()], createTask);
+router.put("/:id", auth, updateTask);
 router.delete("/:id", auth, deleteTask);
 
 module.exports = router;

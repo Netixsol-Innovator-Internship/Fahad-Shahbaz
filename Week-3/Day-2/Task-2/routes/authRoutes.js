@@ -23,26 +23,20 @@ const router = express.Router();
  *             properties:
  *               name:
  *                 type: string
+ *                 example: John Doe
  *               email:
  *                 type: string
+ *                 example: john.doe@example.com
  *               password:
  *                 type: string
  *                 format: password
+ *                 example: password123
  *     responses:
  *       201:
  *         description: User registered successfully
  *       400:
  *         description: Bad request
  */
-router.post(
-  "/register",
-  [
-    body("name").notEmpty(),
-    body("email").isEmail(),
-    body("password").isLength({ min: 6 }),
-  ],
-  register
-);
 
 /**
  * @swagger
@@ -62,15 +56,26 @@ router.post(
  *             properties:
  *               email:
  *                 type: string
+ *                 example: john.doe@example.com
  *               password:
  *                 type: string
  *                 format: password
+ *                 example: password123
  *     responses:
  *       200:
  *         description: Login successful, returns JWT
  *       401:
  *         description: Invalid credentials
  */
+router.post(
+  "/register",
+  [
+    body("name").notEmpty(),
+    body("email").isEmail(),
+    body("password").isLength({ min: 6 }),
+  ],
+  register
+);
 router.post(
   "/login",
   [body("email").isEmail(), body("password").exists()],

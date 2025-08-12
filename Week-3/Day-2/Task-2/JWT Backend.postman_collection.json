@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "efb9bd71-a387-4d35-8b1d-6a0904c78500",
+		"name": "JWT Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47499845",
+		"_collection_link": "https://fahadshahbazintern-1944498.postman.co/workspace/Fahad's-Workspace~3e1465b4-4680-4de7-8ef2-edc4ca3b48f2/collection/47499845-efb9bd71-a387-4d35-8b1d-6a0904c78500?action=share&source=collection_link&creator=47499845"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Fahad Test\",\n  \"email\": \"fahadtest@example.com\",\n  \"password\": \"123456\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/users/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"fahadtest@example.com\",\n  \"password\": \"123456\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Protected Route add task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg5YjRiNTY2OWYxNDg0ZTk0MzkzN2U0In0sImlhdCI6MTc1NTAwODQwNCwiZXhwIjoxNzU1MDEyMDA0fQ.gM0xfbvGHa8CTmrOXLLmcTJ8KGC6S223-izgyxY7Lyc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Learn Express\",\n  \"completed\": false\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all tasks",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg5YjRiNTY2OWYxNDg0ZTk0MzkzN2U0In0sImlhdCI6MTc1NTAwODQwNCwiZXhwIjoxNzU1MDEyMDA0fQ.gM0xfbvGHa8CTmrOXLLmcTJ8KGC6S223-izgyxY7Lyc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg5YjRiNTY2OWYxNDg0ZTk0MzkzN2U0In0sImlhdCI6MTc1NTAwODQwNCwiZXhwIjoxNzU1MDEyMDA0fQ.gM0xfbvGHa8CTmrOXLLmcTJ8KGC6S223-izgyxY7Lyc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/tasks/689b5696c61cd9c3c1a1483c",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"tasks",
+						"689b5696c61cd9c3c1a1483c"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
