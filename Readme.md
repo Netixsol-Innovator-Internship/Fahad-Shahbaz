@@ -63,3 +63,7 @@ Task 2 - Restful Api (Only Code Repo Required)
 Task 1 - Product Designer
 
 - https://fahad-week3-day2-task1.vercel.app/
+
+Task 2 - JWT Backend
+
+- https://fahad-week3-day2-task2.vercel.app/api-docs/
