@@ -3,9 +3,11 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./docs/swagger");
+const cors = require("cors");
 
 dotenv.config();
 const app = express();
+app.use(cors({ origin: "*", methods: "GET, HEAD, PUT, PATCH, POST, DELETE" }));
 
 mongoose
   .connect(process.env.MONGODB_URL)
