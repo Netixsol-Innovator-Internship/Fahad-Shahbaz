@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { validationResult } = require("express-validator");
 
+// Register user
 exports.register = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty())
@@ -25,10 +26,11 @@ exports.register = async (req, res) => {
     res.json({ token });
   } catch (err) {
     console.error("Register error:", err);
-    res.status(500).send("Server error");
+    res.status(500).json({ msg: "Server error" }); // JSON instead of plain text
   }
 };
 
+// Login user
 exports.login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty())
@@ -50,6 +52,6 @@ exports.login = async (req, res) => {
     res.json({ token });
   } catch (err) {
     console.error("Login error:", err);
-    res.status(500).send("Server error");
+    res.status(500).json({ msg: "Server error" }); // JSON instead of plain text
   }
 };

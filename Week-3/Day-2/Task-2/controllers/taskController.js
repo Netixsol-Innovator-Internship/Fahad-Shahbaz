@@ -1,11 +1,13 @@
 const Task = require("../models/Task");
 const { validationResult } = require("express-validator");
 
+// Get All Tasks
 exports.getTasks = async (req, res) => {
   const tasks = await Task.find({ user: req.user.id });
   res.json(tasks);
 };
 
+// POST - Create Task
 exports.createTask = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty())
@@ -17,6 +19,7 @@ exports.createTask = async (req, res) => {
   res.status(201).json(task);
 };
 
+// PUT - Update Task
 exports.updateTask = async (req, res) => {
   const { id } = req.params;
   const task = await Task.findOneAndUpdate(
@@ -28,6 +31,7 @@ exports.updateTask = async (req, res) => {
   res.json(task);
 };
 
+// DELETE - Delete Task
 exports.deleteTask = async (req, res) => {
   const { id } = req.params;
   const task = await Task.findOneAndDelete({ _id: id, user: req.user.id });
