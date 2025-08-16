@@ -67,3 +67,9 @@ Task 1 - Product Designer
 Task 2 - JWT Backend
 
 - https://fahad-week3-day2-task2.vercel.app/api-docs/
+
+#### Day 3 (Completed) ✅
+
+Task 1 - Task Manager
+
+https://fahad-week3-day3-taskmanager.vercel.app/
