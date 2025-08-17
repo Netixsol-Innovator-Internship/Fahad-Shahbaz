@@ -7,6 +7,7 @@ const cors = require("cors");
 
 dotenv.config();
 const app = express();
+
 // app.use(cors({ origin: "*", methods: "GET, HEAD, PUT, PATCH, POST, DELETE" }));
 app.use(
   cors({
@@ -14,7 +15,7 @@ app.use(
     credentials: false,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
 
 mongoose
