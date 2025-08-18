@@ -43,7 +43,17 @@ import ErrorResponse from "../utils/errorResponse.js";
  */
 
 const createProduct = async (req, res, next) => {
-  let { name, description, price, category } = req.body;
+  let {
+    name,
+    description,
+    price,
+    category,
+    origin,
+    flavor,
+    qualities,
+    caffeine,
+    allergens,
+  } = req.body;
   category = category.trim();
   if (
     name.trim().length < 3 ||
@@ -73,6 +83,11 @@ const createProduct = async (req, res, next) => {
     description,
     price,
     category,
+    origin,
+    flavor,
+    qualities,
+    caffeine,
+    allergens,
     image: req.file.path,
   });
 
