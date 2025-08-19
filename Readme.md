@@ -95,3 +95,7 @@ https://fahad-week4-day1-todofront.vercel.app/
 Task 2 - Todo Backend
 
 https://fahad-week4-day1-todoback.vercel.app/api-docs/
+
+#### Day 2 (Completed) ✅
+
+https://fahad-week4-day2-job.vercel.app/
