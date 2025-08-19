@@ -78,7 +78,17 @@ app.post("/api/tasks", (req: Request, res: Response) => {
   res.status(201).json(newTask);
 });
 
-// PUT /api/tasks removed (not implemented)
+/**
+ * Toggle task completed
+ */
+app.put("/api/tasks/:id", (req: Request, res: Response) => {
+  const id = parseInt(req.params.id as string, 10);
+  const task = tasks.find((t) => t.id === id);
+  if (!task) return res.status(404).json({ error: "Task not found" });
+
+  task.completed = !task.completed;
+  res.json(task);
+});
 
 /**
  * @swagger
