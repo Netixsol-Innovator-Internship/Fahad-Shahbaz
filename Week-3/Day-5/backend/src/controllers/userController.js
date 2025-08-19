@@ -88,6 +88,11 @@ const signup = async (req, res, next) => {
 
     await createdUser.save();
 
+    // Ensure JWT secret is available — jwt.sign will throw a confusing error if it's missing
+    if (!JWT_KEY) {
+      throw new Error("JWT_KEY is not defined in environment variables");
+    }
+
     const token = jwt.sign(
       {
         userId: createdUser._id,
@@ -109,11 +114,13 @@ const signup = async (req, res, next) => {
       token,
     });
   } catch (err) {
+    // Log the full error server-side for debugging
     console.error("signup error:", err);
+    // Return a safer, but informative error to the client (no stack)
     const error = new ErrorResponse(
       "Signing up failed, please try again later.",
       500,
-      {},
+      { error: err.message || "Unknown error" },
       false
     );
     return next(error);
