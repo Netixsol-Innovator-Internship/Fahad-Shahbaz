@@ -78,35 +78,7 @@ app.post("/api/tasks", (req: Request, res: Response) => {
   res.status(201).json(newTask);
 });
 
-/**
- * @swagger
- * /api/tasks/{id}:
- *   put:
- *     summary: Toggle task completed
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: integer
- *         required: true
- *     responses:
- *       200:
- *         description: Updated task
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Task'
- *       404:
- *         description: Task not found
- */
-app.put("/api/tasks/:id", (req: Request, res: Response) => {
-  const id = parseInt(req.params.id as string, 10);
-  const task = tasks.find((t) => t.id === id);
-  if (!task) return res.status(404).json({ error: "Task not found" });
-
-  task.completed = !task.completed;
-  res.json(task);
-});
+// PUT /api/tasks removed (not implemented)
 
 /**
  * @swagger
