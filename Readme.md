@@ -73,3 +73,25 @@ Task 2 - JWT Backend
 Task 1 - Task Manager
 
 https://fahad-week3-day3-taskmanager.vercel.app/
+
+#### Day 5 (Backend Completed) ✅
+
+Task 1 - Hackathon (Backend)
+
+https://fahad-week3-day5-teabackend.vercel.app/
+
+Task 2 - Hackathon (Frontend) pending 📝
+
+- 
+
+### 📌 WEEK - 4
+
+#### Day 1 (Completed) ✅
+    
+Task 1 - Todo App
+
+https://fahad-week4-day1-todofront.vercel.app/
+
+Task 2 - Todo Backend
+
+https://fahad-week4-day1-todoback.vercel.app/api-docs/
