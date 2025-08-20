@@ -1,0 +1,3 @@
+- globals.css file has commented code
+- layout file has commented code
+- searchStore component is not used and not built yet
