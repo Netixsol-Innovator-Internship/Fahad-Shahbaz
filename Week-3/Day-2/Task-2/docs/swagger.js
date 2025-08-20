@@ -5,7 +5,7 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: { title: "Task Manager API", version: "2.0.0" },
-    servers: [{ url: "http://localhost:8000" }],
+    servers: [{ url: "https://fahad-week3-day2-task2.vercel.app/" }],
     components: {
       securitySchemes: {
         bearerAuth: {
