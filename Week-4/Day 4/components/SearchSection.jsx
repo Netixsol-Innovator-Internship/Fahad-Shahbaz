@@ -22,7 +22,7 @@ export default function SearchSection({ handleSearch, loading }) {
           />
           <Button
             type="submit"
-            className="absolute right-1 top-1/2 transform -translate-y-1/2 px-4 cursor-pointer"
+            className="absolute right-[0.3px] top-1/2 transform -translate-y-1/2 px-4 cursor-pointer"
             disabled={loading}
           >
             {loading ? "Searching..." : "Search"}

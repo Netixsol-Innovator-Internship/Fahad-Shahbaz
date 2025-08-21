@@ -82,7 +82,7 @@ https://fahad-week3-day5-teabackend.vercel.app/
 
 Task 2 - Hackathon (Frontend) pending 📝
 
-- https://fahad-week3-day5-teafront.vercel.app/
+https://fahad-week3-day5-teafront.vercel.app/
 
 
 ### 📌 WEEK - 4
