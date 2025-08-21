@@ -8,11 +8,17 @@ import { Eye } from "lucide-react";
 export default function ResultsGrid({ users = [], fetchUserDetails }) {
   if (!users.length) return null;
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+  <div className="grid gap-x-4 gap-y-4" style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+      maxWidth: '1200px',
+      margin: '0 auto'
+    }}>
       {users.map((user) => (
         <Card
           key={user.id}
           className="group hover:shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer"
+          style={{ width: '100%', maxWidth: '290px', height: '300px', margin: '0 auto' }}
           onClick={() => fetchUserDetails(user.login)}
         >
           <CardContent className="p-6">
