@@ -13,3 +13,4 @@ build/
 .next/
 .cache/
 .parcel-cache/
+.vercel
