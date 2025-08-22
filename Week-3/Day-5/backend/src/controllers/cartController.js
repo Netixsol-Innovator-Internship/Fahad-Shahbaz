@@ -70,7 +70,7 @@ const addToCart = async (req, res, next) => {
 
     await cart.save();
   } catch (err) {
-    console.log("err", err);
+    console.error("Error in addToCart:", err);
     const error = new ErrorResponse(
       "Error catched while adding to cart",
       500,
