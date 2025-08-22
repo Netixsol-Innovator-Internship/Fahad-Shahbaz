@@ -56,11 +56,8 @@ const CollectionsPage = () => {
         {/* STATS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4 py-8">
           {products.map((product) => (
-            <Link to="/accessories">
-              <div
-                key={product._id}
-                className="bg-white  overflow-hidden text-center"
-              >
+            <Link to="/accessories" key={product._id}>
+              <div className="bg-white  overflow-hidden text-center">
                 <img
                   src={product.image}
                   alt={product.name}
