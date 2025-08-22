@@ -10,6 +10,15 @@ import cors from "cors";
 
 const app = express();
 
+// Enabling CORS for all origins (MUST be before any routes)
+app.use(
+  cors({
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 // Serve Swagger spec as JSON
 app.get("/api-docs/swagger.json", (req, res) => {
   res.setHeader("Content-Type", "application/json");
@@ -43,15 +52,6 @@ app.get("/api-docs", (req, res) => {
     </html>
   `);
 });
-
-// Enabling CORS for all origins
-app.use(
-  cors({
-    origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
 
 app.use(express.json());
 app.use(bodyParser.json());
