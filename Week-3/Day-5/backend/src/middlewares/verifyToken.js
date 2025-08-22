@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import ErrorResponse from "../utils/errorResponse.js";
 
-const JWT_KEY = "chooseAnyStrongKey";
+const JWT_KEY = "myNewSuperSecretKey_2025";
 
 const checkAuth = (req, res, next) => {
   if (req.method === "OPTIONS") {
