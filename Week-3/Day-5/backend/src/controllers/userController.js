@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/userSchema");
 const ErrorResponse = require("../utils/errorResponse");
-const User = require("../models/userSchema");
 
 const superAdminEmails = ["superAdmin1@admin.com", "superAdmin2@admin.com"];
 const JWT_KEY = "myNewSuperSecretKey_2025";
@@ -394,7 +393,13 @@ const blockUnblockUser = async (req, res, next) => {
     }
     if(currentUser.role === "superAdmin" && user.role ==="superAdmin" ) {
       return res
-        .status(403)
+        .strouter.get(
+  "/",
+  checkAuth,
+  requireRole("admin", "superadmin"),
+  usersControllers.getUsers
+);
+atus(403)
         .json({ message: "You can't block/unblock another superAdmin." });
     }
 
