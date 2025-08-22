@@ -4,10 +4,9 @@ import jwt from "jsonwebtoken";
 import User from "../models/userSchema.js";
 import ErrorResponse from "../utils/errorResponse.js";
 import dotenv from "dotenv";
-dotenv.config();
 
 const adminEmails = ["admin@mail.com", "admin2@mail.com"];
-const JWT_KEY = process.env.JWT_KEY;
+const JWT_KEY = "myNewSuperSecretKey_2025";
 const SALT_ROUNDS = 10;
 
 /**

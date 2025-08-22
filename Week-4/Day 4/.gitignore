@@ -22,3 +22,4 @@ coverage/
 .idea/
 .sass-cache
 .turbo/
+.vercel
