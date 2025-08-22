@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const ErrorResponse = require("../../utils/errorResponse");
-const User = require("../../models/userSchema");
+const ErrorResponse = require("../utils/errorResponse");
+const User = require("../models/userSchema");
 
 const JWT_KEY = "myNewSuperSecretKey_2025";
 
