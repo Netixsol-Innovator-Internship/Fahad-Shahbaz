@@ -12,7 +12,7 @@ const RecommendedProducts = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          "https://fahad-week3-day5-teabackend.vercel.app//api/products"
+          "https://fahad-week3-day5-teabackend.vercel.app/api/products"
         );
 
         // Select first 3 products — replace logic if you want random or filtered ones

@@ -20,7 +20,7 @@ const CartPage = () => {
 
       try {
         const res = await axios.get(
-          "https://fahad-week3-day5-teabackend.vercel.app//api/cart",
+          "https://fahad-week3-day5-teabackend.vercel.app/api/cart",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -53,7 +53,7 @@ const CartPage = () => {
 
     try {
       await axios.delete(
-        "https://fahad-week3-day5-teabackend.vercel.app//api/cart/removeItem",
+        "https://fahad-week3-day5-teabackend.vercel.app/api/cart/removeItem",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -83,7 +83,7 @@ const CartPage = () => {
 
     try {
       const response = await axios.put(
-        "https://fahad-week3-day5-teabackend.vercel.app//api/cart/update-quantity",
+        "https://fahad-week3-day5-teabackend.vercel.app/api/cart/update-quantity",
         {
           productId,
           quantity: newQuantity,

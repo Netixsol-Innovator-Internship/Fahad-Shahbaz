@@ -106,7 +106,7 @@ const SignupPage = () => {
           />
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+            className="w-full bg-black text-white py-2 rounded hover:bg-black/80 transition cursor-pointer"
           >
             Sign Up
           </button>

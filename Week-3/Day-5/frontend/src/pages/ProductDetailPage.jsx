@@ -276,7 +276,7 @@ const ProductDetailPage = () => {
 
                 <button
                   onClick={handleAddToBag}
-                  className="flex items-center gap-2 bg-[#282828] text-white justify-center py-3 px-6 hover:bg-gray-800 transition-colors font-medium h-14"
+                  className="flex items-center gap-2 bg-[#282828] text-white justify-center py-3 px-12 hover:bg-gray-800 transition-colors font-medium h-14 cursor-pointer"
                 >
                   <IoBagHandleOutline /> ADD TO BAG
                 </button>

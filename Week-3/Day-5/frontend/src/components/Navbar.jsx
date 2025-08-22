@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/CartContext";
-import { IoBagHandleOutline } from "react-icons/io5";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -22,37 +21,37 @@ const Navbar = () => {
           <div className="hidden md:flex space-x-6 items-center">
             <Link
               to="/"
-              className="font-montserrat  text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+              className="font-montserrat  text-[14px] font-normal leading-5 text-gray-700 hover:text-black"
             >
               TEA COLLECTIONS
             </Link>
             <Link
               to="/accessories"
-              className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+              className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-black"
             >
               ACCESSORIES
             </Link>
             <Link
               to="/ "
-              className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+              className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-black"
             >
               BLOGS
             </Link>
             <Link
               to="/ "
-              className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+              className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-black"
             >
               CONTACT US
             </Link>
           </div>
 
           {/* Auth Buttons */}
-          <div className="hidden md:flex space-x-10 mr-4 ">
-            <Link to="/login" className="  w-4 ">
-              <img src="/images/search.png" alt="" />
+          <div className="hidden md:flex items-center justify-between space-x-10 mr-4">
+            <Link to="#" className="w-4">
+              <img src="/images/search.svg" alt="search icon" />
             </Link>
-            <Link to="/signup" className=" w-4 ">
-              <img src="/images/person.png" alt="" />
+            <Link to="/signup" className="w-4">
+              <img src="/images/person.svg" alt="person icon" />
             </Link>
             {/* <Link
                 onClick={logout}
@@ -65,7 +64,7 @@ const Navbar = () => {
               className="relative w-5 h-5 flex items-center justify-center"
             >
               <img
-                src="/images/local_mall.png"
+                src="/images/mall.svg"
                 alt="Cart"
                 className="w-full h-full"
               />
