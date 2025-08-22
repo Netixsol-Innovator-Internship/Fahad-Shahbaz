@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/userSchema");
 const ErrorResponse = require("../utils/errorResponse");
+const User = require("../models/userSchema");
 
 const superAdminEmails = ["superAdmin1@admin.com", "superAdmin2@admin.com"];
 const JWT_KEY = "myNewSuperSecretKey_2025";
@@ -320,6 +321,37 @@ const changeUserRole = async (req, res, next) => {
   }
 };
 
+
+
+const getUsers = async (req, res, next) => {
+  let users;
+  try {
+    users = await User.find({});
+    if (!users || users.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No users found",
+        data: {},
+      });
+    }
+  } catch (err) {
+    console.error("Error fetching users:", err.message || err);
+    const error = new ErrorResponse(
+      "error catched getting users, server error",
+      500,
+      { err: err.message || err.toString() },
+      false
+    );
+    return next(error);
+  }
+  res.status(200).json({
+    success: true,
+    message: "  users data",
+    data: users,
+  });
+};
+
+
 const blockUnblockUser = async (req, res, next) => {
   const { id } = req.params;
   const currentUser = req.userData;
@@ -383,3 +415,4 @@ exports.signup = signup;
 exports.login = login;
 exports.changeUserRole = changeUserRole;
 exports.blockUnblockUser = blockUnblockUser;
+exports.getUsers = getUsers;

@@ -138,8 +138,8 @@ const getProducts = async (req, res, next) => {
     const categoriesWithOneProductEach = await Products.aggregate([
       {
         $group: {
-          _id: "$category", // category wise group karna
-          product: { $first: "$$ROOT" }, // har category ka pehla product lena
+          _id: "$category",
+          product: { $first: "$$ROOT" },
         },
       },
     ]);

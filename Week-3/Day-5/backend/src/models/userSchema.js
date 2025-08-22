@@ -9,7 +9,7 @@ const userSchema = new Schema(
     password: { type: String, required: true, minlength: 6 },
     role: {
       type: String,
-      enum: ["user", "admin", "superAdmin"],
+      enum: ["user", "admin", "superadmin"],
       default: "user",
     },
     isBlocked: {
