@@ -1,9 +1,7 @@
-import swaggerUi from "swagger-ui-express";
-import swaggerJsdoc from "swagger-jsdoc";
-import path from "path";
-import { fileURLToPath } from "url";
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsdoc = require("swagger-jsdoc");
+const path = require("path");
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -37,4 +35,5 @@ const options = {
 };
 
 const swaggerSpec = swaggerJsdoc(options);
-export { swaggerUi, swaggerSpec };
+
+module.exports = { swaggerUi, swaggerSpec };

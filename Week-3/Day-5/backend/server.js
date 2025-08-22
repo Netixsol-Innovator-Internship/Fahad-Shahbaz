@@ -1,57 +1,30 @@
-import express from "express";
-import { swaggerSpec } from "./src/docs/swagger.js";
-import userRoutes from "./src/routes/userRoutes.js";
-import productRoutes from "./src/routes/productRoutes.js";
-import cartRoutes from "./src/routes/cartRoutes.js";
-import ErrorResponse from "./src/utils/errorResponse.js";
-import connectDB from "./src/config/db.js";
-import bodyParser from "body-parser";
-import cors from "cors";
+const cors = require("cors");
+const express = require("express");
+// const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+// const { swaggerUi, swaggerSpec } = require("./src/docs/swagger");
+
+const userRoutes = require("./src/routes/userRoutes");
+const productRoutes = require("./src/routes/productRoutes");
+const cartRoutes = require("./src/routes/cartRoutes");
+
+const { swaggerUi, swaggerSpec } = require("./src/docs/swagger");
+
+const connectDB = require("./src/config/db");
+const ErrorResponse = require("./src/utils/errorResponse");
 
 const app = express();
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Enabling CORS for all origins (MUST be before any routes)
+// Enabling CORS for all origins
 app.use(
   cors({
     origin: "*",
+    // credentials: false,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
-// Serve Swagger spec as JSON
-app.get("/api-docs/swagger.json", (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  res.send(swaggerSpec);
-});
-
-// Serve Swagger UI using CDN
-app.get("/api-docs", (req, res) => {
-  res.send(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>API Docs</title>
-        <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
-      </head>
-      <body>
-        <div id="swagger-ui"></div>
-        <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
-        <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js"></script>
-        <script>
-          window.onload = function() {
-            SwaggerUIBundle({
-              url: '/api-docs/swagger.json',
-              dom_id: '#swagger-ui',
-              presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
-              layout: 'StandaloneLayout'
-            });
-          }
-        </script>
-      </body>
-    </html>
-  `);
-});
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -63,23 +36,22 @@ app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 
-// Health check route
 app.get("/", (req, res) => {
   console.log(`app working`);
   res.status(200).json({
     success: true,
-    message: "Everything is working",
+    message: "hy",
     data: {},
   });
 });
 
-// Handle non-existing routes
+// middleware for non existing ROute
 app.use((req, res, next) => {
-  const error = new ErrorResponse("Can't find this route", 404, [], false);
+  const error = new ErrorResponse("Couldn't found this route", 404, [], false);
   return next(error);
 });
 
-// Central error handler
+// Central error handling middleware
 app.use((error, req, res, next) => {
   if (res.headersSent) {
     return next(error);
@@ -95,12 +67,11 @@ app.use((error, req, res, next) => {
     status,
   });
 });
-
-// Start the server
 connectDB();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  // console.log(`Database Connected`);
+  console.log(` Server running on port ${PORT}`);
 });
 
-export default app;
+module.exports = app;

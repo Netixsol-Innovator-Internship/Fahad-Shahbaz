@@ -1,16 +1,12 @@
-import express from "express";
-import { checkAuth } from "../middlewares/verifyToken.js";
-import {
-  addToCart,
-  getCart,
-  updateQuantity,
-  removeItemFromCart,
-} from "../controllers/cartController.js";
+const express = require("express");
+const { checkAuth } = require("../middlewares/verifyToken");
+const cartController = require("../controllers/cartController");
+
 const router = express.Router();
 
-router.post("/add", checkAuth, addToCart);
-router.get("/", checkAuth, getCart);
-router.put("/update-quantity", checkAuth, updateQuantity);
-router.delete("/removeItem", checkAuth, removeItemFromCart);
+router.post("/add", checkAuth, cartController.addToCart);
+router.get("/", checkAuth, cartController.getCart);
+router.put("/update-quantity", checkAuth, cartController.updateQuantity);
+router.delete("/removeItem", checkAuth, cartController.removeItemFromCart);
 
-export default router;
+module.exports = router;

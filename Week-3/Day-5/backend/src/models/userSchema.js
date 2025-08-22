@@ -1,8 +1,7 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-// User schema for authentication and roles
 const userSchema = new Schema(
   {
     name: { type: String, required: true },
@@ -10,11 +9,15 @@ const userSchema = new Schema(
     password: { type: String, required: true, minlength: 6 },
     role: {
       type: String,
-      enum: ["user", "admin"],
+      enum: ["user", "admin", "superAdmin"],
       default: "user",
+    },
+    isBlocked: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);

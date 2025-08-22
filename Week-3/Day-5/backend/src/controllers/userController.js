@@ -1,13 +1,13 @@
-import { validationResult } from "express-validator";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import User from "../models/userSchema.js";
-import ErrorResponse from "../utils/errorResponse.js";
-import dotenv from "dotenv";
+const { validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-const adminEmails = ["admin@mail.com", "admin2@mail.com"];
+const User = require("../models/userSchema");
+const ErrorResponse = require("../utils/errorResponse");
+
+const superAdminEmails = ["superAdmin1@admin.com", "superAdmin2@admin.com"];
 const JWT_KEY = "myNewSuperSecretKey_2025";
-const SALT_ROUNDS = 10;
+const SALT_ROUNDS = 12;
 
 /**
  * @swagger
@@ -76,7 +76,7 @@ const signup = async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-    const role = adminEmails.includes(email) ? "admin" : "user";
+    const role = superAdminEmails.includes(email) ? "superAdmin" : "user";
 
     const createdUser = new User({
       name,
@@ -87,11 +87,6 @@ const signup = async (req, res, next) => {
 
     await createdUser.save();
 
-    // Ensure JWT secret is available — jwt.sign will throw a confusing error if it's missing
-    if (!JWT_KEY) {
-      throw new Error("JWT_KEY is not defined in environment variables");
-    }
-
     const token = jwt.sign(
       {
         userId: createdUser._id,
@@ -101,7 +96,8 @@ const signup = async (req, res, next) => {
       JWT_KEY,
       { expiresIn: "2h" }
     );
-
+    console.log("token from signup", token);
+    console.log("createdUser from signup", createdUser);
     return res.status(201).json({
       success: true,
       message: "User registered successfully",
@@ -113,13 +109,11 @@ const signup = async (req, res, next) => {
       token,
     });
   } catch (err) {
-    // Log the full error server-side for debugging
     console.error("signup error:", err);
-    // Return a safer, but informative error to the client (no stack)
     const error = new ErrorResponse(
       "Signing up failed, please try again later.",
       500,
-      { error: err.message || "Unknown error" },
+      {},
       false
     );
     return next(error);
@@ -176,12 +170,8 @@ const login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const existingUser = await User.findOne({ email });
-    const isValidPassword = await bcrypt.compare(
-      password,
-      existingUser.password
-    );
 
-    if (!existingUser || !isValidPassword) {
+    if (!existingUser) {
       const error = new ErrorResponse(
         "Invalid Credentials.",
         422,
@@ -190,6 +180,20 @@ const login = async (req, res, next) => {
       );
 
       return next(error);
+    }
+    if (existingUser.isBlocked) {
+      return res
+        .status(403)
+        .json({ message: "Your account has been blocked." });
+    }
+
+    const isValidPassword = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+
+    if (!isValidPassword) {
+      return res.status(403).json({ message: "Invalid Credentials" });
     }
 
     const token = jwt.sign(
@@ -225,4 +229,157 @@ const login = async (req, res, next) => {
   }
 };
 
-export { signup, login };
+const changeUserRole = async (req, res, next) => {
+  const { newRole } = req.body;
+  const currentUser = req.userData;
+  const userIdToChange = req.params.id;
+
+  if (!newRole) {
+    return res.status(400).json({ message: "New role is required" });
+  }
+  // Add validation for currentUser
+  if (!currentUser || !currentUser.role) {
+    return res.status(401).json({ message: "Authentication required" });
+  }
+
+  console.log("newRole:", newRole);
+  console.log("currentUser:", currentUser);
+  console.log("currentUser.role:", currentUser.role);
+  console.log("userIdToChange:", userIdToChange);
+
+  try {
+    const userToChange = await User.findById(userIdToChange);
+
+    if (!userToChange) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Can't modify own role
+    if (userToChange._id.toString() === currentUser.userId.toString()) {
+      return res
+        .status(403)
+        .json({ message: "You cannot change your own role" });
+    }
+
+    // SuperAdmin restrictions
+    if (currentUser.role === "superAdmin") {
+      // Can't demote another superAdmin
+      if (userToChange.role === "superAdmin" && newRole !== "superAdmin") {
+        return res
+          .status(403)
+          .json({ message: "Cannot demote another SuperAdmin" });
+      }
+
+      // Valid transitions: user <--> admin
+      const validRoles = ["user", "admin"];
+      if (!validRoles.includes(newRole)) {
+        return res.status(400).json({ message: "Invalid target role" });
+      }
+    }
+
+    // Add Admin restrictions
+    if (currentUser.role === "admin") {
+      // Admins can only change users to/from user role
+      if (newRole !== "user") {
+        return res.status(403).json({
+          message: "Admins can only set role to 'user'",
+        });
+      }
+
+      // Admins cannot modify other admins or superAdmins
+      if (userToChange.role === "admin" || userToChange.role === "superAdmin") {
+        return res.status(403).json({
+          message: "Cannot modify other admins or super admins",
+        });
+      }
+    }
+
+    userToChange.role = newRole;
+    await userToChange.save();
+
+    console.log("userToChange after role changed:", userToChange);
+
+    res.status(200).json({
+      success: true,
+      message: "User role updated successfully",
+      data: {
+        user: {
+          id: userToChange._id,
+          email: userToChange.email,
+          role: userToChange.role,
+        },
+      },
+    });
+  } catch (err) {
+    console.error("changeUserRole error:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: err.message,
+    });
+  }
+};
+
+const blockUnblockUser = async (req, res, next) => {
+  const { id } = req.params;
+  const currentUser = req.userData;
+  const { action } = req.body; // 'block' or 'unblock'
+
+  if (!action.trim()) {
+    return res
+      .status(400)
+      .json({ message: "Action block or unblcok is required." });
+  }
+
+  if (!["block", "unblock"].includes(action)) {
+    return res
+      .status(400)
+      .json({ message: "Invalid action. Use 'block' or 'unblock'." });
+  }
+
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Prevent self block
+    if (user._id.toString() === req.userData.userId) {
+      return res
+        .status(403)
+        .json({ message: "You can't block/unblock yourself." });
+    }
+
+    if(currentUser.role === "admin" && user.role ==="admin" ) {
+      return res
+        .status(403)
+        .json({ message: "You can't block/unblock another admin." });
+    }
+    if(currentUser.role === "admin" && user.role ==="superAdmin" ) {
+      return res
+        .status(403)
+        .json({ message: "Access denied." });
+    }
+    if(currentUser.role === "superAdmin" && user.role ==="superAdmin" ) {
+      return res
+        .status(403)
+        .json({ message: "You can't block/unblock another superAdmin." });
+    }
+
+    user.isBlocked = action === "block";
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: `User ${action}ed successfully.`,
+      user,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.signup = signup;
+exports.login = login;
+exports.changeUserRole = changeUserRole;
+exports.blockUnblockUser = blockUnblockUser;

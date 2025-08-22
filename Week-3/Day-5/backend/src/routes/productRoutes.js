@@ -1,23 +1,45 @@
-import express from "express";
-import {
-  getProducts,
-  getProductsByCategory,
-  getProductsByID,
-  createProduct,
-  updateProducts,
-  deleteProduct,
-} from "../controllers/productController.js";
-import upload from "../middlewares/multerCloudinary.js";
-import { checkAuth, checkAdmin } from "../middlewares/verifyToken.js";
+const express = require("express");
+
+const productController = require("../controllers/productController");
+const upload = require("../middlewares/multerCloudinary");
+const { checkAuth } = require("../middlewares/verifyToken");
+const requireRole = require("../middlewares/roleMiddleware");
+
 const router = express.Router();
 
-router.get("/", getProducts);
-router.get("/category/:category", getProductsByCategory);
+router.get("/", productController.getProducts);
+// router.get("/", productController.getProducts);
+router.get("/category/:category", productController.getProductsByCategory);
 
 // protectedRoutes
-router.post("/", checkAuth, checkAdmin, upload.single("image"), createProduct);
-router.get("/:id", getProductsByID);
-router.put("/:id", checkAuth, checkAdmin, updateProducts);
-router.delete("/:id", checkAuth, checkAdmin, deleteProduct);
+router.post(
+  "/",
+  checkAuth,
+  requireRole("admin", "superAdmin"),
+  upload.single("image"),
+  productController.createProduct
+);
 
-export default router;
+router.get(
+  "/productsForAdmin",
+  checkAuth,
+  requireRole("admin", "superAdmin"),
+  productController.getProductsForAdminPage
+);
+
+router.get("/:id", productController.getProductsByID);
+
+router.patch(
+  "/:id",
+  checkAuth,
+  requireRole("admin", "superAdmin"),
+  productController.updateProducts
+);
+router.delete(
+  "/:id",
+  checkAuth,
+  requireRole("superAdmin"),
+  productController.deleteProduct
+);
+
+module.exports = router;

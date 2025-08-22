@@ -1,7 +1,8 @@
-import Cart from "../models/cartSchema.js";
-import Product from "../models/productSchema.js";
-import User from "../models/userSchema.js";
-import ErrorResponse from "../utils/errorResponse.js";
+const Cart = require("../models/cartSchema");
+const Product = require("../models/productSchema");
+const User = require("../models/userSchema");
+
+const ErrorResponse = require("../utils/errorResponse");
 
 /**
  * @swagger
@@ -70,7 +71,7 @@ const addToCart = async (req, res, next) => {
 
     await cart.save();
   } catch (err) {
-    console.error("Error in addToCart:", err);
+    console.log("err", err);
     const error = new ErrorResponse(
       "Error catched while adding to cart",
       500,
@@ -104,6 +105,7 @@ const addToCart = async (req, res, next) => {
  *         description: Failed to fetch cart
  */
 
+
 const getCart = async (req, res, next) => {
   try {
     const cart = await Cart.findOne({ user: req.userData.userId }).populate(
@@ -130,6 +132,7 @@ const getCart = async (req, res, next) => {
     return next(new ErrorResponse("Failed to fetch cart", 500, {}, false));
   }
 };
+
 
 /**
  * @swagger
@@ -165,6 +168,7 @@ const getCart = async (req, res, next) => {
  *       500:
  *         description: Server error
  */
+
 
 const updateQuantity = async (req, res, next) => {
   const userId = req.userData.userId;
@@ -286,4 +290,9 @@ const removeItemFromCart = async (req, res, next) => {
   }
 };
 
-export { addToCart, getCart, updateQuantity, removeItemFromCart };
+module.exports = {
+  addToCart,
+  getCart,
+  updateQuantity,
+  removeItemFromCart,
+};

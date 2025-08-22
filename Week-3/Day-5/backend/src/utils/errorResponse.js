@@ -1,10 +1,5 @@
 class ErrorResponse extends Error {
-  constructor(
-    message = "Server Error",
-    errorCode = 500,
-    data = [],
-    success = false
-  ) {
+  constructor(message = "Server Error", errorCode = 500, data = [], success = false) {
     super(message);
     this.code = errorCode;
     this.data = data;
@@ -12,4 +7,4 @@ class ErrorResponse extends Error {
   }
 }
 
-export default ErrorResponse;
+module.exports = ErrorResponse;

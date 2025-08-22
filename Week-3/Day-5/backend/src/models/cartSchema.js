@@ -1,31 +1,33 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-// Represents an item in the cart
-const cartItemSchema = new Schema({
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Product",
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    default: 1,
-    required: true,
-    min: 1,
-  },
-});
+//  Sub-schema  
+const cartItemSchema = new Schema(
+  {
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      default: 1,
+      required:true,
+      min: 1,
+    },
+  }
+);
 
-// Represents a user's cart
+//  Main cart schema , this will import 
 const cartSchema = new Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "User", 
     required: true,
-    unique: true,
+    unique: true, // Each user has one cart
   },
-  items: [cartItemSchema],
+  items: [cartItemSchema],  
 });
 
-export default mongoose.model("Cart", cartSchema);
+module.exports = mongoose.model("Cart", cartSchema);

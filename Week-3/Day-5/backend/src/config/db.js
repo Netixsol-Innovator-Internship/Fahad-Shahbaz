@@ -1,14 +1,14 @@
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
+const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log("Database Connected Successfully");
+    await mongoose.connect(
+      `mongodb+srv://muhammadfahadintern:fahad123@cluster0.ug19bpj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+    );
+    console.log("Database Connected");
   } catch (err) {
-    console.error("Error while connecting to database:", err);
+    console.error("Error while connecting database:", err);
   }
 };
 
-export default connectDB;
+module.exports = connectDB;

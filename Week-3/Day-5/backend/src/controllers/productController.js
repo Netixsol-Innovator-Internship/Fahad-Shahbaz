@@ -1,5 +1,7 @@
-import Products from "../models/productSchema.js";
-import ErrorResponse from "../utils/errorResponse.js";
+const mongoose = require("mongoose");
+const Products = require("../models/productSchema");
+const ErrorResponse = require("../utils/errorResponse");
+// const User = require("../models/userSchema");
 
 /**
  * @swagger
@@ -43,6 +45,12 @@ import ErrorResponse from "../utils/errorResponse.js";
  */
 
 const createProduct = async (req, res, next) => {
+  // if (!["admin", "superAdmin"].includes(req.userData.role)) {
+  //   return res
+  //     .status(403)
+  //     .json({ message: "Only admins or SuperAdmin can create products" });
+  // }
+
   let {
     name,
     description,
@@ -54,6 +62,7 @@ const createProduct = async (req, res, next) => {
     caffeine,
     allergens,
   } = req.body;
+
   category = category.trim();
   if (
     name.trim().length < 3 ||
@@ -122,21 +131,6 @@ const createProduct = async (req, res, next) => {
     data: createdProduct,
   });
 };
-
-/**
- * @swagger
- * /api/products:
- *   get:
- *     summary: Get all products
- *     tags: [Products]
- *     responses:
- *       200:
- *         description: List of products
- *       404:
- *         description: No products found
- *       500:
- *         description: Server error
- */
 
 const getProducts = async (req, res, next) => {
   let products;
@@ -300,6 +294,12 @@ const getProductsByID = async (req, res, next) => {
  */
 
 const updateProducts = async (req, res, next) => {
+  // if (!["admin", "superAdmin"].includes(req.userData.role)) {
+  //   return res
+  //     .status(403)
+  //     .json({ message: "Only admins or SuperAdmin can update products" });
+  // }
+
   const { updatedName, updatedDescription, updatedPrice } = req.body;
 
   if (!updatedName.trim() || !updatedDescription.trim()) {
@@ -380,6 +380,12 @@ const updateProducts = async (req, res, next) => {
  */
 
 const deleteProduct = async (req, res, next) => {
+  // if (req.userData.role !== "superAdmin") {
+  //   return res
+  //     .status(403)
+  //     .json({ message: "Only SuperAdmins can delete products." });
+  // }
+
   let deletedProduct;
   try {
     deletedProduct = await Products.findById(req.params.id);
@@ -392,6 +398,14 @@ const deleteProduct = async (req, res, next) => {
       );
       return next(error);
     }
+
+    // if (deletedProduct.id !== req.userData.userId) {
+    //   const error = new Error(
+    //     "You are not allowed ( Authorized ) to delete this Product"
+    //   );
+    //   error.status = 401;
+    //   return next(error);
+    // }
 
     await deletedProduct.deleteOne();
   } catch (err) {
@@ -411,11 +425,42 @@ const deleteProduct = async (req, res, next) => {
   });
 };
 
-export {
+// for admin
+
+const getProductsForAdminPage = async (req, res, next) => {
+  let products;
+  try {
+    products = await Products.find({});
+    if (!products || products.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No products found",
+        data: {},
+      });
+    }
+  } catch (err) {
+    console.error("Error fetching products:", err.message || err);
+    const error = new ErrorResponse(
+      "error catched getting products, server error",
+      500,
+      { err: err.message || err.toString() },
+      false
+    );
+    return next(error);
+  }
+  res.status(200).json({
+    success: true,
+    message: "  products data",
+    data: products,
+  });
+};
+
+module.exports = {
   createProduct,
   getProducts,
   getProductsByID,
   updateProducts,
   deleteProduct,
   getProductsByCategory,
+  getProductsForAdminPage,
 };
