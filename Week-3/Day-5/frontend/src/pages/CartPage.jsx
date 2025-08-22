@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useCart } from "../contexts/CartContext";
 import RecommendedProducts from "../components/RecommendedProducts";
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
   const [loading, setLoading] = useState(true);
@@ -113,7 +114,6 @@ const CartPage = () => {
     }
   };
 
-
   const handleDecreaseQuantity = (item) => {
     if (item.quantity > 1) {
       updateQuantity(item.id, item.quantity - 1);
@@ -210,9 +210,12 @@ const CartPage = () => {
                 </div>
 
                 {/* Back to Shopping */}
-                <button className="mt-6 border border-gray-900 px-8 py-3 text-gray-900 font-medium hover:bg-gray-900 hover:text-white transition duration-300 rounded">
+                <Link
+                  to="/accessories"
+                  className="mt-6 border border-gray-900 px-8 py-3 text-gray-900 font-medium hover:bg-gray-900 hover:text-white transition duration-300 cursor-pointer"
+                >
                   BACK TO SHOPPING
-                </button>
+                </Link>
               </>
             )}
           </div>
