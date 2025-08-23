@@ -1,6 +1,11 @@
-// src/context/AuthContext.jsx
-import { createContext, useContext, useEffect, useState } from "react";
-import axios from "axios";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
+import { useLoginMutation } from "../api/apiSlice";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
@@ -12,73 +17,88 @@ export const AuthProvider = ({ children }) => {
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [role, setRole] = useState("user");
   const navigate = useNavigate();
+
+  const logout = useCallback(() => {
+    console.log("Logging out user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("idOfTheUser");
+    setIsAuthenticated(false);
+    setRole("user");
+    navigate("/login");
+  }, [navigate]);
 
   useEffect(() => {
     const checkToken = () => {
       const token = localStorage.getItem("token");
-      console.log("Checking token...", token);  
+      console.log("Checking token...", token);
 
       if (token) {
         try {
           const decoded = jwtDecode(token);
-          const currentTime = Date.now() / 1000; // in seconds
+          const currentTime = Date.now() / 1000;
 
           if (decoded.exp < currentTime) {
             console.log("Token expired");
             logout();
           } else {
+            console.log(
+              "Token valid, setting authenticated and role:",
+              decoded.role
+            );
             setIsAuthenticated(true);
+            setRole(decoded.role || "user");
           }
         } catch (e) {
           console.error("Invalid token:", e);
           logout();
         }
+      } else {
+        console.log("No token found");
+        setIsAuthenticated(false);
+        setRole("user");
       }
     };
 
     checkToken();
 
     const interval = setInterval(checkToken, 60 * 1000);
-    return () => clearInterval(interval); // cleanup
-  }, []);
+    return () => clearInterval(interval);
+  }, [logout]);
+
+  const [loginMutation] = useLoginMutation();
 
   const login = async (email, password) => {
     setError("");
     try {
       setLoading(true);
-      const response = await axios.post(
-        "https://fahad-week3-day5-teabackend.vercel.app/api/users/login",
-        {
-          email,
-          password,
-        }
-      );
-      console.log("response", response);
-      const token = response.data.token; //  get token from response
-      localStorage.setItem("token", token); // store it
-      const id = response.data.user.id;
+      console.log("Attempting login for:", email);
+      const response = await loginMutation({ email, password }).unwrap();
+      console.log("Login response:", response);
+
+      const token = response.token;
+      localStorage.setItem("token", token);
+      const id = response.user.id;
       localStorage.setItem("idOfTheUser", id);
-      console.log("id", id);
-      console.log("token", token); //  log it
+
+      // Decode token to get user role
+      const decoded = jwtDecode(token);
+      console.log("Decoded token:", decoded);
+      setRole(decoded.role || "user");
 
       setError("");
       setIsAuthenticated(true);
+      console.log("Authentication state set to true");
       navigate("/");
     } catch (err) {
+      console.error("Login error:", err);
       setIsAuthenticated(false);
-      console.log("err", err);
-      setError(err.response.data.message);
+      setError(err?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
   };
-  function logout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("idOfTheUser");
-    setIsAuthenticated(false);
-    navigate("/login");
-  }
 
   return (
     <AuthContext.Provider
@@ -90,6 +110,8 @@ export const AuthProvider = ({ children }) => {
         loading,
         error,
         setError,
+        role,
+        setRole,
       }}
     >
       {children}

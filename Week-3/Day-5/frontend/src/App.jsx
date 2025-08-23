@@ -4,6 +4,11 @@ import SignupPage from "./pages/SignupPage";
 import DashboardPage from "./pages/DashboardPage";
 import AddTaskPage from "./pages/AddTaskPage";
 import Navbar from "./components/Navbar";
+import {
+  ProtectedRoute,
+  AdminProtectedRoute,
+  PublicRoute,
+} from "./components/ProtectedRoute";
 import { useAuth } from "./contexts/AuthContext";
 import { useEffect } from "react";
 import AccessoriesPage from "./pages/AccessoriesPage";
@@ -11,6 +16,7 @@ import CollectionsPage from "./pages/CollectionsPage";
 import CartPage from "../src/pages/CartPage";
 import Footer from "./components/Footer";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   const { isAuthenticated, setIsAuthenticated } = useAuth();
@@ -24,34 +30,60 @@ function App() {
 
   return (
     <>
-      {/* <Router> */}
-      {/* {isAuthenticated && <Navbar />} */}
       <Navbar />
       <Routes>
         <Route path="/" element={<CollectionsPage />} />
         <Route
           path="/login"
-          element={isAuthenticated ? <Navigate to="/" /> : <LoginPage />}
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
         />
         <Route
           path="/signUp"
-          element={isAuthenticated ? <Navigate to="/" /> : <SignupPage />}
+          element={
+            <PublicRoute>
+              <SignupPage />
+            </PublicRoute>
+          }
         />
         <Route path="/accessories" element={<AccessoriesPage />} />
-        <Route path="/cart" element={<CartPage />} />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <CartPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/products/:id" element={<ProductDetailPage />} />
-        {/* <Route
+        <Route
+          path="/admin-dashboard"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboard />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
           path="/dashboard"
           element={
-            isAuthenticated ? <DashboardPage /> : <Navigate to="/login" />
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
           }
         />
         <Route
           path="/addTask"
-          element={isAuthenticated ? <AddTaskPage /> : <Navigate to="/login" />}
-        /> */}
+          element={
+            <ProtectedRoute>
+              <AddTaskPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
-      {/* </Router> */}
       <Footer />
     </>
   );

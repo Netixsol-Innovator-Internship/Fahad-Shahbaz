@@ -1,20 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useLoginMutation } from "../api/apiSlice";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import { useAuth } from "../contexts/AuthContext";
-// import AuthForm from "../components/AuthForm";
 
 const LoginPage = () => {
-  // const [error, setError] = useState("");
   const [isLogin, setIsLogin] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { login, error, setError } = useAuth();
-
+  const { login, error, setError, role } = useAuth();
   const navigate = useNavigate();
-
   const [state, setState] = useState({});
+  const [loginMutation] = useLoginMutation();
 
   const handleValue = (e) => {
     setState((s) => ({
@@ -37,36 +34,25 @@ const LoginPage = () => {
       return setError("Please enter a valid email address.");
     }
 
-    login(email, password);
-
-    // try {
-    //   setLoading(true);
-    //   const response = await axios.post(
-    //     "https://day1-back-end.vercel.app/api/users/login",
-    //     {
-    //       email,
-    //       password,
-    //     }
-    //   );
-    //   console.log("response", response);
-    //   const token = response.data.token; // ✅ get token from response
-    //   localStorage.setItem("token", token); // ✅ store it
-    //   const id = response.data.user.id;
-    //   localStorage.setItem("idOfTheUser", id);
-    //   console.log("id", id);
-    //   console.log("token", token); // ✅ log it
-    //   setIsLogin(true);
-    //   setError("");
-    //   navigate("/dashboard");
-    // } catch (err) {
-    //   console.log("err", err);
-    //   setError(err.response.data.message);
-    // } finally {
-    //   setLoading(false);
-
-    // }
+    try {
+      setLoading(true);
+      const response = await loginMutation({ email, password }).unwrap();
+      const token = response.token;
+      localStorage.setItem("token", token);
+      setError("");
+      // Role-based redirect
+      if (response.role === "admin" || response.role === "superAdmin") {
+        navigate("/admin-dashboard");
+      } else {
+        navigate("/");
+      }
+      login(token, response.role); // update context
+    } catch (err) {
+      setError(err?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
   };
-  // console.log("state", state);
   if (loading) {
     return <Loader />;
   }

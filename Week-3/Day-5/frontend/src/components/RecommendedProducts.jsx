@@ -1,35 +1,13 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import { Link } from "react-router-dom";
+import { useGetProductsQuery } from "../api/apiSlice";
 
 const RecommendedProducts = () => {
-  const [recommended, setRecommended] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const { data, isLoading, isError } = useGetProductsQuery();
+  const recommended = data?.data?.slice(0, 3) || [];
 
-  useEffect(() => {
-    const fetchRecommended = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          "https://fahad-week3-day5-teabackend.vercel.app/api/products"
-        );
-
-        // Select first 3 products — replace logic if you want random or filtered ones
-        setRecommended(response.data.data.slice(0, 3));
-      } catch (err) {
-        setError("Failed to load recommended products");
-        console.error("Error fetching recommended products:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecommended();
-  }, []);
-
-  if (loading) return null;
-  if (error) return null;
+  if (isLoading) return null;
+  if (isError) return null;
   if (recommended.length === 0) return null;
 
   return (

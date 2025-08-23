@@ -1,149 +1,65 @@
 // src/pages/DashboardPage.jsx
-import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import {
+  useGetTasksQuery,
+  useUpdateTaskMutation,
+  useDeleteTaskMutation,
+} from "../api/apiSlice";
 import EditTaskModal from "../components/EditTaskModel";
-import Loader from '../components/Loader'
-// import TaskList from "../components/TaskList";
-// import TaskForm from "../components/TaskForm";
+import Loader from "../components/Loader";
 
 const DashboardPage = () => {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    // const tasksArray = [
-    //   {
-    //     _id: "1",
-    //     title: "Build Login Page",
-    //     description: "Create a login form with validation and token handling.",
-    //     completed: true,
-    //   },
-    //   {
-    //     _id: "2",
-    //     title: "Add Edit Functionality",
-    //     description: "Allow users to edit tasks from the dashboard.",
-    //     completed: false,
-    //   },
-    // ];
+  const token = localStorage.getItem("token");
+  let userId;
+  if (token) {
+    const decoded = jwtDecode(token);
+    userId = decoded.userId;
+  }
 
-    // setTasks(tasksArray);
-
-    const fetchTasks = async () => {
-      try {
-        setLoading(true);
-        const token = localStorage.getItem("token");
-        if (!token) {
-          setError("Unauthorized. Please login.");
-          return;
-        }
-
-        const decoded = jwtDecode(token);
-        const userId = decoded.userId;
-        console.log("userId", userId);
-        const response = await axios.get(
-          `https://fahad-week3-day5-teabackend.vercel.app/api/tasks/${userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log("response while gettind user for dashboard", response.data);
-
-        setTasks(response.data.data);
-        console.log("tasks", tasks);
-      } catch (err) {
-        console.log("err catched", err);
-        setError(err.response.data.message );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTasks();
-  }, []);
+  const {
+    data: tasksData,
+    isLoading,
+    isError,
+  } = useGetTasksQuery(userId, { skip: !userId });
+  const tasks = tasksData?.data || [];
+  const [updateTaskMutation] = useUpdateTaskMutation();
+  const [deleteTaskMutation] = useDeleteTaskMutation();
 
   const handleEdit = (task) => {
     setEditingTask(task);
-    console.log("task from handle Edit function", task);
     setIsModalOpen(true);
   };
 
   const handleUpdateTask = async (taskId, updatedTaskData) => {
     try {
-      setLoading(true);
-      const token = localStorage.getItem("token");
-
-      const response = await axios.put(
-        `https://fahad-week3-day5-teabackend.vercel.app/api/tasks/${taskId}`,
-        updatedTaskData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("response", response);
-      // Update task in UI
-      const updatedTask = response.data.data;
-      console.log("updatedTask", updatedTask);
-      setTasks((prev) =>
-        prev.map((task) => (task._id === taskId ? updatedTask : task))
-      );
-
+      await updateTaskMutation({ taskId, updatedTaskData, token }).unwrap();
       setIsModalOpen(false);
       setEditingTask(null);
     } catch (err) {
-      console.error("Update error:", err);
-      setError(err.response?.data?.message || "Failed to update task");
-    } finally {
-      setLoading(false);
+      setError(err?.data?.message || "Failed to update task");
     }
   };
 
   const handleDelete = async (taskId) => {
-    let confirmDelete = confirm("Do You really want to delete Task");
-
+    let confirmDelete = confirm("Do you really want to delete this task?");
     if (confirmDelete) {
       try {
-        setLoading(true);
-        const token = localStorage.getItem("token");
-        if (!token) {
-          return setError("UnAuthorized Access, Calling... 15");
-        }
-
-        const response = await axios.delete(
-          `https://fahad-week3-day5-teabackend.vercel.app/api/tasks/${taskId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const filteredTask = tasks.filter((task) => task._id !== taskId);
-        setTasks(filteredTask);
-        console.log("filteredTask", filteredTask);
-        console.log("response", response);
-
+        await deleteTaskMutation({ taskId, token }).unwrap();
         setIsModalOpen(false);
         setEditingTask(null);
       } catch (err) {
-        console.error("deleting error:", err);
-        setError(err.response?.data?.message || "Failed to update task");
-      } finally {
-        setLoading(false);
+        setError(err?.data?.message || "Failed to delete task");
       }
     }
-    console.log("taskId", taskId);
   };
 
-  if (loading) {
+  if (isLoading) {
     return <Loader />;
   }
 

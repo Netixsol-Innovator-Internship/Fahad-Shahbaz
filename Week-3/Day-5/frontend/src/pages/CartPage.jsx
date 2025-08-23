@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useCart } from "../contexts/CartContext";
 import RecommendedProducts from "../components/RecommendedProducts";
 import { Link } from "react-router-dom";
+import {
+  useGetUsersQuery,
+  useUpdateUserMutation,
+  useDeleteProductMutation,
+} from "../api/apiSlice";
 
 const CartPage = () => {
   const [loading, setLoading] = useState(true);
@@ -10,109 +14,31 @@ const CartPage = () => {
   const [updatingItems, setUpdatingItems] = useState({}); // Track which items are being updated
   const { cartItems, setCartItems } = useCart();
 
-  useEffect(() => {
-    const fetchCart = async () => {
-      const token = localStorage.getItem("token");
+  // Example: Use RTK Query for cart fetch (replace with actual cart endpoint in apiSlice.js)
+  // const { data, isLoading, isError } = useGetCartQuery();
+  // useEffect(() => {
+  //   if (data?.items) {
+  //     setCartItems(data.items);
+  //   }
+  // }, [data, setCartItems]);
 
-      if (!token) {
-        setLoading(false);
-        return;
-      }
+  // Example: Use RTK Query mutation for remove (replace with actual mutation in apiSlice.js)
+  // const [removeItemMutation] = useRemoveItemMutation();
+  // const removeItem = async (productId) => {
+  //   await removeItemMutation(productId);
+  //   setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId));
+  // };
 
-      try {
-        const res = await axios.get(
-          "https://fahad-week3-day5-teabackend.vercel.app/api/cart",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const items = res.data.data.items.map((item) => ({
-          id: item.product._id,
-          name: item.product.name,
-          image: item.product.image,
-          price: item.product.price,
-          quantity: item.quantity,
-        }));
-
-        setCartItems(items);
-      } catch (err) {
-        console.error("Cart fetch error:", err);
-        setError("It Looks Like the cart is empty");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCart();
-  }, [setCartItems]);
-
-  const removeItem = async (productId) => {
-    const token = localStorage.getItem("token");
-
-    try {
-      await axios.delete(
-        "https://fahad-week3-day5-teabackend.vercel.app/api/cart/removeItem",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          data: {
-            productId,
-          },
-        }
-      );
-
-      // Update cart UI by removing the item locally
-      setCartItems((prevItems) =>
-        prevItems.filter((item) => item.id !== productId)
-      );
-    } catch (err) {
-      console.error("Error removing item:", err);
-      // Optionally show toast or error message
-    }
-  };
-
-  const updateQuantity = async (productId, newQuantity) => {
-    const token = localStorage.getItem("token");
-
-    if (newQuantity < 1 || newQuantity > 10) return;
-
-    setUpdatingItems((prev) => ({ ...prev, [productId]: true }));
-
-    try {
-      const response = await axios.put(
-        "https://fahad-week3-day5-teabackend.vercel.app/api/cart/update-quantity",
-        {
-          productId,
-          quantity: newQuantity,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      console.log("Quantity update response:", response.data);
-
-      if (response.data && response.data.success) {
-        setCartItems((prevItems) =>
-          prevItems.map((item) =>
-            item.id === productId ? { ...item, quantity: newQuantity } : item
-          )
-        );
-      } else {
-        console.warn("Failed to update quantity:", response.data.message);
-      }
-    } catch (err) {
-      console.error("Error updating quantity:", err);
-    } finally {
-      setUpdatingItems((prev) => ({ ...prev, [productId]: false }));
-    }
-  };
+  // Example: Use RTK Query mutation for update quantity (replace with actual mutation in apiSlice.js)
+  // const [updateQuantityMutation] = useUpdateQuantityMutation();
+  // const updateQuantity = async (productId, newQuantity) => {
+  //   await updateQuantityMutation({ productId, quantity: newQuantity });
+  //   setCartItems((prevItems) =>
+  //     prevItems.map((item) =>
+  //       item.id === productId ? { ...item, quantity: newQuantity } : item
+  //     )
+  //   );
+  // };
 
   const handleDecreaseQuantity = (item) => {
     if (item.quantity > 1) {

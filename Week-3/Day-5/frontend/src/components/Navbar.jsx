@@ -2,12 +2,16 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/CartContext";
+import { FiLogOut } from "react-icons/fi";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { cartItems } = useCart();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, role } = useAuth();
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  // Debug logging
+  console.log("Navbar - isAuthenticated:", isAuthenticated, "role:", role);
 
   return (
     <header className="bg-white  mx-w-[90%]  mx-auto sticky top-0 z-50">
@@ -32,17 +36,25 @@ const Navbar = () => {
               ACCESSORIES
             </Link>
             <Link
-              to="/ "
+              to=" "
               className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-black"
             >
               BLOGS
             </Link>
             <Link
-              to="/ "
-              className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-black"
+              to=" "
+              className="hidden lg:block text-[14px] font-normal leading-5 text-gray-700 hover:text-black"
             >
               CONTACT US
             </Link>
+            {(role === "admin" || role === "superadmin") && (
+              <Link
+                to="/admin-dashboard"
+                className="text-[14px] font-semibold leading-5 text-blue-700 hover:text-blue-900"
+              >
+                Admin Dashboard
+              </Link>
+            )}
           </div>
 
           {/* Auth Buttons */}
@@ -50,15 +62,14 @@ const Navbar = () => {
             <Link to="#" className="w-4">
               <img src="/images/search.svg" alt="search icon" />
             </Link>
-            <Link to="/signup" className="w-4">
-              <img src="/images/person.svg" alt="person icon" />
-            </Link>
-            {/* <Link
-                onClick={logout}
-                className=" w-4 "
-              >
-                <img src="/images/local_mall.png" alt="" />
-              </Link> */}
+
+            {/* Show login/signup icon only if not authenticated */}
+            {!isAuthenticated && (
+              <Link to="/login" className="w-4">
+                <img src="/images/person.svg" alt="person icon" />
+              </Link>
+            )}
+
             <Link
               to="/cart"
               className="relative w-5 h-5 flex items-center justify-center"
@@ -75,13 +86,24 @@ const Navbar = () => {
                 </span>
               )}
             </Link>
+
+            {/* Show logout button only if authenticated */}
+            {isAuthenticated && (
+              <button
+                onClick={logout}
+                className="w-4 flex items-center justify-center cursor-pointer"
+                title="Logout"
+              >
+                <FiLogOut className="w-5 h-5 text-red-500" />
+              </button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-700 focus:outline-none"
+              className="text-gray-700 focus:outline-none cursor-pointer"
             >
               <svg
                 className="w-6 h-6"
@@ -111,22 +133,55 @@ const Navbar = () => {
 
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
-          <div className="md:hidden flex flex-col gap-2 mt-2 pb-4 border-t pt-4">
-            <Link to="/dashboard" className="text-gray-700 px-2">
-              Dashboard
+          <div className="md:hidden flex flex-col gap-2 mt-2 pb-4 border-t pt-4 items-center text-center space-y-3">
+            {(role === "admin" || role === "superadmin") && (
+              <Link
+                to="/admin-dashboard"
+                className="text-blue-700 px-2 font-semibold"
+              >
+                Admin Dashboard
+              </Link>
+            )}
+            <Link to="/" className="text-gray-700 px-2">
+              TEA COLLECTIONS
             </Link>
-            <Link to="/addTask" className="text-gray-700 px-2">
-              Add Task
+            <Link to="/accessories" className="text-gray-700 px-2">
+              ACCESSORIES
             </Link>
-            <Link to="/ " className="text-gray-700 px-2">
-              Stats
+            <Link
+              to="/cart"
+              className="text-gray-700 px-2 flex items-center justify-center"
+            >
+              <img src="/images/mall.svg" alt="Cart" className="w-5 h-5 mr-2" />
+              Cart
             </Link>
-            <Link to="/login" className="text-gray-700 px-2">
-              Login
-            </Link>
-            <Link to="/signup" className="text-gray-700 px-2">
-              Signup
-            </Link>
+
+            {/* Show login link only if not authenticated */}
+            {!isAuthenticated && (
+              <Link
+                to="/login"
+                className="text-gray-700 px-2 flex items-center justify-center"
+              >
+                <img
+                  src="/images/person.svg"
+                  alt="Login"
+                  className="w-5 h-5 mr-2"
+                />
+                Login
+              </Link>
+            )}
+
+            {/* Show logout button only if authenticated */}
+            {isAuthenticated && (
+              <button
+                onClick={logout}
+                className="flex items-center justify-center px-2 cursor-pointer text-red-500"
+                title="Logout"
+              >
+                <FiLogOut className="w-5 h-5 mr-2" />
+                Logout
+              </button>
+            )}
           </div>
         )}
       </nav>

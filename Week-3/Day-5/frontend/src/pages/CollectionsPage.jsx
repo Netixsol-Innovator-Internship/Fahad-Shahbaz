@@ -1,45 +1,16 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useGetProductsQuery } from "../api/apiSlice";
 import Loader from "../components/Loader";
 import Collections from "../components/Collections";
 import { Link } from "react-router-dom";
 
 const CollectionsPage = () => {
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { data, isLoading, isError } = useGetProductsQuery();
+  const products = data?.data || [];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const productsResponse = await axios.get(
-          "https://fahad-week3-day5-teabackend.vercel.app/api/products"
-        );
+  // useEffect no longer needed for fetching products
 
-        console.log(
-          "response while gettind products for dashboard",
-          productsResponse
-        );
-
-        setProducts(productsResponse.data.data);
-
-        console.log("products", products);
-      } catch (err) {
-        setError("Failed to fetch data");
-        console.log(
-          "err cathed in statsPAge while getting products and users",
-          err
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -51,7 +22,11 @@ const CollectionsPage = () => {
           Our Collections
         </p>
 
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        {isError && (
+          <p className="text-red-500 text-center mb-4">
+            Failed to fetch products
+          </p>
+        )}
 
         {/* STATS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4 py-8">

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import Loader from "../components/Loader";
 import RecommendedProducts from "../components/RecommendedProducts";
 import TeaDetails from "../components/TeaDetails";
@@ -8,53 +7,43 @@ import { useAuth } from "../contexts/AuthContext";
 import { TbWorld } from "react-icons/tb";
 import { MdOutlineRedeem, MdOutlineEco } from "react-icons/md";
 import { IoBagHandleOutline } from "react-icons/io5";
-
-// Import variant images
-import variant50g from "/images/50g.png";
-import variant170g from "/images/170g.png";
-import variant100g from "/images/100g.png";
-import variant1kg from "/images/1kg.png";
-import variant250g from "/images/250g.png";
+import { useGetProductsQuery, useAddToCartMutation } from "../api/apiSlice";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [quantity, setQuantity] = useState(1);
   const { isAuthenticated } = useAuth();
+  const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { data, isLoading, isError } = useGetProductsQuery();
+  const [addToCartMutation] = useAddToCartMutation();
 
-  // Function to get the appropriate image based on variant weight
+  const product = data?.data?.find((p) => p._id === id) || null;
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(
-          `https://fahad-week3-day5-teabackend.vercel.app/api/products/${id}`
-        );
+    if (product && product.variants && product.variants.length > 0) {
+      setSelectedVariant(product.variants[0]);
+    }
+  }, [product]);
 
-        if (res.data.success) {
-          setProduct(res.data.data);
-          if (res.data.data.variants && res.data.data.variants.length > 0) {
-            setSelectedVariant(res.data.data.variants[0]);
-          }
-        } else {
-          setError("Product not found");
-        }
-      } catch (err) {
-        setError("Failed to fetch product details");
-        console.error("Error fetching product:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [id]);
+  const getVariantImage = (weight) => {
+    switch (weight) {
+      case "50g":
+        return variant50g;
+      case "100g":
+        return variant100g;
+      case "170g":
+        return variant170g;
+      case "250g":
+        return variant250g;
+      case "1kg":
+        return variant1kg;
+      default:
+        return variant50g;
+    }
+  };
 
   const handleDecreaseQuantity = () => {
     setQuantity((prev) => {
@@ -84,51 +73,30 @@ const ProductDetailPage = () => {
       navigate("/login");
       return;
     }
-
-    // if (!product || !selectedVariant) return;
-
     try {
       setLoading(true);
-      const data = {
+      await addToCartMutation({
         productId: product._id,
         userId,
-        quantity: quantity,
-      };
-
-      const res = await axios.post(
-        `https://fahad-week3-day5-teabackend.vercel.app/api/cart/add`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (res.data.success) {
-        console.log("Added to bag:", {
-          productId: product._id,
-          name: product.name,
-          quantity,
-          image: product.image,
-        });
-        // Show success message here if needed
-        setMsg("Item add to cart see cart at the right top corner");
-      } else {
-        setError("Failed to add to cart");
-      }
+        quantity,
+        token,
+      }).unwrap();
+      setMsg("Item added to cart. See cart at the top right corner.");
+      setError("");
     } catch (err) {
-      setError("Failed to add item to cart");
-      console.error("Error adding to cart:", err);
+      setError(err?.data?.message || "Failed to add item to cart");
     } finally {
-      // setMsg("");
       setLoading(false);
     }
   };
 
-  if (loading) return <Loader />;
-  if (error)
-    return <div className="text-center text-red-500 py-8">{error}</div>;
+  if (isLoading) return <Loader />;
+  if (isError)
+    return (
+      <div className="text-center text-red-500 py-8">
+        Failed to fetch product details
+      </div>
+    );
   if (!product)
     return <div className="text-center py-8">Product not found</div>;
 
@@ -158,7 +126,6 @@ const ProductDetailPage = () => {
           </svg>
           Back to Products
         </button>
-
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Product Image */}
           <div className="lg:w-1/2">
@@ -170,7 +137,6 @@ const ProductDetailPage = () => {
               />
             </div>
           </div>
-
           {/* Product Details */}
           <div className="lg:w-1/2">
             <div className="space-y-6">
@@ -178,12 +144,10 @@ const ProductDetailPage = () => {
               <h1 className="text-4xl font-prosto leading-11 text-[#282828]">
                 {product.name}
               </h1>
-
               {/* Description */}
               <p className="text-base leading-6 font-montserrat text-[#282828]">
                 {product.description}
               </p>
-
               {/* Product Meta */}
               <div className="flex items-center gap-14 flex-wrap">
                 {product.origin && (
@@ -211,19 +175,16 @@ const ProductDetailPage = () => {
                   </div>
                 )}
               </div>
-
               {/* Price */}
               <p className="text-4xl font-prosto leading-11 text-[#282828]">
                 €{selectedVariant?.price || product.price}
               </p>
-
               {/* Variants */}
               {product.variants && product.variants.length > 0 && (
                 <div>
                   <p className="text-base font-medium text-[#282828] leading-6 tracking-[0.15px] font-montserrat">
                     Variants
                   </p>
-
                   <div className="flex py-[10px] gap-3.5 text-[#282828] flex-wrap">
                     {product.variants.map((variant, index) => {
                       const isActive = selectedVariant?._id === variant._id;
@@ -231,14 +192,12 @@ const ProductDetailPage = () => {
                         <div
                           key={index}
                           onClick={() => setSelectedVariant(variant)}
-                          className={`w-[84px] cursor-pointer py-[10px] px-1 flex flex-col items-center rounded-sm transition 
-                            ${
-                              isActive
-                                ? "border-2 border-[#282828] bg-gray-100"
-                                : "border border-gray-300"
-                            }`}
+                          className={`w-[84px] cursor-pointer py-[10px] px-1 flex flex-col items-center rounded-sm transition ${
+                            isActive
+                              ? "border-2 border-[#282828] bg-gray-100"
+                              : "border border-gray-300"
+                          }`}
                         >
-                          {/* Use the variant-specific image */}
                           <img
                             src={getVariantImage(variant.weight)}
                             alt={`${variant.weight} bag`}
@@ -253,27 +212,8 @@ const ProductDetailPage = () => {
                   </div>
                 </div>
               )}
-
               {/* Quantity and Add to Bag */}
               <div className="flex items-center gap-6">
-                {/* <div className="flex w-[96px] gap-2 p-1">
-                  <button
-                    className="h-6 w-6 text-[22px] leading-7 flex items-center justify-center font-montserrat text-black cursor-pointer hover:bg-gray-100"
-                    onClick={handleDecreaseQuantity}
-                  >
-                    -
-                  </button>
-                  <span className="h-6 w-6 text-[22px] leading-7 flex items-center justify-center font-montserrat text-black">
-                    {quantity}
-                  </span>
-                  <button
-                    className="h-6 w-6 text-[22px] leading-7 flex items-center justify-center font-montserrat text-black cursor-pointer hover:bg-gray-100"
-                    onClick={handleIncreaseQuantity}
-                  >
-                    +
-                  </button>
-                </div> */}
-
                 <button
                   onClick={handleAddToBag}
                   className="flex items-center gap-2 bg-[#282828] text-white justify-center py-3 px-12 hover:bg-gray-800 transition-colors font-medium h-14 cursor-pointer"
