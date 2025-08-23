@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import Loader from "../components/Loader";
-import { useUpdateUserMutation, useRegisterMutation } from "../api/apiSlice";
 
 const SignupPage = () => {
   const [state, setState] = useState({});
@@ -16,7 +16,6 @@ const SignupPage = () => {
     }));
   };
 
-  const [registerUser] = useRegisterMutation();
   const handleSignUp = async (e) => {
     e.preventDefault();
     const { name = "", email = "", password = "" } = state;
@@ -33,24 +32,42 @@ const SignupPage = () => {
       return setError("name length should be greater than 3");
     }
 
+    if (!isValidEmail(email)) {
+      return setError("Email Format isn't correct");
+    }
     function isValidEmail(email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(email);
     }
-    if (!isValidEmail(email)) {
-      return setError("Email Format isn't correct");
-    }
 
     try {
       setLoading(true);
-      await registerUser({ name, email, password });
-      alert("User Created");
-      navigate("/login");
+      const response = await axios.post(
+        "https://fahad-week3-day5-teabackend.vercel.app/api/users/register",
+        {
+          name,
+          email,
+          password,
+        }
+      );
+
+      // console.log("response", response);
+      // Handle success
+      // console.log("Sign up successful:", response.data);
+      // setError("");
     } catch (error) {
-      setError(error?.data?.message || "Registration failed");
+      // console.log("Full error:", error.response.data)
+      // console.log(" status code", error.response.data.status)
+      setError(error.response.data.message);
     } finally {
       setLoading(false);
+      alert("User Created");
+      navigate("/login");
     }
+
+    // console.log("name, email, password", name, email, password);
+    // commenting setError line here because it's overwriting the previous errors
+    // setError("");
   };
   if (loading) {
     return <Loader />;
@@ -89,7 +106,7 @@ const SignupPage = () => {
           />
           <button
             type="submit"
-            className="w-full bg-black text-white py-2 rounded hover:bg-black/80 transition cursor-pointer"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
           >
             Sign Up
           </button>

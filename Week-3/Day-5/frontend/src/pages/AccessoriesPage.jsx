@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+
 import image from "/images/11098c099110f50ae3271077bf88a575d381cce4.jpg";
 import Loader from "../components/Loader";
-import { useGetProductsQuery } from "../api/apiSlice";
+import axios from "axios";
 
 const AccessoriesPage = () => {
   const { collectionName } = useParams();
-  const { data, isLoading, isError } = useGetProductsQuery();
   const [products, setProducts] = useState([]);
   const [filteredTeas, setFilteredTeas] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   const [expandedSections, setExpandedSections] = useState({
@@ -63,17 +64,30 @@ const AccessoriesPage = () => {
     organic: ["Yes", "No"],
   };
 
-  // Set products and filteredTeas when data loads
+  // Fetch products
   useEffect(() => {
-    if (data?.data) {
-      setProducts(data.data);
-      setFilteredTeas(data.data);
-    }
-  }, [data]);
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(
+          "https://fahad-week3-day5-teabackend.vercel.app/api/products/category/accessories"
+        );
+        setProducts(res.data.data);
+        setFilteredTeas(res.data.data);
+      } catch (err) {
+        setError("Failed to fetch data");
+        console.log("Error fetching products", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // Apply filters
   useEffect(() => {
-    let filtered = [...filteredTeas];
+    let filtered = [...products];
 
     if (filters.collections.length > 0) {
       filtered = filtered.filter((item) =>
@@ -167,10 +181,9 @@ const AccessoriesPage = () => {
       allergens: [],
       organic: false,
     });
-    setFilteredTeas(products);
   };
 
-  if (isLoading) return <Loader />;
+  if (loading) return <Loader />;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -184,7 +197,6 @@ const AccessoriesPage = () => {
 
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
-          {/* <h2 className="text-3xl font-bold">{collectionName} Collection</h2> */}
           <button
             onClick={() => setShowFilters(!showFilters)}
             className="lg:hidden bg-white border border-gray-300 px-4 py-2 rounded-md"
@@ -214,7 +226,7 @@ const AccessoriesPage = () => {
                 <div className="mb-4">
                   <button
                     onClick={clearAllFilters}
-                    className="text-sm text-gray-500 hover:text-gray-700 cursor-pointer"
+                    className="text-sm text-gray-500 hover:text-gray-700"
                   >
                     Clear All
                   </button>
@@ -277,7 +289,7 @@ const AccessoriesPage = () => {
                 <h3 className="text-lg font-semibold">Filters</h3>
                 <button
                   onClick={clearAllFilters}
-                  className="text-sm text-gray-500 hover:text-gray-700 cursor-pointer"
+                  className="text-sm text-gray-500 hover:text-gray-700"
                 >
                   Clear All
                 </button>
@@ -365,6 +377,12 @@ const AccessoriesPage = () => {
                 <p className="text-gray-500 text-lg">
                   No products found with selected filters.
                 </p>
+                <button
+                  onClick={clearAllFilters}
+                  className="mt-4 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
+                >
+                  Clear Filters
+                </button>
               </div>
             )}
           </div>

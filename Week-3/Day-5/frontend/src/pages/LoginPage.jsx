@@ -1,17 +1,20 @@
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../api/apiSlice";
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import { useAuth } from "../contexts/AuthContext";
+// import AuthForm from "../components/AuthForm";
 
 const LoginPage = () => {
+  // const [error, setError] = useState("");
   const [isLogin, setIsLogin] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { login, error, setError, role } = useAuth();
+  const { login, error, setError } = useAuth();
+
   const navigate = useNavigate();
+
   const [state, setState] = useState({});
-  const [loginMutation] = useLoginMutation();
 
   const handleValue = (e) => {
     setState((s) => ({
@@ -34,24 +37,7 @@ const LoginPage = () => {
       return setError("Please enter a valid email address.");
     }
 
-    try {
-      setLoading(true);
-      const response = await loginMutation({ email, password }).unwrap();
-      const token = response.token;
-      localStorage.setItem("token", token);
-      setError("");
-      // Role-based redirect
-      if (response.role === "admin" || response.role === "superAdmin") {
-        navigate("/admin-dashboard");
-      } else {
-        navigate("/");
-      }
-      login(token, response.role); // update context
-    } catch (err) {
-      setError(err?.data?.message || "Login failed");
-    } finally {
-      setLoading(false);
-    }
+    login(email, password);
   };
   if (loading) {
     return <Loader />;
@@ -82,7 +68,7 @@ const LoginPage = () => {
           />
           <button
             type="submit"
-            className="w-full bg-black text-white py-2 rounded hover:bg-black/80 transition cursor-pointer"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
           >
             Login
           </button>

@@ -112,7 +112,7 @@ const Footer = () => {
             {/* Address */}
             <li className="flex items-start gap-3">
               <img
-                src="/images/location.svg"
+                src="/images/location_on.png"
                 alt="Location Icon"
                 className="w-5 h-5 mt-1"
               />
@@ -126,7 +126,7 @@ const Footer = () => {
             {/* Email */}
             <li className="flex items-center gap-3">
               <img
-                src="/images/mail.svg"
+                src="/images/mail.png"
                 alt="Email Icon"
                 className="w-5 h-5"
               />
@@ -141,7 +141,7 @@ const Footer = () => {
             {/* Phone */}
             <li className="flex items-center gap-3">
               <img
-                src="/images/call.svg"
+                src="/images/call.png"
                 alt="Phone Icon"
                 className="w-5 h-5"
               />
