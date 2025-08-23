@@ -262,9 +262,9 @@ const changeUserRole = async (req, res, next) => {
     }
 
     // SuperAdmin restrictions
-    if (currentUser.role === "superadmin") {
+    if (currentUser.role === "superAdmin") {
       // Can't demote another superAdmin
-      if (userToChange.role === "superadmin" && newRole !== "superadmin") {
+      if (userToChange.role === "superAdmin" && newRole !== "superAdmin") {
         return res
           .status(403)
           .json({ message: "Cannot demote another SuperAdmin" });
@@ -287,7 +287,7 @@ const changeUserRole = async (req, res, next) => {
       }
 
       // Admins cannot modify other admins or superAdmins
-      if (userToChange.role === "admin" || userToChange.role === "superadmin") {
+      if (userToChange.role === "admin" || userToChange.role === "superAdmin") {
         return res.status(403).json({
           message: "Cannot modify other admins or super admins",
         });
@@ -318,34 +318,6 @@ const changeUserRole = async (req, res, next) => {
       error: err.message,
     });
   }
-};
-
-const getUsers = async (req, res, next) => {
-  let users;
-  try {
-    users = await User.find({});
-    if (!users || users.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No users found",
-        data: {},
-      });
-    }
-  } catch (err) {
-    console.error("Error fetching users:", err.message || err);
-    const error = new ErrorResponse(
-      "error catched getting users, server error",
-      500,
-      { err: err.message || err.toString() },
-      false
-    );
-    return next(error);
-  }
-  res.status(200).json({
-    success: true,
-    message: "  users data",
-    data: users,
-  });
 };
 
 const blockUnblockUser = async (req, res, next) => {
@@ -383,10 +355,10 @@ const blockUnblockUser = async (req, res, next) => {
         .status(403)
         .json({ message: "You can't block/unblock another admin." });
     }
-    if (currentUser.role === "admin" && user.role === "superadmin") {
+    if (currentUser.role === "admin" && user.role === "superAdmin") {
       return res.status(403).json({ message: "Access denied." });
     }
-    if (currentUser.role === "superadmin" && user.role === "superadmin") {
+    if (currentUser.role === "superAdmin" && user.role === "superAdmin") {
       return res
         .status(403)
         .json({ message: "You can't block/unblock another superAdmin." });
@@ -405,8 +377,36 @@ const blockUnblockUser = async (req, res, next) => {
   }
 };
 
+const getUsers = async (req, res, next) => {
+  let users;
+  try {
+    users = await User.find({});
+    if (!users || users.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No users found",
+        data: {},
+      });
+    }
+  } catch (err) {
+    console.error("Error fetching users:", err.message || err);
+    const error = new ErrorResponse(
+      "error catched getting users, server error",
+      500,
+      { err: err.message || err.toString() },
+      false
+    );
+    return next(error);
+  }
+  res.status(200).json({
+    success: true,
+    message: "  users data",
+    data: users,
+  });
+};
+
 exports.signup = signup;
 exports.login = login;
 exports.changeUserRole = changeUserRole;
-exports.blockUnblockUser = blockUnblockUser;
 exports.getUsers = getUsers;
+exports.blockUnblockUser = blockUnblockUser;

@@ -132,14 +132,35 @@ const createProduct = async (req, res, next) => {
   });
 };
 
+const dummy = async (req, res, next) => {
+  res.json({
+    data: await Products.find({}),
+  });
+};
+
+/**
+ * @swagger
+ * /api/products:
+ *   get:
+ *     summary: Get all products
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: List of products
+ *       404:
+ *         description: No products found
+ *       500:
+ *         description: Server error
+ */
+
 const getProducts = async (req, res, next) => {
   let products;
   try {
     const categoriesWithOneProductEach = await Products.aggregate([
       {
         $group: {
-          _id: "$category",
-          product: { $first: "$$ROOT" },
+          _id: "$category", // category wise group karna
+          product: { $first: "$$ROOT" }, // har category ka pehla product lena
         },
       },
     ]);
@@ -329,7 +350,7 @@ const updateProducts = async (req, res, next) => {
   try {
     product = await Products.findById(req.params.id);
     if (!product) {
-      const error = new Error("Product not found", 404, {}, false);
+      const error = new ErrorResponse("Product not found", 404, {}, false);
       return next(error);
     }
 
@@ -462,5 +483,6 @@ module.exports = {
   updateProducts,
   deleteProduct,
   getProductsByCategory,
+  dummy,
   getProductsForAdminPage,
 };

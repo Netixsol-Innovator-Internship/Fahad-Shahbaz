@@ -8,12 +8,7 @@ const requireRole = require("../middlewares/roleMiddleware");
 
 const router = express.Router();
 
-router.get(
-  "/",
-  checkAuth,
-  requireRole("admin", "superadmin"),
-  usersControllers.getUsers
-);
+router.get("/", usersControllers.getUsers);
 
 router.post(
   "/register",
@@ -39,13 +34,13 @@ router.post(
 router.patch(
   "/:id/role",
   checkAuth,
-  requireRole("superadmin", "admin"),
+  requireRole("superAdmin", "admin"),
   usersControllers.changeUserRole
 );
 router.patch(
   "/:id/block",
   checkAuth,
-  requireRole("superadmin", "admin"),
+  requireRole("superAdmin", "admin"),
   usersControllers.blockUnblockUser
 );
 

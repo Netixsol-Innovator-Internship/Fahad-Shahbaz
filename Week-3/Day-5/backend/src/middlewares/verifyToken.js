@@ -2,7 +2,9 @@ const jwt = require("jsonwebtoken");
 const ErrorResponse = require("../utils/errorResponse");
 const User = require("../models/userSchema");
 
+// const JWT_KEY = "chooseAnyStrongKey";
 const JWT_KEY = "myNewSuperSecretKey_2025";
+
 
 const checkAuth = async (req, res, next) => {
   if (req.method === "OPTIONS") {
@@ -34,14 +36,7 @@ const checkAuth = async (req, res, next) => {
 
     req.userData = { userId: decodedToken.userId, role: decodedToken.role };
 
-    //  fix Use user.role from database instead of decodedToken.role
-    // req.userData = {
-    //   userId: user._id.toString(),
-    //   role: user.role, // This is the crucial fix
-    // };
     console.log("req.userData", req.userData);
-
-    // console.log("token", token);
     next();
   } catch (err) {
     console.log("err", err);
