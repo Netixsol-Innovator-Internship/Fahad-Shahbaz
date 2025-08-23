@@ -39,13 +39,13 @@ router.post(
 router.patch(
   "/:id/role",
   checkAuth,
-  requireRole("superAdmin", "admin"),
+  requireRole("superadmin", "admin"),
   usersControllers.changeUserRole
 );
 router.patch(
   "/:id/block",
   checkAuth,
-  requireRole("superAdmin", "admin"),
+  requireRole("superadmin", "admin"),
   usersControllers.blockUnblockUser
 );
 

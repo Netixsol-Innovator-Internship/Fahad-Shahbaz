@@ -15,7 +15,7 @@ router.get("/category/:category", productController.getProductsByCategory);
 router.post(
   "/",
   checkAuth,
-  requireRole("admin", "superAdmin"),
+  requireRole("admin", "superadmin"),
   upload.single("image"),
   productController.createProduct
 );
@@ -23,7 +23,7 @@ router.post(
 router.get(
   "/productsForAdmin",
   checkAuth,
-  requireRole("admin", "superAdmin"),
+  requireRole("admin", "superadmin"),
   productController.getProductsForAdminPage
 );
 
@@ -32,13 +32,13 @@ router.get("/:id", productController.getProductsByID);
 router.patch(
   "/:id",
   checkAuth,
-  requireRole("admin", "superAdmin"),
+  requireRole("admin", "superadmin"),
   productController.updateProducts
 );
 router.delete(
   "/:id",
   checkAuth,
-  requireRole("superAdmin"),
+  requireRole("superadmin"),
   productController.deleteProduct
 );
 

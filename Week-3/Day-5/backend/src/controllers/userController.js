@@ -262,9 +262,9 @@ const changeUserRole = async (req, res, next) => {
     }
 
     // SuperAdmin restrictions
-    if (currentUser.role === "superAdmin") {
+    if (currentUser.role === "superadmin") {
       // Can't demote another superAdmin
-      if (userToChange.role === "superAdmin" && newRole !== "superAdmin") {
+      if (userToChange.role === "superadmin" && newRole !== "superadmin") {
         return res
           .status(403)
           .json({ message: "Cannot demote another SuperAdmin" });
@@ -287,7 +287,7 @@ const changeUserRole = async (req, res, next) => {
       }
 
       // Admins cannot modify other admins or superAdmins
-      if (userToChange.role === "admin" || userToChange.role === "superAdmin") {
+      if (userToChange.role === "admin" || userToChange.role === "superadmin") {
         return res.status(403).json({
           message: "Cannot modify other admins or super admins",
         });
@@ -320,8 +320,6 @@ const changeUserRole = async (req, res, next) => {
   }
 };
 
-
-
 const getUsers = async (req, res, next) => {
   let users;
   try {
@@ -349,7 +347,6 @@ const getUsers = async (req, res, next) => {
     data: users,
   });
 };
-
 
 const blockUnblockUser = async (req, res, next) => {
   const { id } = req.params;
@@ -381,25 +378,17 @@ const blockUnblockUser = async (req, res, next) => {
         .json({ message: "You can't block/unblock yourself." });
     }
 
-    if(currentUser.role === "admin" && user.role ==="admin" ) {
+    if (currentUser.role === "admin" && user.role === "admin") {
       return res
         .status(403)
         .json({ message: "You can't block/unblock another admin." });
     }
-    if(currentUser.role === "admin" && user.role ==="superAdmin" ) {
+    if (currentUser.role === "admin" && user.role === "superadmin") {
+      return res.status(403).json({ message: "Access denied." });
+    }
+    if (currentUser.role === "superadmin" && user.role === "superadmin") {
       return res
         .status(403)
-        .json({ message: "Access denied." });
-    }
-    if(currentUser.role === "superAdmin" && user.role ==="superAdmin" ) {
-      return res
-        .strouter.get(
-  "/",
-  checkAuth,
-  requireRole("admin", "superadmin"),
-  usersControllers.getUsers
-);
-atus(403)
         .json({ message: "You can't block/unblock another superAdmin." });
     }
 
