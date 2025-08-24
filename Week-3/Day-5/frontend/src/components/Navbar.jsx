@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/CartContext";
@@ -6,11 +6,16 @@ import { MdLogout } from "react-icons/md";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { cartItems } = useCart();
   const { isAuthenticated, logout } = useAuth();
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-  const role = localStorage.getItem("roleOfTheUser");
-  const isAdmin = role === "admin" || role === "superAdmin";
+
+  // Update admin status whenever authentication state changes
+  useEffect(() => {
+    const role = localStorage.getItem("roleOfTheUser");
+    setIsAdmin(role === "admin" || role === "superAdmin");
+  }, [isAuthenticated]); // This will run whenever isAuthenticated changes
 
   return (
     <header className="bg-white  mx-w-[90%]  mx-auto sticky top-0 z-50">
@@ -69,13 +74,13 @@ const Navbar = () => {
             )}
 
             <Link to="/signup" className=" w-4 ">
-              <img src="/images/search.svg" alt="" />
+              <img src="/images/search.svg" alt="person" />
             </Link>
 
             {/* Show person icon only if NOT logged in */}
             {!isAuthenticated && (
               <Link to="/signup" className=" w-4 ">
-                <img src="/images/person.svg" alt="" />
+                <img src="/images/person.svg" alt="person" />
               </Link>
             )}
 
@@ -156,9 +161,9 @@ const Navbar = () => {
               to="/ "
               className=" text-[14px] font-normal leading-5 text-black hover:text-gray-400"
             >
-            <Link to="/login">
-              <img src="/images/login.svg" alt="" />
-            </Link>
+              <Link to="/login">
+                <img src="/images/login.svg" alt="" />
+              </Link>
               BLOGS
             </Link>
             <Link
@@ -172,7 +177,7 @@ const Navbar = () => {
               {isAuthenticated && (
                 <button
                   onClick={logout}
-                  className="w-5 h-5 text-gray-700 hover:text-red-600"
+                  className="w-5 h-5 text-gray-700 hover:text-red-600 cursor-pointer"
                 >
                   <MdLogout size={20} />
                 </button>
@@ -181,7 +186,7 @@ const Navbar = () => {
               {/* Show person icon only if NOT logged in */}
               {!isAuthenticated && (
                 <Link to="/signup" className="w-4">
-                  <img src="/images/person.svg" alt="person"/>
+                  <img src="/images/person.svg" alt="person" />
                 </Link>
               )}
               <Link

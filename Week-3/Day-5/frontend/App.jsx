@@ -26,7 +26,13 @@ function App() {
     }
     const role = localStorage.getItem("roleOfTheUser");
     setIsAdmin(role === "admin" || role === "superAdmin");
-  }, []);
+  }, [setIsAuthenticated]);
+
+  // Update admin status whenever authentication state changes
+  useEffect(() => {
+    const role = localStorage.getItem("roleOfTheUser");
+    setIsAdmin(role === "admin" || role === "superAdmin");
+  }, [isAuthenticated]); // This will run whenever isAuthenticated changes
 
   return (
     <>
