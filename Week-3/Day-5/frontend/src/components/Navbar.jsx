@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/CartContext";
-import { IoBagHandleOutline } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
 
 const Navbar = () => {
@@ -132,7 +131,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
-          <div className="md:hidden flex justify-center items-center gap-3 flex-col gap-2 mt-2 pb-4 border-t pt-4">
+          <div className="md:hidden flex justify-center items-center gap-3 flex-col mt-2 pb-4 border-t pt-4">
             <Link
               to="/"
               className="font-montserrat  text-[14px] font-normal leading-5 text-black hover:text-gray-400"
