@@ -9,10 +9,6 @@ import { Navigate } from "react-router-dom";
 const GetProducts = () => {
   const role = localStorage.getItem("roleOfTheUser");
 
-  // if (role !== "admin" && role !== "superAdmin") {
-  //   return <Navigate to="/login" />;
-  // }
-
   const { data, error, isLoading } = useGetProductsForAdminQuery();
   const [deleteProduct] = useDeleteProductMutation();
   const [updateProduct] = useUpdateProductMutation();

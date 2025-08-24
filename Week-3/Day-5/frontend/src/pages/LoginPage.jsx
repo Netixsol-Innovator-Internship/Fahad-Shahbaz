@@ -36,7 +36,12 @@ const LoginPage = () => {
       return setError("Please enter a valid email address.");
     }
 
-    login(email, password);
+    setLoading(true);
+    try {
+      await login(email, password);
+    } finally {
+      setLoading(false);
+    }
   };
   if (loading) {
     return <Loader />;
@@ -67,9 +72,14 @@ const LoginPage = () => {
           />
           <button
             type="submit"
-            className="w-full bg-black text-white py-2 rounded hover:bg-gray-700 transition cursor-pointer"
+            className="w-full bg-black text-white py-2 rounded hover:bg-gray-700 transition cursor-pointer flex items-center justify-center"
+            disabled={loading}
           >
-            Login
+            {loading ? (
+              <span className="loader mr-2 inline-block w-4 h-4 border-2 border-t-2 border-black border-t-black rounded-full animate-spin"></span>
+            ) : (
+              "Login"
+            )}
           </button>
           <p className="mt-4 text-center text-sm text-gray-600">
             Don't have an account?{" "}
