@@ -25,57 +25,67 @@ const Navbar = () => {
           <div className="hidden md:flex space-x-6 items-center">
             <Link
               to="/"
-              className="font-montserrat  text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+              className="font-montserrat  text-[14px] font-normal leading-5 text-black hover:text-gray-500"
             >
               TEA COLLECTIONS
             </Link>
             <Link
               to="/accessories"
-              className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+              className=" text-[14px] font-normal leading-5 text-black hover:text-gray-500"
             >
               ACCESSORIES
             </Link>
             {isAdmin && (
               <Link
                 to="/admin"
-                className="text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+                className="text-[14px] font-normal leading-5 text-black hover:text-gray-500"
               >
                 ADMIN PAGE
               </Link>
             )}
             <Link
               to="/ "
-              className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+              className=" text-[14px] font-normal leading-5 text-black hover:text-gray-500"
             >
               BLOGS
             </Link>
             {/* <Link
               to="/ "
-              className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+              className=" text-[14px] font-normal leading-5 text-black hover:text-gray-500"
             >
               CONTACT US
             </Link> */}
           </div>
 
           {/* Auth Buttons */}
-          <div className="hidden md:flex space-x-10 mr-4 ">
-            <button
-              onClick={logout}
-              className="w-5 h-5 text-gray-700 hover:text-red-600"
-            >
-              <MdLogout size={20} />
-            </button>
+          <div className="hidden md:flex justify-center items-center space-x-10 mr-4 ">
+            {/* Show logout button only if logged in */}
+            {isAuthenticated && (
+              <button
+                onClick={logout}
+                className="w-5 h-5 text-gray-700 hover:text-red-600 cursor-pointer"
+              >
+                <MdLogout size={20} />
+              </button>
+            )}
 
             <Link to="/signup" className=" w-4 ">
-              <img src="/images/person.png" alt="" />
+              <img src="/images/search.svg" alt="" />
             </Link>
+
+            {/* Show person icon only if NOT logged in */}
+            {!isAuthenticated && (
+              <Link to="/signup" className=" w-4 ">
+                <img src="/images/person.svg" alt="" />
+              </Link>
+            )}
 
             <Link
               to="/cart"
-              className="relative w-5 h-5 flex items-center justify-center"
+              className="w-5 h-5 flex items-center justify-center"
             >
               <img
-                src="/images/local_mall.png"
+                src="/images/mall.svg"
                 alt="Cart"
                 className="w-full h-full"
               />
@@ -162,16 +172,22 @@ const Navbar = () => {
               CONTACT US
             </Link>
             <div className="flex gap-4 mt-2">
-              <button
-                onClick={logout}
-                className="w-5 h-5 text-gray-700 hover:text-red-600"
-              >
-                <MdLogout size={20} />
-              </button>
+              {/* Show logout button only if logged in */}
+              {isAuthenticated && (
+                <button
+                  onClick={logout}
+                  className="w-5 h-5 text-gray-700 hover:text-red-600"
+                >
+                  <MdLogout size={20} />
+                </button>
+              )}
 
-              <Link to="/signup" className=" w-4 ">
-                <img src="/images/person.png" alt="" />
-              </Link>
+              {/* Show person icon only if NOT logged in */}
+              {!isAuthenticated && (
+                <Link to="/signup" className=" w-4 ">
+                  <img src="/images/person.png" alt="" />
+                </Link>
+              )}
 
               <Link
                 to="/cart"

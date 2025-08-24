@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
@@ -57,18 +56,18 @@ const LoginPage = () => {
             onChange={handleValue}
             type="email"
             placeholder="Email"
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
           />
           <input
             name="password"
             onChange={handleValue}
             type="password"
             placeholder="Password"
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
           />
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+            className="w-full bg-black text-white py-2 rounded hover:bg-gray-700 transition cursor-pointer"
           >
             Login
           </button>

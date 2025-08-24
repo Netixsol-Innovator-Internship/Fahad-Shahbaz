@@ -226,7 +226,7 @@ const AccessoriesPage = () => {
                 <div className="mb-4">
                   <button
                     onClick={clearAllFilters}
-                    className="text-sm text-gray-500 hover:text-gray-700"
+                    className="text-sm text-gray-500 hover:text-gray-700 cursor-pointer"
                   >
                     Clear All
                   </button>
@@ -289,7 +289,7 @@ const AccessoriesPage = () => {
                 <h3 className="text-lg font-semibold">Filters</h3>
                 <button
                   onClick={clearAllFilters}
-                  className="text-sm text-gray-500 hover:text-gray-700"
+                  className="text-sm text-gray-500 hover:text-gray-700 cursor-pointer"
                 >
                   Clear All
                 </button>
@@ -349,7 +349,7 @@ const AccessoriesPage = () => {
                 <Link to={`/products/${product._id}`} key={product._id}>
                   <div
                     key={product._id}
-                    className=" overflow-hidden   hover:shadow-md transition-shadow"
+                    className=" overflow-hidden"
                   >
                     <img
                       src={product.image}
@@ -379,7 +379,7 @@ const AccessoriesPage = () => {
                 </p>
                 <button
                   onClick={clearAllFilters}
-                  className="mt-4 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
+                  className="mt-4 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 cursor-pointer"
                 >
                   Clear Filters
                 </button>

@@ -51,28 +51,17 @@ const SignupPage = () => {
         }
       );
 
-      // console.log("response", response);
-      // Handle success
-      // console.log("Sign up successful:", response.data);
-      // setError("");
     } catch (error) {
-      // console.log("Full error:", error.response.data)
-      // console.log(" status code", error.response.data.status)
       setError(error.response.data.message);
     } finally {
       setLoading(false);
       alert("User Created");
       navigate("/login");
     }
-
-    // console.log("name, email, password", name, email, password);
-    // commenting setError line here because it's overwriting the previous errors
-    // setError("");
   };
   if (loading) {
     return <Loader />;
   }
-  // console.log("state", state);
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
@@ -88,25 +77,25 @@ const SignupPage = () => {
             name="name"
             type="text"
             placeholder="Full Name"
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
           />
           <input
             onChange={handleValue}
             name="email"
             type="email"
             placeholder="Email"
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
           />
           <input
             onChange={handleValue}
             name="password"
             type="password"
             placeholder="Password"
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
           />
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+            className="w-full bg-black text-white py-2 rounded hover:bg-gray-700 transition cursor-pointer"
           >
             Sign Up
           </button>

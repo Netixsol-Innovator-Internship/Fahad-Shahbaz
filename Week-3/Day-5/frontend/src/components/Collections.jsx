@@ -12,7 +12,7 @@ const Collections = () => {
           <img
             src="/images/spoons.jpg"
             alt="Tea spoons and leaves"
-            className="w-full h-auto lg:h-[500px] object-cover rounded-lg"
+            className="w-full h-auto lg:h-[600px] object-cover"
           />
         </div>
 
@@ -34,7 +34,7 @@ const Collections = () => {
 
           <Link
             to="/accessories"
-            className="bg-black text-white px-8 sm:px-14 py-2 sm:py-3 text-sm sm:text-base hover:bg-gray-800 transition rounded-md w-full sm:w-auto"
+            className="bg-black text-white px-8 sm:px-14 py-2 sm:py-3 text-sm sm:text-base hover:bg-gray-800 transition  w-full sm:w-auto"
           >
             BROWSE TEAS
           </Link>
@@ -44,30 +44,30 @@ const Collections = () => {
       {/* Features Section */}
       <section className="bg-gray-100 py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center justify-between">
             {/* Feature Items */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 w-full py-4">
-              <FeatureItem
-                icon={<FaCoffee className="text-gray-700" size={18} />}
-                text="450+ KIND OF LOOSE TEA"
-              />
-              <FeatureItem
-                icon={<FaCertificate className="text-gray-700" size={18} />}
-                text="CERTIFIED ORGANIC TEAS"
-              />
-              <FeatureItem
-                icon={<FaTruck className="text-gray-700" size={18} />}
-                text="FREE DELIVERY"
-              />
-              <FeatureItem
-                icon={<FaTag className="text-gray-700" size={18} />}
-                text="SAMPLES FOR ALL TEAS"
-              />
+            <div className="flex justify-between items-center gap-4 flex-wrap w-full py-4 ">
+              <div className="flex justify-center items-center gap-2">
+                <img src="/images/cup.svg" alt="cup" />
+                <span>450+ KIND OF LOOSE TEA</span>
+              </div>
+              <div className="flex justify-center items-center gap-2">
+                <img src="/images/cup.svg" alt="cup" />
+                <span>CERTIFIED ORGANIC TEAS</span>
+              </div>
+              <div className="flex justify-center items-center gap-2">
+                <img src="/images/ship.svg" alt="shipping" />
+                <span>FREE DELIVERY</span>
+              </div>
+              <div className="flex justify-center items-center gap-2">
+                <img src="/images/tag.svg" alt="tag" />
+                <span>SAMPLES FOR ALL TEAS</span>
+              </div>
             </div>
 
             {/* Button */}
             <div className="flex justify-center mt-6 sm:mt-8">
-              <button className="border border-gray-600 text-gray-600 uppercase px-6 py-2 text-xs sm:text-sm tracking-wider hover:bg-gray-200 transition rounded-md">
+              <button className="border border-gray-800 text-gray-800 uppercase px-14 py-4 text-xs sm:text-sm tracking-wider hover:bg-gray-200 transition cursor-pointer">
                 LEARN MORE
               </button>
             </div>
