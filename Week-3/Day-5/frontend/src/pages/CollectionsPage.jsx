@@ -1,46 +1,28 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import { useGetProductsQuery } from "../services/api";
 import Loader from "../components/Loader";
 import Collections from "../components/Collections";
 import { Link } from "react-router-dom";
 
 const CollectionsPage = () => {
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const {
+    data: productsResponse,
+    error,
+    isLoading: loading,
+  } = useGetProductsQuery();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const productsResponse = await axios.get(
-          "https://fahad-week3-day5-teabackend.vercel.app/api/products"
-        );
-
-        console.log(
-          "response while gettind products for dashboard",
-          productsResponse
-        );
-
-        setProducts(productsResponse.data.data);
-
-        console.log("products", products);
-      } catch (err) {
-        setError("Failed to fetch data");
-        console.log(
-          "err cathed in statsPAge while getting products and users",
-          err
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const products = productsResponse?.data || [];
 
   if (loading) {
     return <Loader />;
+  }
+
+  if (error) {
+    return (
+      <div className="text-center p-4">
+        <p className="text-red-500">Failed to fetch products</p>
+      </div>
+    );
   }
 
   return (

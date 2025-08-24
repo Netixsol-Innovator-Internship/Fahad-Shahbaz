@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useSignupMutation } from "../services/api";
 import Loader from "../components/Loader";
 
 const SignupPage = () => {
   const [state, setState] = useState({});
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const [signupMutation, { isLoading: loading }] = useSignupMutation();
 
   const handleValue = (e) => {
     setState((s) => ({
@@ -41,22 +42,16 @@ const SignupPage = () => {
     }
 
     try {
-      setLoading(true);
-      const response = await axios.post(
-        "https://fahad-week3-day5-teabackend.vercel.app/api/users/register",
-        {
-          name,
-          email,
-          password,
-        }
-      );
+      await signupMutation({
+        name,
+        email,
+        password,
+      }).unwrap();
 
-    } catch (error) {
-      setError(error.response.data.message);
-    } finally {
-      setLoading(false);
       alert("User Created");
       navigate("/login");
+    } catch (error) {
+      setError(error.data?.message || "Signup failed");
     }
   };
   if (loading) {

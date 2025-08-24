@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useGetProductsByCategoryQuery } from "../services/api";
 
 import image from "/images/11098c099110f50ae3271077bf88a575d381cce4.jpg";
 import Loader from "../components/Loader";
-import axios from "axios";
 
 const AccessoriesPage = () => {
   const { collectionName } = useParams();
-  const [products, setProducts] = useState([]);
   const [filteredTeas, setFilteredTeas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+
+  const {
+    data: productsResponse,
+    error,
+    isLoading: loading,
+  } = useGetProductsByCategoryQuery("accessories");
+
+  const products = productsResponse?.data || [];
 
   const [expandedSections, setExpandedSections] = useState({
     collections: true,
@@ -64,26 +69,10 @@ const AccessoriesPage = () => {
     organic: ["Yes", "No"],
   };
 
-  // Fetch products
+  // Set initial filtered data when products are loaded
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(
-          "https://fahad-week3-day5-teabackend.vercel.app/api/products/category/accessories"
-        );
-        setProducts(res.data.data);
-        setFilteredTeas(res.data.data);
-      } catch (err) {
-        setError("Failed to fetch data");
-        console.log("Error fetching products", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+    setFilteredTeas(products);
+  }, [products]);
 
   // Apply filters
   useEffect(() => {
@@ -184,6 +173,8 @@ const AccessoriesPage = () => {
   };
 
   if (loading) return <Loader />;
+  if (error)
+    return <div className="p-6 text-red-600">Failed to fetch accessories</div>;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -347,10 +338,7 @@ const AccessoriesPage = () => {
             <div className="grid grid-cols-1 mt-20 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-6">
               {filteredTeas.map((product) => (
                 <Link to={`/products/${product._id}`} key={product._id}>
-                  <div
-                    key={product._id}
-                    className=" overflow-hidden"
-                  >
+                  <div key={product._id} className=" overflow-hidden">
                     <img
                       src={product.image}
                       alt={product.name}

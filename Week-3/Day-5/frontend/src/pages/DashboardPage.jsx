@@ -1,8 +1,5 @@
-// import axios from "axios";
-// import { jwtDecode } from "jwt-decode";
-// import { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
-// import EditTaskModal from "../components/EditTaskModel";
+import React from "react";
+import { Link } from "react-router-dom";
 // import Loader from '../components/Loader'
 
 // const DashboardPage = () => {
@@ -174,7 +171,7 @@
 //             <div className="flex justify-between items-center">
 //               {/* Smaller status label */}
 //               <span
-//                 className={`inline-block px-3 py-1 text-xs font-medium rounded 
+//                 className={`inline-block px-3 py-1 text-xs font-medium rounded
 //             ${
 //               task.completed
 //                 ? "bg-green-100 text-green-700"

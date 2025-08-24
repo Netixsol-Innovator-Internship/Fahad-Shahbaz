@@ -1,8 +1,8 @@
 // src/context/AuthContext.jsx
 import { createContext, useContext, useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { useLoginMutation } from "../services/api";
 
 const AuthContext = createContext();
 
@@ -10,9 +10,10 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("token")
   );
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const [loginMutation, { isLoading: loading }] = useLoginMutation();
 
   useEffect(() => {
     const checkToken = () => {
@@ -46,46 +47,34 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     setError("");
     try {
-      setLoading(true);
-      const response = await axios.post(
-        "https://fahad-week3-day5-teabackend.vercel.app/api/users/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await loginMutation({
+        email,
+        password,
+      }).unwrap();
+
       console.log("response", response);
-      const token = response.data.token; //  get token from response
+      const token = response.token; //  get token from response
       localStorage.setItem("token", token); // store it
 
-      const id = response.data.user.id;
-      const role = response.data.user.role;
+      const id = response.user.id;
+      const role = response.user.role;
 
       localStorage.setItem("idOfTheUser", id);
       localStorage.setItem("roleOfTheUser", role);
 
       console.log("role", role);
-
       console.log("id", id);
       console.log("token", token); //  log it
 
       setError("");
       setIsAuthenticated(true);
-      // if (role === "admin" || role === "superAdmin") {
-      //   window.location.href = "/admin";
-      //   // navigate("/admin");
-      // } else {
-      //   window.location.href = "/";
-      //   // navigate("/admin");
-      // }
     } catch (err) {
       setIsAuthenticated(false);
       console.log("err", err);
-      setError(err.response.data.message);
-    } finally {
-      setLoading(false);
+      setError(err.data?.message || "Login failed");
     }
   };
+
   function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("idOfTheUser");

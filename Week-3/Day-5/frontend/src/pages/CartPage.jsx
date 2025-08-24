@@ -1,69 +1,42 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import {
+  useGetCartQuery,
+  useRemoveFromCartMutation,
+  useUpdateCartQuantityMutation,
+} from "../services/api";
 import { useCart } from "../contexts/CartContext";
 import RecommendedProducts from "../components/RecommendedProducts";
 
 const CartPage = () => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [updatingItems, setUpdatingItems] = useState({}); // Track which items are being updated
   const { cartItems, setCartItems } = useCart();
 
+  const {
+    data: cartData,
+    error,
+    isLoading: loading,
+    refetch,
+  } = useGetCartQuery();
+
+  const [removeFromCartMutation] = useRemoveFromCartMutation();
+  const [updateCartQuantityMutation] = useUpdateCartQuantityMutation();
+
   useEffect(() => {
-    const fetchCart = async () => {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const res = await axios.get(
-          "https://fahad-week3-day5-teabackend.vercel.app/api/cart",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const items = res.data.data.items.map((item) => ({
-          id: item.product._id,
-          name: item.product.name,
-          image: item.product.image,
-          price: item.product.price,
-          quantity: item.quantity,
-        }));
-
-        setCartItems(items);
-      } catch (err) {
-        console.error("Cart fetch error:", err);
-        setError("Seems Cart is empty ");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCart();
-  }, [setCartItems]);
+    if (cartData?.data?.items) {
+      const items = cartData.data.items.map((item) => ({
+        id: item.product._id,
+        name: item.product.name,
+        image: item.product.image,
+        price: item.product.price,
+        quantity: item.quantity,
+      }));
+      setCartItems(items);
+    }
+  }, [cartData, setCartItems]);
 
   const removeItem = async (productId) => {
-    const token = localStorage.getItem("token");
-
     try {
-      await axios.delete(
-        "https://fahad-week3-day5-teabackend.vercel.app/api/cart/removeItem",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          data: {
-            productId,
-          },
-        }
-      );
-
+      await removeFromCartMutation(productId).unwrap();
       // Update cart UI by removing the item locally
       setCartItems((prevItems) =>
         prevItems.filter((item) => item.id !== productId)
@@ -75,36 +48,26 @@ const CartPage = () => {
   };
 
   const updateQuantity = async (productId, newQuantity) => {
-    const token = localStorage.getItem("token");
-
     if (newQuantity < 1 || newQuantity > 10) return;
 
     setUpdatingItems((prev) => ({ ...prev, [productId]: true }));
 
     try {
-      const response = await axios.put(
-        "https://fahad-week3-day5-teabackend.vercel.app/api/cart/update-quantity",
-        {
-          productId,
-          quantity: newQuantity,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await updateCartQuantityMutation({
+        productId,
+        quantity: newQuantity,
+      }).unwrap();
 
-      console.log("Quantity update response:", response.data);
+      console.log("Quantity update response:", response);
 
-      if (response.data && response.data.success) {
+      if (response && response.success) {
         setCartItems((prevItems) =>
           prevItems.map((item) =>
             item.id === productId ? { ...item, quantity: newQuantity } : item
           )
         );
       } else {
-        console.warn("Failed to update quantity:", response.data.message);
+        console.warn("Failed to update quantity:", response.message);
       }
     } catch (err) {
       console.error("Error updating quantity:", err);
@@ -129,7 +92,7 @@ const CartPage = () => {
     cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
   if (loading) return <div className="p-6">Loading...</div>;
-  if (error) return <div className="p-6 text-red-600">{error}</div>;
+  if (error) return <div className="p-6 text-red-600">Seems Cart is empty</div>;
 
   return (
     <div className="min-h-screen bg-gray-50 py-6 px-4 sm:px-6 lg:px-6">

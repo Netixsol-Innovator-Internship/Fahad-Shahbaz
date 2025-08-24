@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { useAddTaskMutation } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 
@@ -7,8 +7,9 @@ const AddTaskPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const [addTaskMutation, { isLoading: loading }] = useAddTaskMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,41 +20,35 @@ const AddTaskPage = () => {
       return;
     }
 
-    if(title.length < 3 || description.length < 5 ) {
-      return setError("Title minimum length should be 3 and for description is 5")
+    if (title.length < 3 || description.length < 5) {
+      return setError(
+        "Title minimum length should be 3 and for description is 5"
+      );
     }
 
     try {
-      setLoading(true);
       const token = localStorage.getItem("token");
       if (!token) {
         setError("Unauthorized access, please login.");
         return;
       }
 
-      const response = await axios.post(
-        "https://day1-back-end.vercel.app/api/tasks/",
-        { title, description },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await addTaskMutation({
+        title,
+        description,
+      }).unwrap();
 
-      console.log("Task added:", response.data);
+      console.log("Task added:", response);
       navigate("/dashboard");
     } catch (err) {
       console.error("Failed to add task:", err);
       setError("Failed to add task. Please try again.");
-    } finally {
-      setLoading(false);
     }
   };
 
-   if (loading) {
-      return <Loader />;
-   }
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">

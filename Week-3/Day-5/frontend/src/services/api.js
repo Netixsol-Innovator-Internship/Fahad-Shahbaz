@@ -14,21 +14,64 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Product", "User", "Cart"],
+  tagTypes: ["Product", "User", "Cart", "Auth"],
 
   endpoints: (builder) => ({
+    // Auth endpoints
+    login: builder.mutation({
+      query: (credentials) => ({
+        url: "users/login",
+        method: "POST",
+        body: credentials,
+      }),
+      invalidatesTags: ["Auth"],
+    }),
+
+    signup: builder.mutation({
+      query: (userData) => ({
+        url: "users/register",
+        method: "POST",
+        body: userData,
+      }),
+    }),
+
+    // Product endpoints
     addProduct: builder.mutation({
       query: (formData) => ({
         url: "products",
         method: "POST",
         body: formData,
       }),
+      invalidatesTags: ["Product"],
     }),
 
-    // ✅ Get All Products
+    getProducts: builder.query({
+      query: () => ({
+        url: "products",
+        method: "GET",
+      }),
+      providesTags: ["Product"],
+    }),
+
     getProductsForAdmin: builder.query({
       query: () => ({
         url: "products/productsForAdmin",
+        method: "GET",
+      }),
+      providesTags: ["Product"],
+    }),
+
+    getProductById: builder.query({
+      query: (id) => ({
+        url: `products/${id}`,
+        method: "GET",
+      }),
+      providesTags: (result, error, id) => [{ type: "Product", id }],
+    }),
+
+    getProductsByCategory: builder.query({
+      query: (category) => ({
+        url: `products/category/${category}`,
         method: "GET",
       }),
       providesTags: ["Product"],
@@ -56,25 +99,25 @@ export const api = createApi({
       invalidatesTags: ["Product"],
     }),
 
+    // User endpoints
     updateUserRole: builder.mutation({
       query: ({ id, newRole }) => ({
         url: `users/${id}/role`,
         method: "PATCH",
         body: { newRole },
       }),
-      invalidatesTags: ["User"], 
+      invalidatesTags: ["User"],
     }),
 
     blockUnblockUser: builder.mutation({
       query: ({ id, action }) => ({
         url: `users/${id}/block`,
         method: "PATCH",
-        body: { action }, 
+        body: { action },
       }),
       invalidatesTags: ["User"],
     }),
 
-    // ✅ Get Users
     getUsers: builder.query({
       query: () => ({
         url: "users",
@@ -82,16 +125,79 @@ export const api = createApi({
       }),
       providesTags: ["User"],
     }),
+
+    // Cart endpoints
+    getCart: builder.query({
+      query: () => ({
+        url: "cart",
+        method: "GET",
+      }),
+      providesTags: ["Cart"],
+    }),
+
+    addToCart: builder.mutation({
+      query: (cartData) => ({
+        url: "cart/add",
+        method: "POST",
+        body: cartData,
+      }),
+      invalidatesTags: ["Cart"],
+    }),
+
+    removeFromCart: builder.mutation({
+      query: (productId) => ({
+        url: "cart/removeItem",
+        method: "DELETE",
+        body: { productId },
+      }),
+      invalidatesTags: ["Cart"],
+    }),
+
+    updateCartQuantity: builder.mutation({
+      query: ({ productId, quantity }) => ({
+        url: "cart/update-quantity",
+        method: "PUT",
+        body: { productId, quantity },
+      }),
+      invalidatesTags: ["Cart"],
+    }),
+
+    // Task endpoints (if still needed)
+    addTask: builder.mutation({
+      query: (taskData) => ({
+        url: "tasks",
+        method: "POST",
+        body: taskData,
+      }),
+    }),
   }),
 });
 
 export const {
+  // Auth hooks
+  useLoginMutation,
+  useSignupMutation,
+
+  // Product hooks
   useAddProductMutation,
+  useGetProductsQuery,
   useGetProductsForAdminQuery,
+  useGetProductByIdQuery,
+  useGetProductsByCategoryQuery,
   useUpdateProductMutation,
   useDeleteProductMutation,
+
+  // User hooks
   useUpdateUserRoleMutation,
   useBlockUnblockUserMutation,
-  useGetProductsQuery,
   useGetUsersQuery,
+
+  // Cart hooks
+  useGetCartQuery,
+  useAddToCartMutation,
+  useRemoveFromCartMutation,
+  useUpdateCartQuantityMutation,
+
+  // Task hooks
+  useAddTaskMutation,
 } = api;

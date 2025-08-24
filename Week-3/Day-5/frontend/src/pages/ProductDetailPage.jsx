@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useGetProductByIdQuery, useAddToCartMutation } from "../services/api";
 import Loader from "../components/Loader";
 import RecommendedProducts from "../components/RecommendedProducts";
 import TeaDetails from "../components/TeaDetails";
@@ -19,42 +19,27 @@ import variant250g from "/images/250g.png";
 const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const [quantity, setQuantity] = useState(1);
   const { isAuthenticated } = useAuth();
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [msg, setMsg] = useState("");
 
-  // Function to get the appropriate image based on variant weight
+  const {
+    data: productResponse,
+    error,
+    isLoading: loading,
+  } = useGetProductByIdQuery(id);
+
+  const [addToCartMutation, { isLoading: addingToCart }] =
+    useAddToCartMutation();
+
+  const product = productResponse?.data;
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(
-          `https://fahad-week3-day5-teabackend.vercel.app/api/products/${id}`
-        );
-
-        if (res.data.success) {
-          setProduct(res.data.data);
-          if (res.data.data.variants && res.data.data.variants.length > 0) {
-            setSelectedVariant(res.data.data.variants[0]);
-          }
-        } else {
-          setError("Product not found");
-        }
-      } catch (err) {
-        setError("Failed to fetch product details");
-        console.error("Error fetching product:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [id]);
+    if (product?.variants && product.variants.length > 0) {
+      setSelectedVariant(product.variants[0]);
+    }
+  }, [product]);
 
   const handleDecreaseQuantity = () => {
     setQuantity((prev) => {
@@ -85,50 +70,37 @@ const ProductDetailPage = () => {
       return;
     }
 
-    // if (!product || !selectedVariant) return;
+    if (!product) return;
 
     try {
-      setLoading(true);
       const data = {
         productId: product._id,
         userId,
         quantity: quantity,
       };
 
-      const res = await axios.post(
-        `https://fahad-week3-day5-teabackend.vercel.app/api/cart/add`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (res.data.success) {
-        console.log("Added to bag:", {
-          productId: product._id,
-          name: product.name,
-          quantity,
-          image: product.image,
-        });
-        // Show success message here if needed
-        setMsg("Item add to cart see cart at the right top corner");
-      } else {
-        setError("Failed to add to cart");
-      }
+      await addToCartMutation(data).unwrap();
+      console.log("Added to bag:", {
+        productId: product._id,
+        name: product.name,
+        quantity,
+        image: product.image,
+      });
+      // Show success message here if needed
+      setMsg("Item add to cart see cart at the right top corner");
     } catch (err) {
-      setError("Failed to add item to cart");
       console.error("Error adding to cart:", err);
-    } finally {
-      // setMsg("");
-      setLoading(false);
+      setMsg("Failed to add item to cart");
     }
   };
 
-  if (loading) return <Loader />;
+  if (loading || addingToCart) return <Loader />;
   if (error)
-    return <div className="text-center text-red-500 py-8">{error}</div>;
+    return (
+      <div className="text-center text-red-500 py-8">
+        Failed to fetch product details
+      </div>
+    );
   if (!product)
     return <div className="text-center py-8">Product not found</div>;
 

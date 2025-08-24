@@ -1,32 +1,15 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import { useGetProductsQuery } from "../services/api";
 import { Link } from "react-router-dom";
 
 const RecommendedProducts = () => {
-  const [recommended, setRecommended] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const {
+    data: productsResponse,
+    error,
+    isLoading: loading,
+  } = useGetProductsQuery();
 
-  useEffect(() => {
-    const fetchRecommended = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          "https://fahad-week3-day5-teabackend.vercel.app/api/products"
-        );
-
-        // Select first 3 products — replace logic if you want random or filtered ones
-        setRecommended(response.data.data.slice(0, 3));
-      } catch (err) {
-        setError("Failed to load recommended products");
-        console.error("Error fetching recommended products:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecommended();
-  }, []);
+  const recommended = productsResponse?.data?.slice(0, 3) || [];
 
   if (loading) return null;
   if (error) return null;
@@ -39,11 +22,8 @@ const RecommendedProducts = () => {
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {recommended.map((product) => (
-          <Link to="/accessories">
-            <div
-              key={product._id}
-              className="bg-white  overflow-hidden text-center"
-            >
+          <Link to="/accessories" key={product._id}>
+            <div className="bg-white  overflow-hidden text-center">
               <img
                 src={product.image}
                 alt={product.name}
