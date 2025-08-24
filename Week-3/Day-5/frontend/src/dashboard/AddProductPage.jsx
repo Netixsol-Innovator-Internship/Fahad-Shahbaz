@@ -121,14 +121,14 @@ const AddProductPage = () => {
                 value={formData.description}
                 onChange={handleChange}
                 rows="3"
-                className="w-full border-0 border-b border-gray-300 bg-transparent px-0 py-2 text-gray-900 placeholder-gray-400 focus:border-black focus:ring-0 resize-none"
+                className="w-full bg-transparent px-0 py-2 text-gray-900 placeholder-gray-400 focus:border-black focus:ring-0 resize-none"
                 required
               />
             </div>
           </div>
 
           {/* Product Details Section */}
-          <div className="border-b border-gray-200 pb-8">
+          <div className="pb-8">
             <h3 className="text-lg font-light mb-6">Product Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
@@ -165,7 +165,7 @@ const AddProductPage = () => {
                   type="file"
                   accept="image/*"
                   onChange={handleImageChange}
-                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border file:border-gray-300 file:text-sm file:font-light file:bg-white file:text-gray-700 hover:file:bg-gray-50"
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border file:border-gray-300 file:text-sm file:font-light file:bg-white file:text-gray-700 hover:file:bg-gray-50  cursor-pointer"
                 />
               </div>
               {preview && (
@@ -185,7 +185,7 @@ const AddProductPage = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="bg-black text-white px-8 py-3 font-light hover:bg-gray-800 disabled:bg-gray-400 transition-colors"
+              className="bg-black text-white px-8 py-3 font-light hover:bg-gray-800 disabled:bg-gray-400 transition-colors cursor-pointer"
             >
               {isLoading ? "Adding Product..." : "Add Product"}
             </button>

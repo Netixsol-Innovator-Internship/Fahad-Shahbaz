@@ -122,7 +122,7 @@ const GetProducts = () => {
             return (
               <div
                 key={product._id}
-                className="border border-gray-200 group hover:border-black transition-colors"
+                className="border border-gray-200 group hover:border-black transition-colors hover:shadow-md"
               >
                 <div className="aspect-square bg-gray-50">
                   <img
@@ -147,7 +147,8 @@ const GetProducts = () => {
                         value={editForm.description}
                         onChange={handleInputChange}
                         rows="3"
-                        className="w-full border-0 border-b border-gray-300 bg-transparent px-0 py-2 text-gray-900 focus:border-black focus:ring-0 resize-none"
+                        className="w-full border-0 border-b border-gray-300 bg-transparent px-0 py-2 text-gray-900 focus:border-black focus:ring-0 
+                        resize-none"
                         placeholder="Description"
                       />
                       <input
@@ -176,13 +177,13 @@ const GetProducts = () => {
                       <>
                         <button
                           onClick={() => handleSave(product._id)}
-                          className="bg-black text-white px-4 py-2 text-sm font-light hover:bg-gray-800 transition-colors"
+                          className="bg-black text-white px-4 py-2 text-sm font-light hover:bg-gray-800 transition-colors cursor-pointer"
                         >
                           Save
                         </button>
                         <button
                           onClick={handleCancel}
-                          className="border border-gray-300 text-gray-700 px-4 py-2 text-sm font-light hover:border-black transition-colors"
+                          className="border border-gray-300 text-gray-700 px-4 py-2 text-sm font-light hover:border-black transition-colors cursor-pointer"
                         >
                           Cancel
                         </button>
@@ -191,14 +192,14 @@ const GetProducts = () => {
                       <>
                         <button
                           onClick={() => handleEdit(product)}
-                          className="border border-gray-300 text-gray-700 px-4 py-2 text-sm font-light hover:border-black transition-colors"
+                          className="border border-gray-300 text-gray-700 px-4 py-2 text-sm font-light hover:border-black transition-colors cursor-pointer"
                         >
                           Edit
                         </button>
                         {role === "superAdmin" && (
                           <button
                             onClick={() => handleDelete(product._id)}
-                            className="bg-gray-800 text-white px-4 py-2 text-sm font-light hover:bg-black transition-colors"
+                            className="bg-gray-800 text-white px-4 py-2 text-sm font-light hover:bg-black transition-colors cursor-pointer"
                           >
                             Delete
                           </button>

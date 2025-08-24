@@ -45,16 +45,16 @@ const Navbar = () => {
             )}
             <Link
               to="/ "
-              className=" text-[14px] font-normal leading-5 text-black hover:text-gray-500"
+              className="hidden lg:block text-[14px] font-normal leading-5 text-black hover:text-gray-500"
             >
               BLOGS
             </Link>
-            {/* <Link
+            <Link
               to="/ "
-              className=" text-[14px] font-normal leading-5 text-black hover:text-gray-500"
+              className="hidden lg:block text-[14px] font-normal leading-5 text-black hover:text-gray-500"
             >
               CONTACT US
-            </Link> */}
+            </Link>
           </div>
 
           {/* Auth Buttons */}
@@ -102,7 +102,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-700 focus:outline-none"
+              className="text-gray-700 focus:outline-none cursor-pointer"
             >
               <svg
                 className="w-6 h-6"
@@ -132,42 +132,39 @@ const Navbar = () => {
 
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
-          <div className="md:hidden flex flex-col gap-2 mt-2 pb-4 border-t pt-4">
-            {/* <Link to="/login" className="text-gray-700 px-2">
-              Login
-            </Link>
-            <Link to="/signup" className="text-gray-700 px-2">
-              Signup
-            </Link> */}
+          <div className="md:hidden flex justify-center items-center gap-3 flex-col gap-2 mt-2 pb-4 border-t pt-4">
             <Link
               to="/"
-              className="font-montserrat  text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+              className="font-montserrat  text-[14px] font-normal leading-5 text-black hover:text-gray-400"
             >
               TEA COLLECTIONS
             </Link>
             <Link
               to="/accessories"
-              className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+              className=" text-[14px] font-normal leading-5 text-black hover:text-gray-400"
             >
               ACCESSORIES
             </Link>
             {isAdmin && (
               <Link
                 to="/admin"
-                className="text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+                className="text-[14px] font-normal leading-5 text-black hover:text-gray-400"
               >
                 ADMIN PAGE
               </Link>
             )}
             <Link
               to="/ "
-              className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+              className=" text-[14px] font-normal leading-5 text-black hover:text-gray-400"
             >
+            <Link to="/login">
+              <img src="/images/login.svg" alt="" />
+            </Link>
               BLOGS
             </Link>
             <Link
               to="/ "
-              className=" text-[14px] font-normal leading-5 text-gray-700 hover:text-blue-600"
+              className=" text-[14px] font-normal leading-5 text-black hover:text-gray-400"
             >
               CONTACT US
             </Link>
@@ -184,17 +181,16 @@ const Navbar = () => {
 
               {/* Show person icon only if NOT logged in */}
               {!isAuthenticated && (
-                <Link to="/signup" className=" w-4 ">
-                  <img src="/images/person.png" alt="" />
+                <Link to="/signup" className="w-4">
+                  <img src="/images/person.svg" alt="person"/>
                 </Link>
               )}
-
               <Link
                 to="/cart"
-                className="relative w-5 h-5 flex items-center justify-center"
+                className="relative w-4 h-4 flex flex-col items-center justify-center"
               >
                 <img
-                  src="/images/local_mall.png"
+                  src="/images/mall.svg"
                   alt="Cart"
                   className="w-full h-full"
                 />

@@ -6,7 +6,7 @@ import {
 } from "../services/api";
 
 const roleOptionsForSuperAdmin = ["admin", "user"];
-const roleOptionsForAdmin = ["user"]; // Admin can only change roles to user
+const roleOptionsForAdmin = ["user"];
 
 const GetUsers = () => {
   const { data, error, isLoading } = useGetUsersQuery();
@@ -106,7 +106,7 @@ const GetUsers = () => {
             return (
               <div
                 key={user._id}
-                className={`px-6 py-6 grid grid-cols-12 gap-4 items-center border-b border-gray-100 hover:bg-gray-50 transition-colors ${
+                className={`px-6 py-6 grid grid-cols-12 gap-4 items-center border-b border-gray-100 hover:bg-gray-50 transition-colors shadow-md ${
                   index % 2 === 0 ? "bg-white" : "bg-gray-50"
                 }`}
               >
@@ -153,7 +153,7 @@ const GetUsers = () => {
                 <div className="col-span-4 flex space-x-4">
                   {canEditRole && (
                     <select
-                      className="border border-gray-300 bg-white px-3 py-1 text-sm font-light focus:border-black focus:ring-0"
+                      className="border border-gray-300 bg-white px-3 py-1 text-sm font-light focus:border-black focus:ring-0 cursor-pointer"
                       value={user.role}
                       onChange={(e) =>
                         handleRoleChange(user._id, e.target.value)
@@ -175,7 +175,7 @@ const GetUsers = () => {
 
                   {canEditBlock && (
                     <select
-                      className="border border-gray-300 bg-white px-3 py-1 text-sm font-light focus:border-black focus:ring-0"
+                      className="border border-gray-300 bg-white px-3 py-1 text-sm font-light focus:border-black focus:ring-0 cursor-pointer"
                       value={user.isBlocked ? "block" : "unblock"}
                       onChange={(e) =>
                         handleBlockChange(user._id, e.target.value)
