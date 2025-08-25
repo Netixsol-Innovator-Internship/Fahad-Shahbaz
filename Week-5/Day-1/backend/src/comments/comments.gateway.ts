@@ -30,7 +30,7 @@ import { Server } from 'socket.io';
     origin: [
       'http://localhost:3000',
       'http://127.0.0.1:3000',
-      'https://realtimefrontend.vercel.app', // <-- add your deployed frontend URL here
+      'https://fahad-week5-day1.vercel.app/', // <-- add your deployed frontend URL here
     ],
     credentials: true,
   },
