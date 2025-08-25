@@ -16,9 +16,7 @@ export default function Page() {
     // Fetch initial comments from backend
     async function fetchComments() {
       try {
-        const res = await fetch(
-          `https://realtimebackend.vercel.app/comments`
-        );
+        const res = await fetch(`https://realtimebackend.vercel.app/comments`);
         const data = await res.json();
         if (Array.isArray(data)) {
           setComments(data);
@@ -65,14 +63,11 @@ export default function Page() {
     const name = author.trim() || "Anonymous";
     if (!trimmed) return;
 
-    const res = await fetch(
-      `https://realtimebackend.vercel.app/comments`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: trimmed, author: name, clientId: myId }),
-      }
-    );
+    const res = await fetch(`https://realtimebackend.vercel.app/comments`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: trimmed, author: name, clientId: myId }),
+    });
 
     const json = await res.json();
     if (json?.ok) {
