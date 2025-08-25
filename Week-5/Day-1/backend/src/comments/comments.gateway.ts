@@ -22,29 +22,25 @@ export interface CreateCommentDto {
   clientId: string;
 }
 
-import {
-WebSocketGateway,
-WebSocketServer,
-} from '@nestjs/websockets';
+import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
-
 @WebSocketGateway({
-cors: {
-origin: [
-'http://localhost:3000',
-'http://127.0.0.1:3000',
-],
-credentials: true,
-},
-transports: ['websocket'],
+  cors: {
+    origin: [
+      'http://localhost:3000',
+      'http://127.0.0.1:3000',
+      'https://realtimefrontend.vercel.app', // <-- add your deployed frontend URL here
+    ],
+    credentials: true,
+  },
+  transports: ['websocket'],
 })
 export class CommentsGateway {
-@WebSocketServer()
-server!: Server;
+  @WebSocketServer()
+  server!: Server;
 
-
-emitNewComment(payload: any) {
-this.server.emit('new_comment', payload);
-}
+  emitNewComment(payload: any) {
+    this.server.emit('new_comment', payload);
+  }
 }
