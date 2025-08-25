@@ -13,8 +13,7 @@ export default function Page() {
         if (Array.isArray(data)) {
           setComments(data);
         }
-      } catch (err) {
-      }
+      } catch (err) {}
     }
     fetchComments();
   }, []);
@@ -69,7 +68,7 @@ export default function Page() {
 
   return (
     <main className="min-h-screen w-full bg-[#f7f9fc] flex items-start justify-center">
-      <div className="max-w-2xl w-full p-4 sm:p-8 rounded-2xl shadow-2xl bg-white flex flex-col gap-6 sm:gap-8 border border-gray-200 mt-10">
+      <div className="max-w-2xl w-full p-4 sm:p-8 rounded-2xl shadow-2xl bg-white flex flex-col gap-6 sm:gap-8 border border-gray-200 mt-10 max-h-[80vh] overflow-y-auto">
         <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-blue-700 tracking-tight">
           💬 Real-time Comments
         </h1>
