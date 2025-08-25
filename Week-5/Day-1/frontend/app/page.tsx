@@ -17,7 +17,7 @@ export default function Page() {
     async function fetchComments() {
       try {
         const res = await fetch(
-          `https://fahad-week5-day1-backend.vercel.app/comments`
+          `https://realtimebackend.vercel.app/comments`
         );
         const data = await res.json();
         if (Array.isArray(data)) {
@@ -66,7 +66,7 @@ export default function Page() {
     if (!trimmed) return;
 
     const res = await fetch(
-      `https://fahad-week5-day1-backend.vercel.app/comments`,
+      `https://realtimebackend.vercel.app/comments`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
