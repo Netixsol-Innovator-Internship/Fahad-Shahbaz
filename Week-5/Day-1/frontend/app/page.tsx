@@ -1,6 +1,14 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+
+type Comment = {
+  id: string;
+  text: string;
+  author: string;
+  clientId: string;
+  createdAt: number;
+};
 import { getSocket } from "../lib/socket";
 
 export default function Page() {
@@ -8,18 +16,22 @@ export default function Page() {
     // Fetch initial comments from backend
     async function fetchComments() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`);
+        const res = await fetch(
+          `https://fahad-week5-day1-backend.vercel.app/comments`
+        );
         const data = await res.json();
         if (Array.isArray(data)) {
           setComments(data);
         }
-      } catch (err) {}
+      } catch {
+        // Optionally handle error
+      }
     }
     fetchComments();
   }, []);
   const [text, setText] = useState("");
   const [author, setAuthor] = useState("");
-  const [comments, setComments] = useState<any[]>([]);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [toast, setToast] = useState("");
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -53,11 +65,14 @@ export default function Page() {
     const name = author.trim() || "Anonymous";
     if (!trimmed) return;
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: trimmed, author: name, clientId: myId }),
-    });
+    const res = await fetch(
+      `https://fahad-week5-day1-backend.vercel.app/comments`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: trimmed, author: name, clientId: myId }),
+      }
+    );
 
     const json = await res.json();
     if (json?.ok) {
