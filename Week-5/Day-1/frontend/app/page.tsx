@@ -26,7 +26,7 @@ export default function Page() {
   };
   useEffect(() => {
     fetchComments();
-    const interval = setInterval(fetchComments, 2000);
+    const interval = setInterval(fetchComments, 1000);
     return () => clearInterval(interval);
   }, []);
 
