@@ -1,13 +1,3 @@
-// import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
-
-// @WebSocketGateway()
-// export class CommentsGateway {
-//   @SubscribeMessage('message')
-//   handleMessage(client: any, payload: any): string {
-//     return 'Hello world!';
-//   }
-// }
-
 export interface Comment {
   id: string;
   text: string;
@@ -27,11 +17,7 @@ import { Server } from 'socket.io';
 
 @WebSocketGateway({
   cors: {
-    origin: [
-      'http://localhost:3000',
-      'http://127.0.0.1:3000',
-      'https://fahad-week5-day1.vercel.app',
-    ],
+    origin: '*',
     credentials: true,
   },
   transports: ['websocket'],
