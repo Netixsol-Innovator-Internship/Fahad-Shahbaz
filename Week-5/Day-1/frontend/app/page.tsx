@@ -12,21 +12,24 @@ type Comment = {
 import { getSocket } from "../lib/socket";
 
 export default function Page() {
-  useEffect(() => {
-    // Fetch initial comments from backend
-    async function fetchComments() {
-      try {
-        const res = await fetch(`https://realtimebackend.vercel.app/comments`);
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setComments(data);
-        }
-      } catch {
-        // Optionally handle error
+  // Poll backend for comments every 2 seconds
+  const fetchComments = async () => {
+    try {
+      const res = await fetch(`https://realtimebackend.vercel.app/comments`);
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setComments(data);
       }
+    } catch {
+      // Optionally handle error
     }
+  };
+  useEffect(() => {
     fetchComments();
+    const interval = setInterval(fetchComments, 2000);
+    return () => clearInterval(interval);
   }, []);
+
   const [text, setText] = useState("");
   const [author, setAuthor] = useState("");
   const [comments, setComments] = useState<Comment[]>([]);
