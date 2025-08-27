@@ -1,0 +1,34 @@
+Starting e2e test...
+login A response 201
+login B response 201
+tokenA true tokenB true
+socket connected KB7fyey5ojk22PdlAAAB
+socket notification:new {
+  "type": "comment",
+  "actor": "68ada6abe4362cc7cc04cb50",
+  "target": null,
+  "read": false,
+  "data": {
+    "commentId": "68ada6e262019170a4939af7"
+  },
+  "_id": "68ada6e262019170a4939af9",
+  "createdAt": "2025-08-26T12:21:54.733Z",
+  "updatedAt": "2025-08-26T12:21:54.733Z",
+  "__v": 0
+}
+create comment status 201 {
+  ok: true,
+  comment: {
+    author: '68ada6abe4362cc7cc04cb50',
+    content: 'hi from e2e',
+    parent: null,
+    likes: [],
+    likesCount: 0,
+    postId: 'post-e2e',
+    _id: '68ada6e262019170a4939af7',
+    createdAt: '2025-08-26T12:21:54.521Z',
+    updatedAt: '2025-08-26T12:21:54.521Z',
+    __v: 0
+  }
+}
+No comment id, abort
