@@ -8,6 +8,7 @@ import React, {
   useState,
 } from "react";
 import { getSocket } from "../lib/socket";
+import { BACKEND_URL } from "../lib/config";
 import { useAuth } from "./AuthContext";
 
 type NotificationItem = {
@@ -55,7 +56,7 @@ export function NotificationsProvider({
     }
 
     let mounted = true;
-    const base = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+    const base = BACKEND_URL;
 
     (async () => {
       try {
@@ -88,8 +89,7 @@ export function NotificationsProvider({
   const markRead = useCallback(
     async (id: string) => {
       if (!token) return;
-      const base =
-        process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+      const base = BACKEND_URL;
       try {
         await fetch(`${base}/notifications/${id}/read`, {
           method: "POST",
@@ -105,7 +105,7 @@ export function NotificationsProvider({
 
   const markAllRead = useCallback(async () => {
     if (!token) return;
-    const base = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+    const base = BACKEND_URL;
     try {
       await fetch(`${base}/notifications/read-all`, {
         method: "POST",

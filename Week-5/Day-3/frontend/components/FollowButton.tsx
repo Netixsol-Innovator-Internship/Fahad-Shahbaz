@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { BACKEND_URL } from "../lib/config";
 import { useRouter } from "next/navigation";
 import { getSocket } from "../lib/socket";
 
@@ -27,7 +28,7 @@ export default function FollowButton({
     if (!token || !user) return;
 
     let mounted = true;
-    const base = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+    const base = BACKEND_URL;
 
     (async () => {
       try {
@@ -79,7 +80,7 @@ export default function FollowButton({
     const prev = following;
     setFollowing(!prev);
     setLoading(true);
-    const base = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+    const base = BACKEND_URL;
     const action = prev ? "unfollow" : "follow";
     try {
       const res = await fetch(`${base}/users/${targetId}/${action}`, {

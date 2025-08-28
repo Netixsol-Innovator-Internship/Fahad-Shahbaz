@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Header from "../../components/Header";
+import { BACKEND_URL } from "../../lib/config";
 import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
@@ -27,20 +28,15 @@ export default function RegisterPage() {
     if (v) return setError(v);
     setLoading(true);
     try {
-      const res = await fetch(
-        `${
-          process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001"
-        }/auth/register`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: username.trim(),
-            email: email.trim(),
-            password,
-          }),
-        }
-      );
+      const res = await fetch(`${BACKEND_URL}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: username.trim(),
+          email: email.trim(),
+          password,
+        }),
+      });
       const j = await res.json();
       if (res.ok && j) {
         // registration success -> go to login with a success flag

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import NotificationsPanel from "../../components/Notifications";
 import { getSocket } from "../../lib/socket";
+import { BACKEND_URL } from "../../lib/config";
 import { useAuth } from "../../context/AuthContext";
 import Header from "../../components/Header";
 import sanitizeHtml from "../../lib/sanitizeHtml";
@@ -46,11 +47,7 @@ export default function CommentsPage() {
   useEffect(() => {
     async function fetchComments() {
       try {
-        const res = await fetch(
-          `${
-            process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001"
-          }/comments`
-        );
+        const res = await fetch(`${BACKEND_URL}/comments`);
         const j = await res.json();
         let list: any[] = [];
         if (Array.isArray(j)) list = j;
@@ -154,7 +151,7 @@ export default function CommentsPage() {
       router.push("/login");
       return;
     }
-    const base = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+    const base = BACKEND_URL;
     try {
       const authToken = token;
       const headers: Record<string, string> = {
@@ -178,7 +175,7 @@ export default function CommentsPage() {
       setTimeout(() => setToast(""), 1500);
       return;
     }
-    const base = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+    const base = BACKEND_URL;
     try {
       const res = await fetch(`${base}/comments/${commentId}/like`, {
         method: "POST",
@@ -208,7 +205,7 @@ export default function CommentsPage() {
       setTimeout(() => setToast(""), 1500);
       return;
     }
-    const base = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+    const base = BACKEND_URL;
     try {
       await fetch(`${base}/comments`, {
         method: "POST",

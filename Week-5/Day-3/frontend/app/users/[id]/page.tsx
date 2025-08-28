@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, use } from "react";
 import { useAuth } from "../../../context/AuthContext";
+import { BACKEND_URL } from "../../../lib/config";
 import FollowButton from "../../../components/FollowButton";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -34,7 +35,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
 
   // Fetch followers and following lists
   useEffect(() => {
-    const base = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+    const base = BACKEND_URL;
     (async () => {
       try {
         const resF = await fetch(`${base}/users/${id}/followers`, {
@@ -53,7 +54,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     let mounted = true;
-    const base = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+    const base = BACKEND_URL;
 
     (async () => {
       try {
@@ -81,7 +82,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   }, [id]);
 
   async function refreshCounts() {
-    const base = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+    const base = BACKEND_URL;
     try {
       const res = await fetch(`${base}/users/${id}`);
       const j = await res.json();
@@ -181,9 +182,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
                       className="bg-blue-600 text-white border-none rounded-md px-2 py-1 mr-1 cursor-pointer"
                       onClick={async () => {
                         // Save new name to backend
-                        const base =
-                          process.env.NEXT_PUBLIC_BACKEND_URL ||
-                          "http://localhost:3001";
+                        const base = BACKEND_URL;
                         const res = await fetch(`${base}/users/${id}/update`, {
                           method: "POST",
                           headers: {

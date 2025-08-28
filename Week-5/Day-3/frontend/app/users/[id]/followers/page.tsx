@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../../context/AuthContext";
+import { BACKEND_URL } from "../../../../lib/config";
 import Link from "next/link";
 
 export default function FollowersPage({ params }: { params: { id: string } }) {
@@ -11,7 +12,7 @@ export default function FollowersPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     let mounted = true;
-    const base = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+    const base = BACKEND_URL;
     (async () => {
       try {
         const res = await fetch(`${base}/users/${id}/followers`, {

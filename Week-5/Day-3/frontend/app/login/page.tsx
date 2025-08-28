@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Header from "../../components/Header";
+import { BACKEND_URL } from "../../lib/config";
 import { useAuth } from "../../context/AuthContext";
 import { useRouter } from "next/navigation";
 
@@ -28,16 +29,11 @@ export default function LoginPage() {
     if (!email || !password) return setError("Provide email and password");
     setLoading(true);
     try {
-      const res = await fetch(
-        `${
-          process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001"
-        }/auth/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const res = await fetch(`${BACKEND_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
       const j = await res.json();
       if (res.ok && j?.token) {
         setToken(j.token);

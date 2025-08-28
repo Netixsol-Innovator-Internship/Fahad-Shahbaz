@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../../context/AuthContext";
 import Link from "next/link";
+import { BACKEND_URL } from "../../../../lib/config";
 
 export default function FollowingPage({ params }: { params: { id: string } }) {
   const { token } = useAuth();
@@ -11,7 +12,7 @@ export default function FollowingPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     let mounted = true;
-    const base = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+    const base = BACKEND_URL;
     (async () => {
       try {
         const res = await fetch(`${base}/users/${id}/following`, {

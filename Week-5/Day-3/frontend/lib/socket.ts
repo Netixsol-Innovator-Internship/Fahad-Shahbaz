@@ -1,4 +1,5 @@
 import { io, Socket } from "socket.io-client";
+import { BACKEND_URL } from "./config";
 
 let socket: Socket | null = null;
 let currentToken: string | undefined = undefined;
@@ -16,18 +17,15 @@ export function getSocket(token?: string): Socket {
 
   if (!socket) {
     currentToken = token;
-    socket = io(
-      process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001",
-      {
-        // allow polling fallback so the socket can connect reliably in dev
-        // environments and behind proxies that block direct websocket
-        // upgrades. Removing `transports: ['websocket']` lets the client
-        // negotiate the best transport.
-        auth: token ? { token } : undefined,
-        withCredentials: true,
-        reconnection: true,
-      }
-    );
+    socket = io(BACKEND_URL, {
+      // allow polling fallback so the socket can connect reliably in dev
+      // environments and behind proxies that block direct websocket
+      // upgrades. Removing `transports: ['websocket']` lets the client
+      // negotiate the best transport.
+      auth: token ? { token } : undefined,
+      withCredentials: true,
+      reconnection: true,
+    });
   }
   return socket;
 }
