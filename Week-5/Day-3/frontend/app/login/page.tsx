@@ -44,7 +44,7 @@ export default function LoginPage() {
       } else {
         setError(j?.message || "Login failed");
       }
-    } catch (e) {
+    } catch {
       setError("Login error");
     } finally {
       setLoading(false);

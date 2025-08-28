@@ -6,35 +6,35 @@ import { BACKEND_URL } from "../../../../lib/config";
 import Link from "next/link";
 
 export default function FollowersPage({ params }: { params: { id: string } }) {
+  const [followers, setFollowers] = useState<
+    { _id?: string; id?: string; username?: string }[]
+  >([]);
   const { token } = useAuth();
   const { id } = params;
-  const [list, setList] = useState<any[]>([]);
 
   useEffect(() => {
-    let mounted = true;
-    const base = BACKEND_URL;
-    (async () => {
+    async function fetchData() {
       try {
+        const base = BACKEND_URL;
         const res = await fetch(`${base}/users/${id}/followers`, {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
         const j = await res.json();
-        if (!mounted) return;
-        if (j?.ok) setList(j.followers || []);
-      } catch (e) {}
-    })();
-    return () => {
-      mounted = false;
-    };
+        if (j?.followers) setFollowers(j.followers);
+      } catch {
+        // Error handling
+      }
+    }
+    fetchData();
   }, [id, token]);
 
   return (
     <div style={{ maxWidth: 720, margin: "0 auto" }}>
       <h2>Followers</h2>
       <ul>
-        {list.map((u) => (
-          <li key={u.id}>
-            <Link href={`/users/${u.id}`}>{u.username}</Link>
+        {followers.map((user) => (
+          <li key={user._id ?? user.id}>
+            <Link href={`/users/${user._id ?? user.id}`}>{user.username}</Link>
           </li>
         ))}
       </ul>

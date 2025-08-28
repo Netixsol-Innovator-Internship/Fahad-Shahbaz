@@ -42,11 +42,12 @@ export default function FollowButton({
         if (!mounted) return;
         if (j?.ok && Array.isArray(j.followers)) {
           const found = j.followers.find(
-            (f: any) => String(f.id) === String(user.id)
+            (f: { id?: string; _id?: string }) =>
+              String(f.id ?? f._id) === String(user.id)
           );
           setFollowing(!!found);
         }
-      } catch (err) {
+      } catch {
         // ignore
       }
     })();
@@ -59,7 +60,7 @@ export default function FollowButton({
   useEffect(() => {
     if (!token) return;
     const socket = getSocket(token || undefined);
-    function onFollow(payload: any) {
+    function onFollow(payload: { type: string; target: string }) {
       if (!payload || String(payload.target) !== String(targetId)) return;
       if (payload.type === "follow") setFollowing(true);
       else if (payload.type === "unfollow") setFollowing(false);

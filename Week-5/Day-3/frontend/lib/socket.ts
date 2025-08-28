@@ -9,7 +9,7 @@ export function getSocket(token?: string): Socket {
   if (socket && token !== currentToken) {
     try {
       socket.disconnect();
-    } catch (e) {
+    } catch {
       // ignore
     }
     socket = null;
@@ -34,7 +34,7 @@ export function disconnectSocket() {
   if (socket) {
     try {
       socket.disconnect();
-    } catch (e) {
+    } catch {
       // ignore
     }
     socket = null;

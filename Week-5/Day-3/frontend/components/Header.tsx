@@ -5,34 +5,41 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
 import { useNotifications } from "../context/NotificationsProvider";
 
-export default function Header({ title }: { title?: string }) {
+export default function Header() {
   const { token, logout, user } = useAuth();
   const { unreadCount } = useNotifications();
   const router = useRouter();
 
+  // Debug log to check token state
+  console.log("Header token state:", token, "type:", typeof token);
+
   return (
-    <header className="flex items-center justify-between gap-6 mb-4 max-w-[1400px] mx-auto my-7">
-      <div className="flex items-center gap-3">
-        <div className="hidden md:block w-11 h-11 rounded-lg bg-gradient-to-br from-blue-400 to-indigo-500" />
+    <header className="flex items-center justify-between gap-3 sm:gap-6 mb-4 max-w-[1400px] mx-auto my-4 sm:my-7 px-4 sm:px-0">
+      <div className="flex items-center gap-2 sm:gap-3">
+        <div className="hidden sm:block w-8 h-8 sm:w-11 sm:h-11 rounded-lg bg-gradient-to-br from-blue-400 to-indigo-500" />
         <div>
-          <div className="font-extrabold text-blue-600">RealtimeHub</div>
-          <div className="small muted">Comments & Notifications</div>
+          <div className="font-extrabold text-blue-600 text-sm sm:text-base">
+            RealtimeHub
+          </div>
+          <div className="small muted text-xs sm:text-sm">
+            Comments & Notifications
+          </div>
         </div>
       </div>
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-1 sm:gap-2 items-center">
         {/* Profile page button if logged in, login/register button if logged out */}
-        {token ? (
+        {token && token.trim() !== "" ? (
           <button
             onClick={() => router.push(`/users/${user?.id}`)}
             aria-label="Profile"
             title="Profile"
-            className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 border-0 cursor-pointer"
+            className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-100 border-0 cursor-pointer"
           >
             {/* Profile icon */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -50,13 +57,13 @@ export default function Header({ title }: { title?: string }) {
             onClick={() => router.push("/login")}
             aria-label="Login or Register"
             title="Login or Register"
-            className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 border-0 cursor-pointer"
+            className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-100 border-0 cursor-pointer"
           >
             {/* Login/Register icon */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -72,18 +79,18 @@ export default function Header({ title }: { title?: string }) {
           </button>
         )}
         {/* Notification bell: only show if logged in */}
-        {token && (
+        {token && token.trim() !== "" && (
           <div className="relative">
             <button
               onClick={() => router.push("/notifications")}
               aria-label="Notifications"
               title="Notifications"
-              className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 border-0 cursor-pointer"
+              className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-100 border-0 cursor-pointer"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -96,7 +103,7 @@ export default function Header({ title }: { title?: string }) {
                 <path d="M13.73 21a2 2 0 0 1-3.46 0" />
               </svg>
               {unreadCount > 0 && (
-                <span className="absolute top-0 right-0 bg-red-600 text-white rounded-full text-xs px-1.5 font-bold">
+                <span className="absolute -top-1 -right-1 bg-red-600 text-white rounded-full text-xs px-1.5 py-0.5 font-bold min-w-[18px] h-[18px] flex items-center justify-center">
                   {unreadCount}
                 </span>
               )}
@@ -104,17 +111,17 @@ export default function Header({ title }: { title?: string }) {
           </div>
         )}
         {/* Logout button: only show if logged in */}
-        {token && (
+        {token && token.trim() !== "" ? (
           <button
             onClick={logout}
             aria-label="Logout"
             title="Logout"
-            className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 border-0 cursor-pointer"
+            className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-100 border-0 cursor-pointer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
+              width="16"
+              height="16"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -128,7 +135,7 @@ export default function Header({ title }: { title?: string }) {
               <line x1="21" y1="12" x2="9" y2="12" />
             </svg>
           </button>
-        )}
+        ) : null}
       </div>
     </header>
   );

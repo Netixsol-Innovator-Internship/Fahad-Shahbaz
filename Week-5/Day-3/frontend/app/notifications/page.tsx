@@ -60,7 +60,10 @@ export default function NotificationsPage() {
                 </div>
                 <div style={{ fontWeight: 600, marginTop: 6 }}>
                   {(() => {
-                    const actor = (it as any).actor;
+                    const actor = it.actor as
+                      | { username?: string }
+                      | string
+                      | undefined;
                     const name =
                       actor && typeof actor === "object"
                         ? actor.username || "Someone"

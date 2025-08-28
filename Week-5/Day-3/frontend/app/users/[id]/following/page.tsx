@@ -8,7 +8,9 @@ import { BACKEND_URL } from "../../../../lib/config";
 export default function FollowingPage({ params }: { params: { id: string } }) {
   const { token } = useAuth();
   const { id } = params;
-  const [list, setList] = useState<any[]>([]);
+  const [list, setList] = useState<
+    { _id?: string; id?: string; username?: string }[]
+  >([]);
 
   useEffect(() => {
     let mounted = true;
@@ -21,7 +23,9 @@ export default function FollowingPage({ params }: { params: { id: string } }) {
         const j = await res.json();
         if (!mounted) return;
         if (j?.ok) setList(j.following || []);
-      } catch (e) {}
+      } catch {
+        // Error handling
+      }
     })();
     return () => {
       mounted = false;

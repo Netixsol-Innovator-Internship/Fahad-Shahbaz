@@ -15,7 +15,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const t = window.sessionStorage.getItem("token");
-      if (t) setTokenState(t);
+      if (t && t.trim() !== "") {
+        setTokenState(t);
+      } else {
+        // Clear invalid token from storage
+        window.sessionStorage.removeItem("token");
+        setTokenState(null);
+      }
     }
   }, []);
 

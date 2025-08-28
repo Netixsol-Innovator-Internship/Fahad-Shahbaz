@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, use } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { BACKEND_URL } from "../../../lib/config";
 import FollowButton from "../../../components/FollowButton";
@@ -8,18 +8,35 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getSocket } from "../../../lib/socket";
 
+type UserProfile = {
+  _id?: string;
+  id?: string;
+  username?: string;
+  email?: string;
+  isFollowed?: boolean;
+  bio?: string;
+  createdAt?: string | number;
+  isFollowedByCurrentUser?: boolean;
+};
+
+type UserListItem = {
+  _id?: string;
+  id?: string;
+  username?: string;
+};
+
 export default function ProfilePage({ params }: { params: { id: string } }) {
   const [tab, setTab] = useState<"profile" | "followers" | "following">(
     "profile"
   );
-  const [followersList, setFollowersList] = useState<any[]>([]);
-  const [followingList, setFollowingList] = useState<any[]>([]);
+  const [followersList, setFollowersList] = useState<UserListItem[]>([]);
+  const [followingList, setFollowingList] = useState<UserListItem[]>([]);
   const [editingName, setEditingName] = useState(false);
   const [newName, setNewName] = useState("");
   // Next.js 15+ migration: params is always an object in client components
   const { id } = params;
-  const { token, user } = useAuth();
-  const [profile, setProfile] = useState<any>(null);
+  const { token } = useAuth();
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [followersCount, setFollowersCount] = useState<number | null>(null);
   const [followingCount, setFollowingCount] = useState<number | null>(null);
@@ -48,7 +65,9 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
         });
         const jG = await resG.json();
         setFollowingList(jG?.following || []);
-      } catch (e) {}
+      } catch {
+        // Error handling
+      }
     })();
   }, [id, token]);
 
@@ -69,7 +88,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
           setFollowingCount(j.followingCount ?? 0);
           setIsFollowed(j.isFollowedByCurrentUser);
         }
-      } catch (err) {
+      } catch {
         // ignore
       } finally {
         if (mounted) setLoading(false);
@@ -97,7 +116,11 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     const socket = getSocket(token || undefined);
-    function onFollow(payload: any) {
+    function onFollow(payload: {
+      type: string;
+      actor?: unknown;
+      target?: string;
+    }) {
       // payload: { type: 'follow'|'unfollow', actor, target }
       if (!payload || String(payload.target) !== String(id)) return;
       if (payload.type === "follow") {
@@ -192,7 +215,9 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
                           body: JSON.stringify({ username: newName }),
                         });
                         if (res.ok) {
-                          setProfile((p: any) => ({ ...p, username: newName }));
+                          setProfile((p: UserProfile | null) =>
+                            p ? { ...p, username: newName } : null
+                          );
                           setEditingName(false);
                         }
                       }}
@@ -273,9 +298,12 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
             />
           </div>
           <div style={{ marginTop: 18 }}>
-            <a href="/" onClick={() => router.push("/comments")} className="underline">
+            <button
+              onClick={() => router.push("/comments")}
+              className="underline bg-transparent border-none cursor-pointer text-blue-600"
+            >
               View comments
-            </a>
+            </button>
           </div>
         </>
       )}

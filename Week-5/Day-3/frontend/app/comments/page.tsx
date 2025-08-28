@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState, useRef } from "react";
 // dynamic import handled manually for react-quill to patch react-dom first
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -12,16 +12,23 @@ import Header from "../../components/Header";
 import sanitizeHtml from "../../lib/sanitizeHtml";
 import CommentEditor from "../../components/CommentEditor";
 
+type Author = {
+  _id?: string;
+  id?: string;
+  username?: string;
+};
+
 type Comment = {
   _id?: string;
   id?: string;
   content?: string;
   text?: string;
-  author: any;
+  author: string | Author;
   clientId?: string;
   createdAt: string | number;
   parent?: string | null;
   likesCount?: number;
+  likedByCurrentUser?: boolean;
 };
 
 // using shared sanitizeHtml imported from lib
@@ -34,7 +41,6 @@ export default function CommentsPage() {
   const listRef = useRef<HTMLDivElement>(null);
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
-  const [liked, setLiked] = useState<Record<string, boolean>>({});
   const [likesMap, setLikesMap] = useState<Record<string, number>>({});
   const { token, user } = useAuth();
   const router = useRouter();
@@ -49,61 +55,31 @@ export default function CommentsPage() {
       try {
         const res = await fetch(`${BACKEND_URL}/comments`);
         const j = await res.json();
-        let list: any[] = [];
-        if (Array.isArray(j)) list = j;
-        else if (j?.ok && Array.isArray(j.comments)) list = j.comments;
+        let list: Comment[] = [];
+        if (Array.isArray(j)) list = j as Comment[];
+        else if (j?.ok && Array.isArray(j.comments))
+          list = j.comments as Comment[];
         // sort oldest -> newest
         list.sort(
-          (a: any, b: any) =>
+          (a, b) =>
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
         );
         setComments(list);
         // populate likes map and liked state if provided
         const lm: Record<string, number> = {};
-        const likedState: Record<string, boolean> = {};
-        list.forEach((c: any) => {
+        list.forEach((c) => {
           const id = c._id ?? c.id;
           if (id) {
             lm[id] = c.likesCount ?? 0;
-            if (c.likedByCurrentUser !== undefined)
-              likedState[id] = Boolean(c.likedByCurrentUser);
           }
         });
         setLikesMap(lm);
-        setLiked(likedState);
-      } catch (e) {}
+      } catch {
+        // Error handling - could log or show toast
+      }
     }
     fetchComments();
   }, []);
-
-  const editorModules = useMemo(
-    () => ({
-      toolbar: [
-        [{ header: [1, 2, 3, false] }],
-        ["bold", "italic", "underline", "strike"],
-        ["blockquote", "code-block"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["link"],
-        ["clean"],
-      ],
-    }),
-    []
-  );
-
-  const editorFormats = useMemo(
-    () => [
-      "header",
-      "bold",
-      "italic",
-      "underline",
-      "strike",
-      "blockquote",
-      "code-block",
-      "list",
-      "link",
-    ],
-    []
-  );
 
   function isHtmlEmpty(html: string) {
     if (!html) return true;
@@ -113,12 +89,12 @@ export default function CommentsPage() {
 
   useEffect(() => {
     const socket = getSocket(token || undefined);
-    function onNew(comment: any) {
+    function onNew(comment: Comment) {
       setComments((prev) => [...prev, comment]);
       const authorName =
         typeof comment.author === "string"
           ? comment.author
-          : comment.author?.username || "Someone";
+          : (comment.author as Author)?.username || "Someone";
       setToast(`${authorName} commented!`);
       setTimeout(() => setToast(""), 2000);
       // scroll to bottom if the listRef exists
@@ -131,7 +107,7 @@ export default function CommentsPage() {
       if (id) setLikesMap((s) => ({ ...s, [id]: comment.likesCount ?? 0 }));
     }
     socket.on("new_comment", onNew);
-    function onLike(payload: any) {
+    function onLike(payload: { commentId: string; likesCount: number }) {
       const { commentId, likesCount } = payload || {};
       if (!commentId) return;
       setLikesMap((s) => ({ ...s, [commentId]: likesCount }));
@@ -166,7 +142,9 @@ export default function CommentsPage() {
         }),
       });
       setText("");
-    } catch (e) {}
+    } catch {
+      // Error handling
+    }
   }
 
   async function toggleLike(commentId: string) {
@@ -186,13 +164,9 @@ export default function CommentsPage() {
       const j = await res.json();
       if (j?.likesCount !== undefined) {
         setLikesMap((s) => ({ ...s, [commentId]: j.likesCount }));
-        if (typeof j.liked === "boolean") {
-          setLiked((s) => ({ ...s, [commentId]: j.liked }));
-        } else {
-          setLiked((s) => ({ ...s, [commentId]: !s[commentId] }));
-        }
       }
-    } catch (e) {
+    } catch {
+      // Error handling
     }
   }
 
@@ -219,22 +193,24 @@ export default function CommentsPage() {
       });
       setReplyText("");
       setReplyingTo(null);
-    } catch (e) {}
+    } catch {
+      // Error handling
+    }
   }
 
   return (
-    <main className="min-h-screen w-full bg-[#f7f9fc] flex items-start justify-center">
-      <div className="w-full max-w-4xl px-4">
+    <main className="min-h-screen w-full bg-[#f7f9fc] flex items-start justify-center px-2 sm:px-4">
+      <div className="w-full max-w-4xl">
         <Header />
-        <div className="bg-white rounded-xl shadow p-4">
+        <div className="bg-white rounded-xl shadow p-3 sm:p-4">
           <NotificationsPanel />
-          <h1 className="text-2xl font-bold">Comments</h1>
+          <h1 className="text-xl sm:text-2xl font-bold">Comments</h1>
           <div className="grid gap-3 mt-3">
             <input
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
               placeholder="Your name"
-              className="border border-gray-200 rounded-md p-2"
+              className="border border-gray-200 rounded-md p-2 text-sm sm:text-base"
             />
             <div>
               <CommentEditor
@@ -245,7 +221,7 @@ export default function CommentsPage() {
             </div>
             <button
               onClick={submit}
-              className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
+              className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer text-sm sm:text-base hover:bg-blue-700 transition-colors"
             >
               Send
             </button>
@@ -254,77 +230,83 @@ export default function CommentsPage() {
 
         {/* Separate card for comment list with same visual style - this card will scroll */}
         <div
-          className="bg-white rounded-xl shadow p-4 mt-4 comments-card mb-6"
+          className="bg-white rounded-xl shadow p-3 sm:p-4 mt-4 comments-card mb-6"
           ref={listRef}
         >
-          <h2 className="text-lg font-semibold">All comments</h2>
+          <h2 className="text-base sm:text-lg font-semibold">All comments</h2>
           <div className="comments-list">
             {/* group replies under their parent */}
             {(() => {
-              const byParent: Record<string, any[]> = {};
-              const top: any[] = [];
+              const byParent: Record<string, Comment[]> = {};
+              const top: Comment[] = [];
               comments.forEach((c) => {
-                const id = (c as any)._id ?? (c as any).id;
-                const parent = (c as any).parent ?? null;
-                if (parent) {
+                const id = c._id ?? c.id;
+                const parent = c.parent ?? null;
+                if (parent && id) {
                   byParent[parent] = byParent[parent] || [];
                   byParent[parent].push(c);
-                } else {
+                } else if (id) {
                   top.push(c);
                 }
               });
 
               return top.map((c) => {
-                const id = (c as any)._id ?? (c as any).id;
-                const created = new Date((c as any).createdAt).toLocaleString();
-                const authorObj = (c as any).author;
+                const id = c._id ?? c.id;
+                if (!id) return null;
+                const created = new Date(c.createdAt).toLocaleString();
+                const authorObj = c.author;
                 let authorName =
                   typeof authorObj === "string"
                     ? authorObj
-                    : authorObj?.username || "Unknown";
+                    : (authorObj as Author)?.username || "Unknown";
                 authorName = (authorName || "").toString().trim() || "Unknown";
                 const authorId =
                   typeof authorObj === "string"
                     ? undefined
-                    : authorObj?._id || authorObj?.id;
+                    : (authorObj as Author)?._id || (authorObj as Author)?.id;
                 // Show rounded avatar with first letter (safe)
                 const avatarLetter = (authorName[0] || "?")
                   .toString()
                   .toUpperCase();
                 return (
                   <div key={id} className="mb-3">
-                    <div className="bg-white p-3 rounded-md shadow-sm comment-card">
-                      <div className="text-xs muted">{created}</div>
+                    <div className="bg-white p-2 sm:p-3 rounded-md shadow-sm comment-card">
+                      <div className="text-xs text-gray-500">{created}</div>
                       <div className="flex items-center gap-2 mt-1">
-                        <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold uppercase">
+                        <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs sm:text-sm font-bold uppercase">
                           {avatarLetter}
                         </div>
                         {authorId ? (
-                          <Link href={`/users/${authorId}`}>{authorName}</Link>
+                          <Link
+                            href={`/users/${authorId}`}
+                            className="text-blue-600 hover:underline text-sm sm:text-base"
+                          >
+                            {authorName}
+                          </Link>
                         ) : (
-                          authorName
+                          <span className="text-sm sm:text-base">
+                            {authorName}
+                          </span>
                         )}
                       </div>
-                      <div className="mt-2">
+                      <div className="mt-2 text-sm sm:text-base">
                         <div
                           dangerouslySetInnerHTML={{
-                            __html: sanitizeHtml(
-                              ((c as any).content ?? (c as any).text) || ""
-                            ),
+                            __html: sanitizeHtml((c.content ?? c.text) || ""),
                           }}
                         />
                       </div>
 
-                      <div className="mt-2 flex gap-2 items-center">
+                      <div className="mt-2 flex gap-2 items-center flex-wrap">
                         <button
-                          onClick={() => id && toggleLike(id)}
-                          className="px-2 py-1 rounded bg-gray-100 cursor-pointer"
+                          onClick={() => toggleLike(id)}
+                          className="px-2 py-1 rounded bg-gray-100 cursor-pointer text-xs sm:text-sm hover:bg-gray-200 transition-colors"
                         >
                           👍 {likesMap[id] ?? 0}
                         </button>
                         <button
                           onClick={() => setReplyingTo(id)}
-                          className="px-2 py-1 rounded bg-gray-100 cursor-pointer"
+                          className="px-2 py-1 rounded bg-gray-100 cursor-pointer text-xs sm:text-sm hover:bg-gray-200 transition-colors"
                         >
                           Reply
                         </button>
@@ -339,10 +321,10 @@ export default function CommentsPage() {
                               placeholder="Write a reply..."
                             />
                           </div>
-                          <div className="mt-2 flex gap-2">
+                          <div className="mt-2 flex gap-2 flex-wrap">
                             <button
                               onClick={() => submitReply(id)}
-                              className="px-3 py-1 rounded bg-blue-600 text-white"
+                              className="px-3 py-1 rounded bg-blue-600 text-white text-sm hover:bg-blue-700 transition-colors"
                             >
                               Send reply
                             </button>
@@ -351,7 +333,7 @@ export default function CommentsPage() {
                                 setReplyingTo(null);
                                 setReplyText("");
                               }}
-                              className="px-3 py-1 rounded bg-gray-200"
+                              className="px-3 py-1 rounded bg-gray-200 text-sm hover:bg-gray-300 transition-colors"
                             >
                               Cancel
                             </button>
@@ -361,21 +343,21 @@ export default function CommentsPage() {
                     </div>
 
                     {/* render replies for this comment */}
-                    <div className="ml-4 mt-2">
-                      {(byParent[id] || []).map((r) => {
-                        const rid = (r as any)._id ?? (r as any).id;
-                        const rCreated = new Date(
-                          (r as any).createdAt
-                        ).toLocaleString();
-                        const rAuthorObj = (r as any).author;
+                    <div className="ml-2 sm:ml-4 mt-2">
+                      {(byParent[id] || []).map((r: Comment) => {
+                        const rid = r._id ?? r.id;
+                        if (!rid) return null;
+                        const rCreated = new Date(r.createdAt).toLocaleString();
+                        const rAuthorObj = r.author;
                         const rAuthor =
                           typeof rAuthorObj === "string"
                             ? rAuthorObj
-                            : rAuthorObj?.username || "Unknown";
+                            : (rAuthorObj as Author)?.username || "Unknown";
                         const rAuthorId =
                           typeof rAuthorObj === "string"
                             ? undefined
-                            : rAuthorObj?._id || rAuthorObj?.id;
+                            : (rAuthorObj as Author)?._id ||
+                              (rAuthorObj as Author)?.id;
                         const rAuthorName =
                           (rAuthor || "").toString().trim() || "Unknown";
                         const rAvatarLetter = (rAuthorName[0] || "?")
@@ -384,38 +366,42 @@ export default function CommentsPage() {
                         return (
                           <div
                             key={rid}
-                            className="comment-card"
+                            className="comment-card bg-gray-50 p-2 rounded-md"
                             style={{ marginTop: 8 }}
                           >
-                            <div className="text-xs muted">{rCreated}</div>
+                            <div className="text-xs text-gray-500">
+                              {rCreated}
+                            </div>
                             <div className="flex items-center gap-2 mt-1">
-                              <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold uppercase text-sm">
+                              <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold uppercase text-xs">
                                 {rAvatarLetter}
                               </div>
 
                               {rAuthorId ? (
-                                <Link href={`/users/${rAuthorId}`}>
+                                <Link
+                                  href={`/users/${rAuthorId}`}
+                                  className="text-blue-600 hover:underline text-sm"
+                                >
                                   {rAuthor}
                                 </Link>
                               ) : (
-                                rAuthor
+                                <span className="text-sm">{rAuthor}</span>
                               )}
                             </div>
-                            <div style={{ marginTop: 6 }}>
+                            <div style={{ marginTop: 6 }} className="text-sm">
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html: sanitizeHtml(
-                                    ((r as any).content ?? (r as any).text) ||
-                                      ""
+                                    (r.content ?? r.text) || ""
                                   ),
                                 }}
                               />
                             </div>
                             <div style={{ marginTop: 8 }}>
                               <button
-                                onClick={() => rid && toggleLike(rid)}
-                                className="btn secondary"
-                                style={{ padding: "6px 8px" }}
+                                onClick={() => toggleLike(rid)}
+                                className="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 transition-colors text-xs"
+                                style={{ padding: "4px 6px" }}
                               >
                                 👍 {likesMap[rid] ?? 0}
                               </button>
@@ -432,7 +418,7 @@ export default function CommentsPage() {
         </div>
 
         {toast && (
-          <div className="fixed bottom-4 right-4 bg-white p-2 rounded shadow">
+          <div className="fixed bottom-4 right-4 bg-white p-3 rounded shadow-lg border text-sm sm:text-base max-w-xs">
             {toast}
           </div>
         )}

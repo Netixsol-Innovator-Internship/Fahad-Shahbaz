@@ -84,7 +84,7 @@ export default function sanitizeHtml(input: string) {
 
     clean(doc.body);
     return doc.body.innerHTML;
-  } catch (e) {
+  } catch {
     return input.replace(/<[^>]*>/g, "");
   }
 }

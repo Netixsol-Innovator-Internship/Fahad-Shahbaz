@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getSocket } from "../lib/socket";
-import { useAuth } from "../context/AuthContext";
 import { useNotifications } from "../context/NotificationsProvider";
 import sanitizeHtml from "../lib/sanitizeHtml";
 
@@ -14,12 +12,16 @@ type NotificationItem = {
   actor: { _id?: string; username?: string; avatarUrl?: string } | string;
   target: string | null;
   read: boolean;
-  data: any;
+  data: {
+    message?: string;
+    snippet?: string;
+    commentText?: string;
+  };
   createdAt: string;
 };
 
 export default function NotificationsPanel() {
-  const { items, markRead, markAllRead } = useNotifications();
+  const { items, markRead } = useNotifications();
   // using shared sanitizeHtml
   // show a transient toast for the latest notification when items change
   const [toastVisible, setToastVisible] = useState(false);
@@ -38,7 +40,7 @@ export default function NotificationsPanel() {
         const parsed = JSON.parse(raw) as string[];
         dismissedIds.current = new Set(parsed || []);
       }
-    } catch (e) {}
+    } catch {}
   }, []);
 
   useEffect(() => {
@@ -70,13 +72,13 @@ export default function NotificationsPanel() {
   if (!toastVisible || !toastItem) return null;
 
   return (
-    <div className="fixed right-5 top-5 w-80 z-50">
+    <div className="fixed right-2 sm:right-5 top-5 w-72 sm:w-80 z-50 mx-2 sm:mx-0">
       <div className={`notif-item ${!toastItem.read ? "unread" : ""}`}>
         <div className="flex justify-between">
           <div className="small muted">
             {new Date(toastItem.createdAt).toLocaleString()}
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-1 sm:gap-2">
             <button
               onClick={() => {
                 setToastVisible(false);
@@ -89,11 +91,11 @@ export default function NotificationsPanel() {
                       JSON.stringify(Array.from(dismissedIds.current))
                     );
                   }
-                } catch (e) {}
+                } catch {}
                 // mark read when user dismisses
                 markRead(toastItem._id).catch(() => {});
               }}
-              className="border-0 bg-transparent cursor-pointer"
+              className="border-0 bg-transparent cursor-pointer text-xs sm:text-sm"
             >
               ✕
             </button>
@@ -103,15 +105,15 @@ export default function NotificationsPanel() {
                 // navigate to full notifications page
                 router.push("/notifications");
               }}
-              className="border-0 bg-transparent cursor-pointer text-blue-600"
+              className="border-0 bg-transparent cursor-pointer text-blue-600 text-xs sm:text-sm"
             >
               View all
             </button>
           </div>
         </div>
-        <div className="font-semibold mt-1.5">
+        <div className="font-semibold mt-1.5 text-sm sm:text-base">
           {(() => {
-            const actorObj = (toastItem as any).actor;
+            const actorObj = toastItem.actor;
             const actorName =
               actorObj && typeof actorObj === "object"
                 ? actorObj.username || "Someone"
@@ -129,7 +131,10 @@ export default function NotificationsPanel() {
             return toastItem.type;
           })()}
         </div>
-        <div className="muted small" style={{ marginTop: 6 }}>
+        <div
+          className="muted small text-xs sm:text-sm"
+          style={{ marginTop: 6 }}
+        >
           {toastItem.type === "reply" ? (
             <>{toastItem.data?.message || "Replied to your comment"}</>
           ) : toastItem.type === "comment" ? (

@@ -44,7 +44,7 @@ export default function RegisterPage() {
       } else {
         setError(j?.message || "Registration failed");
       }
-    } catch (e) {
+    } catch {
       setError("Registration error");
     } finally {
       setLoading(false);
