@@ -193,7 +193,6 @@ export default function CommentsPage() {
         }
       }
     } catch (e) {
-      /* ignore */
     }
   }
 
@@ -222,8 +221,6 @@ export default function CommentsPage() {
       setReplyingTo(null);
     } catch (e) {}
   }
-
-  // ...existing code...
 
   return (
     <main className="min-h-screen w-full bg-[#f7f9fc] flex items-start justify-center">
@@ -321,13 +318,13 @@ export default function CommentsPage() {
                       <div className="mt-2 flex gap-2 items-center">
                         <button
                           onClick={() => id && toggleLike(id)}
-                          className="px-2 py-1 rounded bg-gray-100"
+                          className="px-2 py-1 rounded bg-gray-100 cursor-pointer"
                         >
                           👍 {likesMap[id] ?? 0}
                         </button>
                         <button
                           onClick={() => setReplyingTo(id)}
-                          className="px-2 py-1 rounded bg-gray-100"
+                          className="px-2 py-1 rounded bg-gray-100 cursor-pointer"
                         >
                           Reply
                         </button>

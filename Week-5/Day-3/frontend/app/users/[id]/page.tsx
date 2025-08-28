@@ -273,9 +273,9 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
             />
           </div>
           <div style={{ marginTop: 18 }}>
-            <button onClick={() => router.push("/comments")}>
+            <a href="/" onClick={() => router.push("/comments")} className="underline">
               View comments
-            </button>
+            </a>
           </div>
         </>
       )}
