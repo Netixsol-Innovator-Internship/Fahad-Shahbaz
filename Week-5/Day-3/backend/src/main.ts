@@ -19,27 +19,33 @@ async function bootstrap() {
   // localhost or 127.0.0.1 (any port) so Next's dev server can pick a free
   // port (3000, 3001, 3002, etc.) without causing CORS failures.
   app.enableCors({
-    origin: (origin, callback) => {
-      // allow requests with no origin (e.g., curl, mobile apps)
-      if (!origin) return callback(null, true);
-      try {
-        const url = new URL(origin);
-        const host = url.hostname;
-        if (host === 'localhost' || host === '127.0.0.1')
-          return callback(null, true);
-      } catch (e) {
-        // fallthrough to rejection
-      }
-      return callback(new Error('Origin not allowed by CORS'));
-    },
+    origin: ['*'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
   });
+  // app.enableCors({
+  //   origin: (origin, callback) => {
+  //     if (!origin) return callback(null, true);
+  //     try {
+  //       const url = new URL(origin);
+  //       const host = url.hostname;
+  //       if (host === 'localhost' || host === '127.0.0.1')
+  //         return callback(null, true);
+  //     } catch (e) {
+  //     }
+  //     return callback(new Error('Origin not allowed by CORS'));
+  //   },
+  //   credentials: true,
+  //   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  //   allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  // });
 
   const port = 3001;
-  await app.listen(port);
-  console.log(`HTTP server on http://localhost:${port}`);
+  await app.listen(port, '0.0.0.0');
+  console.log(
+    `HTTP server on https://realtimebackend-production-c5ba.up.railway.app (listening on port ${port})`,
+  );
 
   // mongoose connection status
   try {
