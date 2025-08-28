@@ -27,8 +27,8 @@ export default function Header() {
         </div>
       </div>
       <div className="flex gap-1 sm:gap-2 items-center">
-        {/* Profile page button if logged in, login/register button if logged out */}
-        {token && token.trim() !== "" ? (
+        {/* Profile page button if logged in */}
+        {token && token.trim() !== "" && (
           <button
             onClick={() => router.push(`/users/${user?.id}`)}
             aria-label="Profile"
@@ -50,31 +50,6 @@ export default function Header() {
             >
               <circle cx="12" cy="8" r="4" />
               <path d="M4 20v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2" />
-            </svg>
-          </button>
-        ) : (
-          <button
-            onClick={() => router.push("/login")}
-            aria-label="Login or Register"
-            title="Login or Register"
-            className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-100 border-0 cursor-pointer"
-          >
-            {/* Login/Register icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-blue-600"
-            >
-              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-              <polyline points="10 17 15 12 10 7" />
-              <line x1="15" y1="12" x2="3" y2="12" />
             </svg>
           </button>
         )}
