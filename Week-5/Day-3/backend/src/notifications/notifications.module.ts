@@ -8,11 +8,13 @@ import {
   Notification,
   NotificationSchema,
 } from './schemas/notification.schema';
+import { Comment, CommentSchema } from '../comments/schemas/comment.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Notification.name, schema: NotificationSchema },
+      { name: Comment.name, schema: CommentSchema },
     ]),
     JwtModule.register({ secret: 'mylocaldevsecret' }),
   ],

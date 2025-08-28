@@ -15,16 +15,21 @@ async function bootstrap() {
     }),
   );
 
-  // Allow our local frontend during development and explicitly permit
-  // credentials and common headers. We intentionally whitelist the dev
-  // origin so the browser receives a concrete Access-Control-Allow-Origin
-  // value (browsers reject '*' when credentials are used).
-  const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+  // Allow our local frontend during development. Accept any origin on
+  // localhost or 127.0.0.1 (any port) so Next's dev server can pick a free
+  // port (3000, 3001, 3002, etc.) without causing CORS failures.
   app.enableCors({
     origin: (origin, callback) => {
       // allow requests with no origin (e.g., curl, mobile apps)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) return callback(null, true);
+      try {
+        const url = new URL(origin);
+        const host = url.hostname;
+        if (host === 'localhost' || host === '127.0.0.1')
+          return callback(null, true);
+      } catch (e) {
+        // fallthrough to rejection
+      }
       return callback(new Error('Origin not allowed by CORS'));
     },
     credentials: true,
@@ -32,7 +37,7 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
   });
 
-  const port = process.env.PORT || 3001;
+  const port = 3001;
   await app.listen(port);
   console.log(`HTTP server on http://localhost:${port}`);
 

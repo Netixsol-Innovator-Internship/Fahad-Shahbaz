@@ -6,12 +6,15 @@ import {
   NotificationDocument,
 } from './schemas/notification.schema';
 import { NotificationsGateway } from './notifications.gateway';
+import { Comment, CommentDocument } from '../comments/schemas/comment.schema';
 
 @Injectable()
 export class NotificationsService {
   constructor(
     @InjectModel(Notification.name)
     private notifModel: Model<NotificationDocument>,
+    @InjectModel(Comment.name)
+    private commentModel: Model<CommentDocument>,
     private gateway: NotificationsGateway,
   ) {}
 
@@ -70,11 +73,35 @@ export class NotificationsService {
     } catch (err) {
       target = userId;
     }
-    return this.notifModel
+    // populate actor fields so clients receive readable actor info
+    const nots = await this.notifModel
       .find({ target })
       .sort({ createdAt: -1 })
-      .lean()
+      .populate('actor', 'username avatarUrl')
       .exec();
+
+    // if any 'like' notifications are missing a snippet, fetch the comment content to attach a short snippet
+    const promises = nots.map(async (n: any) => {
+      try {
+        if (
+          n.type === 'like' &&
+          n.data &&
+          !n.data.snippet &&
+          n.data.commentId
+        ) {
+          const cid = String(n.data.commentId);
+          const c = await this.commentModel.findById(cid).exec();
+          if (c && typeof c.content === 'string') {
+            n.data.snippet = (c.content || '').slice(0, 200);
+          }
+        }
+      } catch (e) {
+        // ignore
+      }
+      return n;
+    });
+    await Promise.all(promises);
+    return nots;
   }
 
   async markRead(notificationId: string, userId: string) {

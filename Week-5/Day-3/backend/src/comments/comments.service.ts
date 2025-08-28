@@ -99,8 +99,14 @@ export class CommentsService {
       try {
         const authorId = String(comment.author);
         if (String(uid) !== String(authorId)) {
+          // include a short snippet so notifications can show meaningful text
+          const snippet =
+            typeof comment.content === 'string'
+              ? (comment.content as string).slice(0, 200)
+              : '';
           await this.notifications.create('like', uid, comment.author as any, {
             commentId,
+            snippet,
           });
         }
       } catch (e) {
