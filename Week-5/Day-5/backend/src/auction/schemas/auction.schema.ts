@@ -56,6 +56,20 @@ export class Auction {
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   createdBy: Types.ObjectId;
+
+  // Virtual field for bids
+  bids?: any[];
 }
 
 export const AuctionSchema = SchemaFactory.createForClass(Auction);
+
+// Enable virtuals for serialization
+AuctionSchema.set('toObject', { virtuals: true });
+AuctionSchema.set('toJSON', { virtuals: true });
+
+// Virtual relation to bids (Bid.auction -> Auction._id)
+AuctionSchema.virtual('bids', {
+  ref: 'Bid',
+  localField: '_id',
+  foreignField: 'auction',
+});

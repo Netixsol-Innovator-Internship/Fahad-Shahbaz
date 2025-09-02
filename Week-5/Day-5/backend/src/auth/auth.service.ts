@@ -60,7 +60,7 @@ export class AuthService {
     delete userObj.password;
 
     return {
-      access_token: token,
+      token: token,
       user: userObj,
     };
   }

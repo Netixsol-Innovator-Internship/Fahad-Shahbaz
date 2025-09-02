@@ -15,9 +15,7 @@ export class WishlistController {
   }
 
   @Get('user/:userId')
-  async getUserWishlist(
-    @Param('userId') userId: string,
-  ): Promise<Wishlist | null> {
+  async getUserWishlist(@Param('userId') userId: string): Promise<Wishlist[]> {
     return this.wishlistService.getUserWishlist(userId);
   }
 

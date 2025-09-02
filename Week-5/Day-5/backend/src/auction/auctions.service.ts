@@ -15,16 +15,35 @@ export class AuctionService {
   }
 
   async findAll(): Promise<Auction[]> {
-    return this.auctionModel.find().populate('car').populate('winningBid').exec();
+    return this.auctionModel
+      .find()
+      .populate('car')
+      .populate({ path: 'bids', populate: { path: 'bidder' } })
+      .populate({ path: 'winningBid', populate: { path: 'bidder' } })
+      .exec();
   }
 
   async findOne(id: string): Promise<Auction> {
     const auction = await this.auctionModel
       .findById(id)
       .populate('car')
-      .populate('winningBid')
+      .populate({ path: 'bids', populate: { path: 'bidder' } })
+      .populate({ path: 'winningBid', populate: { path: 'bidder' } })
       .exec();
-    if (!auction) throw new NotFoundException(`Auction with ID ${id} not found`);
+    if (!auction)
+      throw new NotFoundException(`Auction with ID ${id} not found`);
+
+    // Log the populated auction data
+    console.log(`\n=== AUCTION ${id} ===`);
+    console.log('Bids count:', (auction as any).bids?.length || 0);
+    if ((auction as any).bids?.length > 0) {
+      console.log(
+        'First bid:',
+        JSON.stringify((auction as any).bids[0], null, 2),
+      );
+    }
+    console.log('========================\n');
+
     return auction;
   }
 
@@ -32,7 +51,8 @@ export class AuctionService {
     const updatedAuction = await this.auctionModel
       .findByIdAndUpdate(id, updateAuctionDto, { new: true })
       .exec();
-    if (!updatedAuction) throw new NotFoundException(`Auction with ID ${id} not found`);
+    if (!updatedAuction)
+      throw new NotFoundException(`Auction with ID ${id} not found`);
     return updatedAuction;
   }
 
