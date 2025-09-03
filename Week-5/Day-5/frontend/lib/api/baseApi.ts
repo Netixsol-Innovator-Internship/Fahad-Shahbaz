@@ -3,6 +3,7 @@ import type { RootState } from "../store";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_API_URL || "https://car-auction-backend-nine.vercel.app/",
+  // baseUrl: "http://localhost:3001",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
 
